@@ -78,7 +78,7 @@ try {
         $nombre = trim($data['nombre'] ?? '');
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $role = $data['role'] ?? 'evaluador';
+        $role = 'admin';
 
         // Validaciones
         if (!$nombre) {
@@ -99,9 +99,10 @@ try {
             exit;
         }
 
-        if (!in_array($role, ['admin', 'evaluador'])) {
+        // Solo se permite crear administradores
+        if ($role !== 'admin') {
             http_response_code(400);
-            echo json_encode(['error' => 'Rol inválido']);
+            echo json_encode(['error' => 'Solo se pueden crear administradores']);
             exit;
         }
 
@@ -179,14 +180,11 @@ try {
             $params[] = password_hash($data['password'], PASSWORD_BCRYPT);
         }
 
+        // El rol no se puede cambiar (todos son administradores)
         if (isset($data['role'])) {
-            if (!in_array($data['role'], ['admin', 'evaluador'])) {
-                http_response_code(400);
-                echo json_encode(['error' => 'Rol inválido']);
-                exit;
-            }
-            $updates[] = 'role = ?';
-            $params[] = $data['role'];
+            http_response_code(400);
+            echo json_encode(['error' => 'El rol no puede ser modificado']);
+            exit;
         }
 
         if (isset($data['activo'])) {

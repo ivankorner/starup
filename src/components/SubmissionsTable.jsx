@@ -19,14 +19,12 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
 
   const getVerdictClass = (veredicto) => {
     if (veredicto === 'startup') return 'verdict-startup';
-    if (veredicto === 'potencial') return 'verdict-potencial';
-    return 'verdict-no-califica';
+    return 'verdict-potencial';
   };
 
   const getVerdictLabel = (veredicto) => {
     if (veredicto === 'startup') return 'Startup';
-    if (veredicto === 'potencial') return 'Potencial';
-    return 'No Califica';
+    return 'Potencial';
   };
 
   return (
@@ -48,7 +46,6 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
             <option value="">Todos los veredictos</option>
             <option value="startup">Startup</option>
             <option value="potencial">Potencial</option>
-            <option value="no-califica">No Califica</option>
           </select>
         </div>
 

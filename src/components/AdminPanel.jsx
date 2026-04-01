@@ -1,14 +1,12 @@
 export default function AdminPanel({ submissions, onSelectSubmission }) {
   const getVerdictClass = (veredicto) => {
     if (veredicto === 'startup') return 'verdict-startup';
-    if (veredicto === 'potencial') return 'verdict-potencial';
-    return 'verdict-no-califica';
+    return 'verdict-potencial';
   };
 
   const getVerdictLabel = (veredicto) => {
     if (veredicto === 'startup') return 'Startup';
-    if (veredicto === 'potencial') return 'Potencial Startup';
-    return 'No Califica';
+    return 'Potencial Startup';
   };
 
   const sortedSubmissions = [...submissions].reverse();
@@ -16,8 +14,8 @@ export default function AdminPanel({ submissions, onSelectSubmission }) {
   return (
     <div className="form-container">
       <div className="admin-header">
-        <h1 className="admin-title">Panel del evaluador</h1>
-        <p className="admin-subtitle">Revisá y evaluá las iniciativas recibidas.</p>
+        <h1 className="admin-title">Propuestas Recibidas</h1>
+        <p className="admin-subtitle">Revisá y evaluá las iniciativas.</p>
       </div>
 
       {sortedSubmissions.length === 0 ? (

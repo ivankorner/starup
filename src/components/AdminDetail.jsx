@@ -3,14 +3,12 @@ import { textoVeredicto } from '../utils/scoring';
 export default function AdminDetail({ submission, onBack }) {
   const getVerdictClass = (veredicto) => {
     if (veredicto === 'startup') return 'verdict-startup';
-    if (veredicto === 'potencial') return 'verdict-potencial';
-    return 'verdict-no-califica';
+    return 'verdict-potencial';
   };
 
   const getVerdictLabel = (veredicto) => {
     if (veredicto === 'startup') return 'Startup';
-    if (veredicto === 'potencial') return 'Potencial Startup';
-    return 'No Califica';
+    return 'Potencial Startup';
   };
 
   const renderValue = (value) => {

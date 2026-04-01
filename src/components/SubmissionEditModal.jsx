@@ -41,8 +41,7 @@ export default function SubmissionEditModal({ submission, onClose, onSave, token
 
   const getVerdictClass = (v) => {
     if (v === 'startup') return 'verdict-startup';
-    if (v === 'potencial') return 'verdict-potencial';
-    return 'verdict-no-califica';
+    return 'verdict-potencial';
   };
 
   return (
@@ -81,7 +80,6 @@ export default function SubmissionEditModal({ submission, onClose, onSave, token
           <select value={veredicto} onChange={(e) => setVeredicto(e.target.value)}>
             <option value="startup">Startup</option>
             <option value="potencial">Potencial</option>
-            <option value="no-califica">No Califica</option>
           </select>
         </div>
 

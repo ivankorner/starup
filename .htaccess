@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Pasar Authorization header a PHP
+    RewriteCond %{HTTP:Authorization} ^(.*)$
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+    # Reescribir requests a carpeta api
+    RewriteBase /starup/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ api/$1 [L,QSA]
+</IfModule>
+
+# Permitir CORS headers
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>

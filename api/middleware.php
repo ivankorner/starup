@@ -13,15 +13,24 @@ require_once 'config.php';
  * @return array|false Usuario si token válido, false si no
  */
 function getCurrentUser() {
-    // Obtener header Authorization
-    $headers = getallheaders();
-    $auth = $headers['Authorization'] ?? '';
+    // Obtener header Authorization (compatible con diferentes servidores)
+    $auth = '';
 
-    if (!preg_match('/^Bearer\s+(.+)$/i', $auth, $matches)) {
+    // Intenta múltiples formas de obtener el header Authorization
+    if (!empty($_SERVER['HTTP_AUTHORIZATION'])) {
+        $auth = $_SERVER['HTTP_AUTHORIZATION'];
+    } elseif (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+        $auth = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    } elseif (function_exists('getallheaders')) {
+        $headers = getallheaders();
+        $auth = $headers['Authorization'] ?? $headers['authorization'] ?? '';
+    }
+
+    if (empty($auth) || !preg_match('/^Bearer\s+(.+)$/i', $auth, $matches)) {
         return false;
     }
 
-    $token = $matches[1];
+    $token = trim($matches[1]);
     global $pdo;
 
     try {

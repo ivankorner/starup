@@ -7,6 +7,7 @@ import Step4Vision from './components/Step4Vision';
 import Step5Viabilidad from './components/Step5Viabilidad';
 import StepDone from './components/StepDone';
 import Dashboard from './components/Dashboard';
+import UsersList from './components/UsersList';
 import LoginScreen from './components/LoginScreen';
 import { calcularScore, clasificarVeredicto } from './utils/scoring';
 import { useAuth } from './hooks/useAuth';
@@ -166,6 +167,21 @@ export default function App() {
           </button>
           {auth.isAuthenticated && (
             <>
+              {auth.isAdmin && (
+                <button
+                  onClick={() => setStep('admin-usuarios')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-muted)',
+                    fontSize: '14px',
+                    padding: '0.5rem 1rem',
+                  }}
+                >
+                  👥 Usuarios
+                </button>
+              )}
               <button
                 style={{
                   background: 'none',
@@ -173,9 +189,7 @@ export default function App() {
                   cursor: 'pointer',
                   color: 'var(--text-muted)',
                   fontSize: '14px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
+                  padding: '0.5rem 1rem',
                 }}
                 title={`${auth.user.nombre} (${auth.user.role})`}
               >
@@ -193,6 +207,7 @@ export default function App() {
                   cursor: 'pointer',
                   color: 'var(--text-muted)',
                   fontSize: '14px',
+                  padding: '0.5rem 1rem',
                 }}
               >
                 Salir
@@ -263,6 +278,19 @@ export default function App() {
             user={auth.user}
             token={auth.token}
           />
+        )}
+
+        {step === 'admin-usuarios' && auth.isAuthenticated && (
+          <div className="dashboard-container">
+            <button
+              className="button button-text"
+              onClick={() => setStep('admin')}
+              style={{ marginBottom: '1.5rem' }}
+            >
+              ← Volver al Dashboard
+            </button>
+            <UsersList token={auth.token} />
+          </div>
         )}
       </main>
     </div>

@@ -47,8 +47,7 @@ export function calcularScore(formData) {
 
 export function clasificarVeredicto(score) {
   if (score >= 70) return 'startup';
-  if (score >= 45) return 'potencial';
-  return 'no-califica';
+  return 'potencial';
 }
 
 export function textoVeredicto(veredicto) {
@@ -57,8 +56,6 @@ export function textoVeredicto(veredicto) {
       'El proyecto muestra madurez sólida, problema claro y recursos para avanzar. Priorizar para reunión de Fase 2.',
     potencial:
       'La idea tiene potencial pero necesita desarrollar mejor algunos aspectos clave antes de avanzar.',
-    'no-califica':
-      'El proyecto en su estado actual no cumple los criterios mínimos. Se puede reaplicar en el futuro.',
   };
   return textos[veredicto] || '';
 }

@@ -41,7 +41,7 @@ function calcScore($d) {
 }
 
 $score = calcScore($data);
-$veredicto = $score >= 70 ? 'startup' : ($score >= 45 ? 'potencial' : 'no-califica');
+$veredicto = $score >= 70 ? 'startup' : 'potencial';
 
 $stmt = $pdo->prepare("
     INSERT INTO submissions
@@ -130,10 +130,8 @@ try {
     // Agregar badge según veredicto
     if ($veredicto === 'startup') {
         $htmlBody .= 'startup">✓ STARTUP</span>';
-    } elseif ($veredicto === 'potencial') {
-        $htmlBody .= 'potencial">△ POTENCIAL STARTUP</span>';
     } else {
-        $htmlBody .= 'no-califica">✗ NO CALIFICA</span>';
+        $htmlBody .= 'potencial">△ POTENCIAL STARTUP</span>';
     }
 
     $htmlBody .= <<<HTML

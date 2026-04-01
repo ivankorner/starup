@@ -19,6 +19,10 @@
   --red-bg: #FCEBEB;
   --red-text: #501313;
   --red-border: #A32D2D;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
 }
 
 * {
@@ -100,6 +104,13 @@ body {
   border-radius: 12px;
   padding: 1.5rem 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 /* Progress bar */
@@ -184,19 +195,24 @@ body {
 
 input[type='text'],
 input[type='email'],
+input[type='password'],
+input[type='number'],
 textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.875rem;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-body);
-  transition: border-color 0.2s ease;
+  background: var(--bg-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input[type='text']:focus,
 input[type='email']:focus,
+input[type='password']:focus,
+input[type='number']:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary);
@@ -665,11 +681,6 @@ textarea {
   border: 1px solid var(--amber-border);
 }
 
-.verdict-no-califica {
-  background: var(--red-bg);
-  color: var(--red-text);
-  border: 1px solid var(--red-border);
-}
 
 /* Detail view */
 .detail-container {
@@ -831,11 +842,12 @@ textarea {
 
 .login-box {
   background: var(--bg-white);
-  border-radius: 12px;
-  padding: 3rem 2rem;
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(91, 91, 214, 0.05);
 }
 
 .login-header {
@@ -870,37 +882,53 @@ textarea {
    ============================================================================ */
 
 .dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
 }
 
 .dashboard-tabs {
   display: flex;
-  gap: 1rem;
-  border-bottom: 2px solid var(--border);
+  gap: 0.25rem;
+  background: var(--bg-light);
+  padding: 0.35rem;
+  border-radius: 12px;
+  border-bottom: none;
+  width: fit-content;
   margin-bottom: 2rem;
-  padding-bottom: 0;
 }
 
 .dashboard-tab {
-  padding: 1rem 1.5rem;
-  background: none;
+  padding: 0.6rem 1.25rem;
+  background: transparent;
   border: none;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-muted);
-  border-bottom: 3px solid transparent;
+  border-radius: 8px;
+  border-bottom: none;
   transition: all 0.2s ease;
-  margin-bottom: -2px;
+  margin-bottom: 0;
 }
 
 .dashboard-tab:hover {
-  color: var(--primary);
+  color: var(--text-body);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .dashboard-tab.active {
   color: var(--primary);
-  border-bottom-color: var(--primary);
+  background: var(--bg-white);
+  box-shadow: var(--shadow-sm);
 }
 
 .dashboard-content {
@@ -915,7 +943,7 @@ textarea {
 /* Stats Cards */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -923,9 +951,45 @@ textarea {
 .stat-card {
   background: var(--bg-white);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-icon.total {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.stat-icon.startup {
+  background: var(--green-bg);
+  color: var(--green-border);
+}
+
+.stat-icon.potencial {
+  background: var(--amber-bg);
+  color: var(--amber-border);
 }
 
 .stat-card.startup {
@@ -936,20 +1000,20 @@ textarea {
   border-left: 4px solid var(--amber-border);
 }
 
-.stat-card.no-califica {
-  border-left: 4px solid var(--red-border);
-}
 
 .stat-label {
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: var(--text-muted);
-  margin-bottom: 0.5rem;
 }
 
 .stat-value {
-  font-size: 32px;
-  font-weight: 600;
-  color: var(--primary);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
 }
 
 /* ============================================================================
@@ -1054,4 +1118,81 @@ textarea {
   .modal-content {
     padding: 1.5rem;
   }
+}
+
+/* Form Builder Styles */
+.form-status-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-status-publicado {
+  background: var(--green-bg);
+  color: var(--green-text);
+}
+
+.form-status-borrador {
+  background: var(--amber-bg);
+  color: var(--amber-text);
+}
+
+.form-status-archivado {
+  background: var(--bg-light);
+  color: var(--text-muted);
+}
+
+.field-tipo-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: var(--bg-light);
+  color: var(--text-muted);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.field-step-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.field-row-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.field-row-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.modal-content.modal-lg {
+  max-width: 640px;
 }

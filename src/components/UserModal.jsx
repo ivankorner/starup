@@ -6,7 +6,6 @@ export default function UserModal({ onClose, token }) {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('evaluador');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,7 +25,7 @@ export default function UserModal({ onClose, token }) {
           nombre,
           email,
           password,
-          role,
+          role: 'admin',
         }),
       });
 
@@ -86,14 +85,6 @@ export default function UserModal({ onClose, token }) {
               required
               disabled={loading}
             />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label required">Rol</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)} disabled={loading}>
-              <option value="evaluador">Evaluador (ver propuestas)</option>
-              <option value="admin">Administrador (control total)</option>
-            </select>
           </div>
 
           {error && <div className="error-message" style={{ marginBottom: '1rem' }}>{error}</div>}
