@@ -6,9 +6,10 @@ import Step3Madurez from './components/Step3Madurez';
 import Step4Vision from './components/Step4Vision';
 import Step5Viabilidad from './components/Step5Viabilidad';
 import StepDone from './components/StepDone';
-import AdminPanel from './components/AdminPanel';
-import AdminDetail from './components/AdminDetail';
+import Dashboard from './components/Dashboard';
+import LoginScreen from './components/LoginScreen';
 import { calcularScore, clasificarVeredicto } from './utils/scoring';
+import { useAuth } from './hooks/useAuth';
 import './styles.css';
 
 const initialFormData = {
@@ -49,18 +50,39 @@ const initialFormData = {
 };
 
 export default function App() {
+  const auth = useAuth();
   const [step, setStep] = useState('intro');
   const [formData, setFormData] = useState(initialFormData);
   const [submissions, setSubmissions] = useState([]);
   const [selectedSubmissionId, setSelectedSubmissionId] = useState(null);
 
-  // Cargar submissions del localStorage al montar
+  // Cargar submissions del localStorage al montar (para desarrollo, fallback)
   useEffect(() => {
     const saved = localStorage.getItem('radar_submissions');
     if (saved) {
       setSubmissions(JSON.parse(saved));
     }
   }, []);
+
+  // Si está cargando auth, mostrar loading
+  if (auth.loading) {
+    return (
+      <div className="app-container">
+        <div className="main-content" style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+            <p>Cargando...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no está autenticado y trata de acceder al dashboard, mostrar login
+  if (!auth.isAuthenticated && step !== 'intro' && step !== 'done' && (step >= 1 && step <= 5)) {
+    // Usuario está en el formulario público, permite continuar
+  } else if (!auth.isAuthenticated && (step.toString().includes('admin') || step === 'admin')) {
+    return <LoginScreen onLogin={auth.login} />;
+  }
 
   const handleNext = (stepNumber) => {
     setStep(stepNumber);
@@ -140,8 +162,43 @@ export default function App() {
             className={step === 'admin' ? 'active' : ''}
             onClick={handleShowAdmin}
           >
-            Panel evaluador
+            Dashboard
           </button>
+          {auth.isAuthenticated && (
+            <>
+              <button
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--text-muted)',
+                  fontSize: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                }}
+                title={`${auth.user.nombre} (${auth.user.role})`}
+              >
+                👤 {auth.user.nombre}
+              </button>
+              <button
+                onClick={() => {
+                  auth.logout();
+                  setStep('intro');
+                  window.scrollTo(0, 0);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: 'var(--text-muted)',
+                  fontSize: '14px',
+                }}
+              >
+                Salir
+              </button>
+            </>
+          )}
         </nav>
       </header>
 
@@ -201,20 +258,11 @@ export default function App() {
 
         {step === 'done' && <StepDone onRestart={handleRestart} />}
 
-        {step === 'admin' && (
-          <>
-            {selectedSubmission ? (
-              <AdminDetail
-                submission={selectedSubmission}
-                onBack={handleBackFromDetail}
-              />
-            ) : (
-              <AdminPanel
-                submissions={submissions}
-                onSelectSubmission={handleSelectSubmission}
-              />
-            )}
-          </>
+        {step === 'admin' && auth.isAuthenticated && (
+          <Dashboard
+            user={auth.user}
+            token={auth.token}
+          />
         )}
       </main>
     </div>

@@ -79,7 +79,7 @@ export default function AdminDetail({ submission, onBack }) {
           <div className="detail-row">
             <div className="detail-label">¿Cómo resuelven hoy?</div>
             <div className="detail-value">
-              {submission.como_resuelven ? submission.como_resuelven : '—'}
+              {submission.comoResuelven || submission.como_resuelven ? (submission.comoResuelven || submission.como_resuelven) : '—'}
             </div>
           </div>
           <div className="detail-row">
@@ -113,7 +113,7 @@ export default function AdminDetail({ submission, onBack }) {
           <div className="detail-row">
             <div className="detail-label">Descripción de Uso</div>
             <div className="detail-value">
-              {submission.uso_descripcion ? submission.uso_descripcion : '—'}
+              {submission.usoDescripcion || submission.uso_descripcion ? (submission.usoDescripcion || submission.uso_descripcion) : '—'}
             </div>
           </div>
           <div className="detail-row">
@@ -141,13 +141,13 @@ export default function AdminDetail({ submission, onBack }) {
           <div className="detail-row">
             <div className="detail-label">Equipo Interno</div>
             <div className="detail-value">
-              {submission.equipoInterno ? submission.equipoInterno : '—'}
+              {submission.equipoInterno || submission.equipo_interno ? (submission.equipoInterno || submission.equipo_interno) : '—'}
             </div>
           </div>
           <div className="detail-row">
             <div className="detail-label">Notas Adicionales</div>
             <div className="detail-value">
-              {submission.notasAdicionales ? submission.notasAdicionales : '—'}
+              {submission.notasAdicionales || submission.notas ? (submission.notasAdicionales || submission.notas) : '—'}
             </div>
           </div>
         </div>
