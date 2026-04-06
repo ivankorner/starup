@@ -40,3 +40,12 @@ CREATE TABLE admins (
 -- Admin por defecto (password: admin123 — cambiar en producción)
 INSERT INTO admins (username, password_hash)
 VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+
+CREATE TABLE IF NOT EXISTS banners (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  step VARCHAR(20) NOT NULL UNIQUE,
+  image_path VARCHAR(300) DEFAULT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT IGNORE INTO banners (step) VALUES ('intro'), ('1'), ('2'), ('3'), ('4'), ('5');

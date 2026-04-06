@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react';
+
 export default function FormBanner({ step }) {
+  const [imageUrl, setImageUrl] = useState(null);
+
   const banners = {
     intro: {
       title: 'Contanos tu proyecto',
@@ -38,9 +42,40 @@ export default function FormBanner({ step }) {
     },
   };
 
+  // Cargar imagen del banner
+  useEffect(() => {
+    fetch('/api/banners.php')
+      .then(res => res.json())
+      .then(data => {
+        const found = data.find(b => b.step === String(step));
+        if (found?.image_url) {
+          setImageUrl(found.image_url);
+        }
+      })
+      .catch(err => console.error('Error cargando banner image:', err));
+  }, [step]);
+
   const banner = banners[step];
   if (!banner) return null;
 
+  // Layout hero si hay imagen
+  if (imageUrl) {
+    return (
+      <div className={`step-banner step-banner--${banner.color} step-banner-hero`}>
+        <div className="step-banner-content">
+          <div className="step-banner-text">
+            <h2 className="step-banner-title">{banner.title}</h2>
+            <p className="step-banner-sub">{banner.sub}</p>
+          </div>
+          <div className="step-banner-image">
+            <img src={imageUrl} alt={banner.title} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Layout original sin imagen
   return (
     <div className={`step-banner step-banner--${banner.color}`}>
       <div className="step-banner-content">
