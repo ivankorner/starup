@@ -166,31 +166,14 @@ export default function App() {
             Dashboard
           </button>
           {auth.isAuthenticated && (
-            <>
+            <div className="header-nav-auth">
               {auth.isAdmin && (
-                <button
-                  onClick={() => setStep('admin-usuarios')}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: 'var(--text-muted)',
-                    fontSize: '14px',
-                    padding: '0.5rem 1rem',
-                  }}
-                >
+                <button onClick={() => setStep('admin-usuarios')}>
                   👥 Usuarios
                 </button>
               )}
               <button
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: 'var(--text-muted)',
-                  fontSize: '14px',
-                  padding: '0.5rem 1rem',
-                }}
+                className="header-nav-user"
                 title={`${auth.user.nombre} (${auth.user.role})`}
               >
                 👤 {auth.user.nombre}
@@ -201,18 +184,10 @@ export default function App() {
                   setStep('intro');
                   window.scrollTo(0, 0);
                 }}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: 'var(--text-muted)',
-                  fontSize: '14px',
-                  padding: '0.5rem 1rem',
-                }}
               >
                 Salir
               </button>
-            </>
+            </div>
           )}
         </nav>
       </header>
