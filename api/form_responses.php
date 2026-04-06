@@ -21,11 +21,13 @@ try {
         $id = $_GET['id'] ?? null;
 
         if ($id) {
-            // GET /api/form_responses?id=X
+            // GET /api/form_responses?id=X — detalle con campos del formulario
             $stmt = $pdo->prepare("
-                SELECT id, form_id, nombre, email, respuestas, created_at
-                FROM form_responses
-                WHERE id = ?
+                SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       f.titulo AS form_titulo
+                FROM form_responses fr
+                JOIN forms f ON f.id = fr.form_id
+                WHERE fr.id = ?
             ");
             $stmt->execute([$id]);
             $response = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -38,16 +40,33 @@ try {
 
             $response['respuestas'] = json_decode($response['respuestas']);
 
+            // Incluir campos del formulario para mostrar labels
+            $stmtFields = $pdo->prepare("
+                SELECT id, label, tipo, slug, paso, orden, opciones
+                FROM form_fields
+                WHERE form_id = ?
+                ORDER BY paso ASC, orden ASC
+            ");
+            $stmtFields->execute([$response['form_id']]);
+            $response['fields'] = $stmtFields->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($response['fields'] as &$field) {
+                if ($field['opciones']) {
+                    $field['opciones'] = json_decode($field['opciones']);
+                }
+            }
+
             http_response_code(200);
             echo json_encode($response);
 
         } elseif ($formId) {
             // GET /api/form_responses?form_id=X
             $stmt = $pdo->prepare("
-                SELECT id, form_id, nombre, email, respuestas, created_at
-                FROM form_responses
-                WHERE form_id = ?
-                ORDER BY created_at DESC
+                SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       f.titulo AS form_titulo
+                FROM form_responses fr
+                JOIN forms f ON f.id = fr.form_id
+                WHERE fr.form_id = ?
+                ORDER BY fr.created_at DESC
             ");
             $stmt->execute([$formId]);
             $responses = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,9 +79,22 @@ try {
             echo json_encode($responses);
 
         } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'form_id o id requerido']);
-            exit;
+            // GET /api/form_responses — todas las respuestas de todos los formularios
+            $stmt = $pdo->query("
+                SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       f.titulo AS form_titulo
+                FROM form_responses fr
+                JOIN forms f ON f.id = fr.form_id
+                ORDER BY fr.created_at DESC
+            ");
+            $responses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($responses as &$response) {
+                $response['respuestas'] = json_decode($response['respuestas']);
+            }
+
+            http_response_code(200);
+            echo json_encode($responses);
         }
 
     // POST /api/form_responses — crear respuesta (público, sin auth)

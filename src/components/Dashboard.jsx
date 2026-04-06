@@ -5,18 +5,18 @@ import FormsList from './FormsList';
 const API_URL = '/api';
 
 export default function Dashboard({ user, token }) {
-  const [activeTab, setActiveTab] = useState('propuestas');
+  const [activeTab, setActiveTab] = useState('respuestas');
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Cargar submissions
+  // Cargar respuestas
   useEffect(() => {
     loadSubmissions();
   }, []);
 
   const loadSubmissions = () => {
     setLoading(true);
-    fetch(`${API_URL}/submissions.php`, {
+    fetch(`${API_URL}/form_responses.php`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -25,7 +25,7 @@ export default function Dashboard({ user, token }) {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error('Error al cargar submissions');
+          throw new Error('Error al cargar respuestas');
         }
       })
       .then((data) => {
@@ -50,10 +50,10 @@ export default function Dashboard({ user, token }) {
       {/* Tabs */}
       <div className="dashboard-tabs">
         <button
-          className={`dashboard-tab ${activeTab === 'propuestas' ? 'active' : ''}`}
-          onClick={() => setActiveTab('propuestas')}
+          className={`dashboard-tab ${activeTab === 'respuestas' ? 'active' : ''}`}
+          onClick={() => setActiveTab('respuestas')}
         >
-          Propuestas
+          Respuestas
         </button>
         {user.role === 'admin' && (
           <button
@@ -65,8 +65,8 @@ export default function Dashboard({ user, token }) {
         )}
       </div>
 
-      {/* Tab: Propuestas */}
-      {activeTab === 'propuestas' && (
+      {/* Tab: Respuestas */}
+      {activeTab === 'respuestas' && (
         <div className="dashboard-content">
           <SubmissionsTable
             submissions={submissions}
