@@ -146,6 +146,118 @@ body {
   color: var(--text-main);
 }
 
+/* Step Banner */
+.step-banner {
+  width: 100%;
+  padding: 2.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  animation: fadeInDown 0.4s ease;
+}
+
+.step-banner-content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-banner-icon {
+  font-size: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.step-banner-text {
+  flex: 1;
+  color: white;
+}
+
+.step-banner-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.step-banner-sub {
+  font-size: 16px;
+  opacity: 0.9;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Decoración geométrica de fondo */
+.step-banner::before {
+  content: '';
+  position: absolute;
+  right: -150px;
+  top: -80px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.step-banner::after {
+  content: '';
+  position: absolute;
+  left: -100px;
+  bottom: -100px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+/* Color variants */
+.step-banner--purple {
+  background: linear-gradient(135deg, #5B5BD6 0%, #8B8CF8 100%);
+}
+
+.step-banner--blue {
+  background: linear-gradient(135deg, #1E88E5 0%, #42A5F5 100%);
+}
+
+.step-banner--orange {
+  background: linear-gradient(135deg, #E65100 0%, #FB8C00 100%);
+}
+
+.step-banner--green {
+  background: linear-gradient(135deg, #2E7D32 0%, #43A047 100%);
+}
+
+.step-banner--teal {
+  background: linear-gradient(135deg, #00695C 0%, #26A69A 100%);
+}
+
+.step-banner--indigo {
+  background: linear-gradient(135deg, #283593 0%, #3949AB 100%);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -1220,6 +1332,28 @@ textarea {
     white-space: nowrap;
   }
 
+  .step-banner {
+    padding: 2rem 1.5rem;
+    min-height: 140px;
+  }
+
+  .step-banner-content {
+    gap: 1.25rem;
+  }
+
+  .step-banner-icon {
+    font-size: 44px;
+    min-width: 60px;
+  }
+
+  .step-banner-title {
+    font-size: 24px;
+  }
+
+  .step-banner-sub {
+    font-size: 14px;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1230,6 +1364,28 @@ textarea {
 }
 
 @media (max-width: 500px) {
+  .step-banner {
+    padding: 1.5rem 1rem;
+    min-height: 120px;
+  }
+
+  .step-banner-content {
+    gap: 1rem;
+  }
+
+  .step-banner-icon {
+    font-size: 36px;
+    min-width: 50px;
+  }
+
+  .step-banner-title {
+    font-size: 20px;
+  }
+
+  .step-banner-sub {
+    font-size: 13px;
+  }
+
   .selector-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;

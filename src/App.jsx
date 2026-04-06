@@ -9,6 +9,7 @@ import StepDone from './components/StepDone';
 import Dashboard from './components/Dashboard';
 import UsersList from './components/UsersList';
 import LoginScreen from './components/LoginScreen';
+import FormBanner from './components/FormBanner';
 import { calcularScore, clasificarVeredicto } from './utils/scoring';
 import { useAuth } from './hooks/useAuth';
 import './styles.css';
@@ -191,6 +192,10 @@ export default function App() {
           )}
         </nav>
       </header>
+
+      {(step === 'intro' || (typeof step === 'number' && step >= 1 && step <= 5)) && (
+        <FormBanner step={step} />
+      )}
 
       <main className="main-content">
         {step === 'intro' && (
