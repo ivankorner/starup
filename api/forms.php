@@ -56,13 +56,17 @@ try {
             echo json_encode($form);
 
         } else {
-            // GET /api/forms — listar todos (o filtrar por estado)
+            // GET /api/forms — listar formularios publicados (o filtrar por estado si se especifica)
             $query = "SELECT id, titulo, descripcion, estado, created_by, created_at, updated_at FROM forms";
             $params = [];
 
             if ($estado) {
+                // Si se especifica estado explícitamente, usar ese filtro
                 $query .= " WHERE estado = ?";
                 $params[] = $estado;
+            } else {
+                // Por defecto, mostrar solo formularios publicados
+                $query .= " WHERE estado = 'publicado'";
             }
 
             $query .= " ORDER BY created_at DESC";

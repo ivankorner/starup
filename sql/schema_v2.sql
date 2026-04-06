@@ -133,10 +133,3 @@ CREATE TABLE IF NOT EXISTS form_responses (
 -- Admin por defecto (email: admin@radar.com, password: admin123)
 INSERT INTO users (nombre, email, password_hash, role, activo) VALUES
 ('Administrador', 'admin@radar.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1);
-
--- Formulario Principal (form_id = 1) — Los campos se cargarán desde el frontend
-INSERT INTO forms (id, titulo, descripcion, estado, created_by) VALUES
-(1, 'Formulario Principal', 'Formulario de evaluación de iniciativas startup', 'publicado', 1);
-
--- Nota: Los 5 pasos del formulario actual necesitan ser insertados como registros en form_fields
--- Esto se puede hacer con un script SQL separado o desde el frontend en el primer login
