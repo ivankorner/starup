@@ -10,6 +10,8 @@ import Dashboard from './components/Dashboard';
 import UsersList from './components/UsersList';
 import LoginScreen from './components/LoginScreen';
 import FormBanner from './components/FormBanner';
+import DynamicForm from './components/DynamicForm/DynamicForm';
+import DynamicFormDone from './components/DynamicFormDone';
 import { calcularScore, clasificarVeredicto } from './utils/scoring';
 import { useAuth } from './hooks/useAuth';
 import './styles.css';
@@ -57,6 +59,34 @@ export default function App() {
   const [formData, setFormData] = useState(initialFormData);
   const [submissions, setSubmissions] = useState([]);
   const [selectedSubmissionId, setSelectedSubmissionId] = useState(null);
+  const [publishedForms, setPublishedForms] = useState([]);
+  const [loadingForms, setLoadingForms] = useState(true);
+  const [selectedFormId, setSelectedFormId] = useState(null);
+  const [dynamicFormResponse, setDynamicFormResponse] = useState(null);
+  const [formKey, setFormKey] = useState(0);
+
+  // Cargar formularios publicados
+  useEffect(() => {
+    const loadPublishedForms = async () => {
+      try {
+        const res = await fetch('/api/forms.php?estado=publicado');
+        if (res.ok) {
+          const data = await res.json();
+          setPublishedForms(data);
+          // Auto-seleccionar si hay exactamente 1
+          if (data.length === 1) {
+            setSelectedFormId(data[0].id);
+          }
+        }
+      } catch (err) {
+        console.error('Error cargando formularios:', err);
+      } finally {
+        setLoadingForms(false);
+      }
+    };
+
+    loadPublishedForms();
+  }, []);
 
   // Cargar submissions del localStorage al montar (para desarrollo, fallback)
   useEffect(() => {
@@ -80,9 +110,9 @@ export default function App() {
   }
 
   // Si no está autenticado y trata de acceder al dashboard, mostrar login
-  if (!auth.isAuthenticated && step !== 'intro' && step !== 'done' && (step >= 1 && step <= 5)) {
-    // Usuario está en el formulario público, permite continuar
-  } else if (!auth.isAuthenticated && (step.toString().includes('admin') || step === 'admin')) {
+  const publicSteps = ['intro', 'done', 'dynamic-done'];
+  const isPublicStep = publicSteps.includes(step) || (typeof step === 'number' && step >= 1 && step <= 5);
+  if (!auth.isAuthenticated && !isPublicStep) {
     return <LoginScreen onLogin={auth.login} />;
   }
 
@@ -140,6 +170,30 @@ export default function App() {
     setSelectedSubmissionId(null);
   };
 
+  // Handlers para formularios dinámicos
+  const handleSelectForm = (formId) => {
+    setSelectedFormId(formId);
+  };
+
+  const handleDynamicFormSubmit = (response) => {
+    setDynamicFormResponse(response);
+    setStep('dynamic-done');
+    window.scrollTo(0, 0);
+  };
+
+  const handleRestartDynamicForm = () => {
+    setDynamicFormResponse(null);
+    setFormKey((k) => k + 1); // Forzar re-mount del DynamicForm
+    // Re-seleccionar si hay un solo formulario, sino mostrar selector
+    if (publishedForms.length === 1) {
+      setSelectedFormId(publishedForms[0].id);
+    } else {
+      setSelectedFormId(null);
+    }
+    setStep('intro');
+    window.scrollTo(0, 0);
+  };
+
   const selectedSubmission = submissions.find((s) => s.id === selectedSubmissionId);
 
   return (
@@ -151,10 +205,18 @@ export default function App() {
         </div>
         <nav className="header-nav">
           <button
-            className={step !== 'admin' && step !== 'done' ? 'active' : ''}
+            className={step !== 'admin' && step !== 'done' && step !== 'dynamic-done' && step !== 'admin-usuarios' ? 'active' : ''}
             onClick={() => {
               setStep('intro');
               setFormData(initialFormData);
+              setDynamicFormResponse(null);
+              setFormKey((k) => k + 1);
+              // Re-seleccionar si hay un solo formulario publicado
+              if (publishedForms.length === 1) {
+                setSelectedFormId(publishedForms[0].id);
+              } else {
+                setSelectedFormId(null);
+              }
               window.scrollTo(0, 0);
             }}
           >
@@ -193,17 +255,65 @@ export default function App() {
         </nav>
       </header>
 
-      {(step === 'intro' || (typeof step === 'number' && step >= 1 && step <= 5)) && (
+      {/* FormBanner solo para el flujo legacy de pasos hardcodeados */}
+      {(typeof step === 'number' && step >= 1 && step <= 5) && (
         <FormBanner step={step} />
       )}
 
       <main className="main-content">
         {step === 'intro' && (
-          <StepIntro
-            formData={formData}
-            setFormData={setFormData}
-            onNext={() => handleNext(1)}
-          />
+          <>
+            {loadingForms ? (
+              <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '2rem' }}>
+                <p>Cargando formularios...</p>
+              </div>
+            ) : publishedForms.length === 0 ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '3rem 2rem',
+                backgroundColor: 'var(--bg-light)',
+                borderRadius: '8px',
+                maxWidth: '600px',
+                margin: '2rem auto'
+              }}>
+                <h2 style={{ color: 'var(--text-main)', marginBottom: '1rem' }}>No hay formularios disponibles</h2>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+                  Por el momento no hay formularios publicados. Por favor, intenta nuevamente más tarde.
+                </p>
+              </div>
+            ) : selectedFormId ? (
+              <DynamicForm
+                key={formKey}
+                formId={selectedFormId}
+                onSubmit={handleDynamicFormSubmit}
+              />
+            ) : (
+              // Selector de formularios (solo si hay 2+, porque 1 se auto-selecciona)
+              <div className="form-container">
+                <h1 className="step-title">Elige un formulario</h1>
+                <p className="step-subtitle">Selecciona cuál deseas completar:</p>
+
+                <div style={{ display: 'grid', gap: '1rem', marginBottom: '2rem' }}>
+                  {publishedForms.map((form) => (
+                    <button
+                      key={form.id}
+                      className="form-selector-card"
+                      onClick={() => handleSelectForm(form.id)}
+                    >
+                      <div style={{ fontWeight: '600', color: 'var(--text-main)', marginBottom: '0.5rem', fontSize: '16px' }}>
+                        {form.titulo}
+                      </div>
+                      {form.descripcion && (
+                        <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+                          {form.descripcion}
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {step === 1 && (
@@ -252,6 +362,15 @@ export default function App() {
         )}
 
         {step === 'done' && <StepDone onRestart={handleRestart} />}
+
+        {step === 'dynamic-done' && dynamicFormResponse && (
+          <DynamicFormDone
+            formTitle={publishedForms.find((f) => f.id === selectedFormId)?.titulo || 'Formulario'}
+            nombre={dynamicFormResponse.nombre || ''}
+            email={dynamicFormResponse.email || ''}
+            onRestart={handleRestartDynamicForm}
+          />
+        )}
 
         {step === 'admin' && auth.isAuthenticated && (
           <Dashboard

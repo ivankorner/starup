@@ -1,492 +1,413 @@
-# CLAUDE.md — Radar de Proyectos
+# CLAUDE.md
 
-## Descripción del Proyecto
-
-**Radar de Proyectos** es una aplicación web fullstack para que emprendedores evalúen y envíen iniciativas startup. Consiste en:
-
-1. **Formulario de 5 pasos** guiado para recopilar información sobre la iniciativa
-2. **Algoritmo de scoring automático** (0-100 pts) que clasifica propuestas
-3. **Panel evaluador** interno para revisar iniciativas con detalle
-
-El proyecto está desplegado en `/Applications/XAMPP/xamppfiles/htdocs/starup/`.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ---
 
-## Stack Tecnológico
+## Descripción General
 
-| Capítulo | Tecnología | Versión |
-|----------|-----------|---------|
-| Frontend | React | 18.2.0 |
-| Build Tool | Vite | 5.0.0+ |
-| Backend | PHP | 8.2.4 (XAMPP) |
-| Database | MySQL | 8 |
-| Estilos | CSS vanilla + variables | — |
-| Persistencia (dev) | localStorage | — |
+**Radar de Proyectos** es una plataforma fullstack para gestionar formularios dinámicos y evaluar iniciativas startup mediante un scoring automático. A diferencia de versiones anteriores, los formularios ahora se crean desde el panel admin sin necesidad de modificar código.
 
-### Notas importantes:
-
-- **No se usa Bootstrap, Tailwind ni librerías UI.** Todos los estilos son CSS vanilla con variables CSS.
-- **Sin librerías de validación ni estado global sofisticado.** React hooks vanilla (`useState`).
-- **Sin TypeScript, sin tests integrados.** Es v1.0 MVP.
-- **Node.js v25.6.1, npm 11.9.0** disponibles en el sistema.
+**Arquitectura actual (v2.0):**
+- Frontend: React 18 + Vite (sin librerías UI, CSS vanilla)
+- Backend: PHP 8.2 con PDO + MySQL 8
+- Autenticación: JWT con roles (admin/evaluador)
+- Formularios: Sistema dinámico con tipos field configurables
 
 ---
 
-## Estructura de Directorios
+## Stack y Convenciones
 
-```
-starup/
-├── src/
-│   ├── components/                 # Componentes React funcionales
-│   │   ├── ProgressBar.jsx         # Barra de progreso (paso X/5)
-│   │   ├── StepIntro.jsx           # Pantalla inicial (nombre, email, proyecto)
-│   │   ├── Step1Idea.jsx           # Paso 1: descripción, sector, problema (tweet)
-│   │   ├── Step2Dolor.jsx          # Paso 2: cómo resuelven, dificultades, urgencia
-│   │   ├── Step3Madurez.jsx        # Paso 3: estado actual (timeline vertical)
-│   │   ├── Step4Vision.jsx         # Paso 4: dispositivo, uso, necesidades (máx 3)
-│   │   ├── Step5Viabilidad.jsx     # Paso 5: timeline, presupuesto, equipo, notas
-│   │   ├── StepDone.jsx            # Pantalla de confirmación post-envío
-│   │   ├── AdminPanel.jsx          # Listado de submissions para evaluador
-│   │   └── AdminDetail.jsx         # Vista de detalle de una submission
-│   │
-│   ├── utils/
-│   │   └── scoring.js              # Función calcularScore() + clasificarVeredicto()
-│   │
-│   ├── App.jsx                     # Componente raíz: navegación global, estado
-│   ├── index.jsx                   # ReactDOM.createRoot()
-│   └── styles.css                  # Estilos globales + variables CSS
-│
-├── api/                            # Endpoints PHP (AccesO en /api/...)
-│   ├── db.php                      # PDO connection
-│   ├── submit.php                  # POST: guardar nueva submission
-│   ├── submissions.php             # GET: listado de submissions
-│   ├── submission.php              # GET ?id=X: detalle de una submission
-│   └── login.php                   # POST: autenticación admin (TBD)
-│
-├── sql/
-│   └── schema.sql                  # DDL: creación de DB, tablas, índices, admin
-│
-├── public/                         # Assets estáticos (vacío por ahora)
-│
-├── dist/                           # Build de producción (gitignore)
-│
-├── index.html                      # HTML principal (punto de entrada)
-├── package.json                    # Dependencias npm
-├── vite.config.js                  # Config Vite + React plugin
-├── README.md                       # Documentación de usuario
-├── CLAUDE.md                       # Este archivo
-└── node_modules/                   # Dependencias instaladas
+| Aspecto | Tech | Notas |
+|--------|------|-------|
+| Frontend | React 18.2, Vite 5 | Sin TypeScript, sin tests |
+| Backend | PHP 8.2, MySQL 8 | PDO, sin frameworks ORM |
+| Auth | JWT en localStorage | Token bearer en headers |
+| Estilos | CSS vanilla + vars | No Bootstrap/Tailwind. Variables en `:root` |
+| Node/npm | v25.6.1 / v11.9.0 | Disponibles en sistema |
 
+**Comandos principales:**
+```bash
+npm run dev      # Vite dev server en localhost:5173
+npm run build    # Build para producción (crea dist/)
+npm run preview  # Preview de dist/ localmente
 ```
 
 ---
 
-## Convenciones de Código
+## Arquitectura Actual
 
-### React Components
+### Core Conceptual
 
-- **Nombres en PascalCase:** `StepIntro.jsx`, `AdminPanel.jsx`
-- **Imports:** ES6 modules (`import X from 'Y'`)
-- **Hooks:** Solo `useState`, `useEffect` si es necesario
-- **Props:** Pasadas directamente, no desestructuradas en parámetros (para claridad)
-- **Estilo de renderizado:** JSX limpio, clases dinámicas con template literals
+1. **Formularios Dinámicos**: Un admin crea/publica un formulario (tabla `forms`) con campos configurables (tabla `form_fields`)
+2. **Publicación Condicional**: Los usuarios públicos solo ven formularios con `estado='publicado'`
+3. **Respuestas**: Cuando un usuario llena un formulario dinámico, se guarda en `form_responses`
+4. **Scoring Automático**: Algunos formularios (como el "Radar" original) incluyen lógica de puntuación
 
-Ejemplo:
+### Flujo de Datos
 
-```jsx
-export default function Step1Idea({ formData, setFormData, onNext, onPrev }) {
-  const [errors, setErrors] = useState({});
+```
+[User llena formulario dinámico] 
+  → Frontend valida
+  → POST /api/form_responses.php 
+  → Backend inserta en form_responses (JSON)
+  → (Opcionalmente: Calcula score si el formulario lo requiere)
+```
 
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+```
+[Admin crea/modifica formulario]
+  → Dashboard → Tab "Formularios"
+  → FormsList.jsx carga /api/forms.php (todos los estados)
+  → Admin publica → estado='publicado'
+  → Frontend carga formularios publicados en App.jsx
+  → Si hay publicados, muestra; si no, muestra "No hay formularios disponibles"
+```
 
-  return (
-    <div className="form-container">
-      <ProgressBar step={1} />
-      {/* contenido */}
-    </div>
-  );
+### Autenticación
+
+```
+[Admin login] 
+  → POST /api/auth/login.php (email + password)
+  → Backend genera JWT token
+  → Frontend almacena token en localStorage
+  → Requests: Header 'Authorization: Bearer <token>'
+  → /api/auth/me.php verifica token y retorna user (admin/evaluador)
+```
+
+---
+
+## Base de Datos (v2.0)
+
+**Usar schema_v2.sql en producción.** El schema.sql original está desactualizado.
+
+Nuevas tablas vs v1.0:
+
+| Tabla | Rol | Campo clave |
+|-------|-----|------------|
+| `users` | Reemplaza `admins`. Roles: admin/evaluador | `role`, `password_hash` |
+| `sessions` | Maneja tokens JWT | `token`, `expires_at` |
+| `forms` | Define formularios dinámicos | `estado` (borrador/publicado/archivado) |
+| `form_fields` | Campos dentro de un formulario | `tipo` (texto/chip-single/selector-grid/etc), `paso`, `orden` |
+| `form_responses` | Respuestas de usuarios | `respuestas` (JSON con slug→valor) |
+| `submissions` | Antiguo: propuestas del formulario "Radar" | Aún existe para el flujo original de scoring |
+
+**Campos importantes:**
+- `form_fields.tipo`: `'texto', 'textarea', 'chip-single', 'chip-multi', 'selector-grid', 'timeline', 'card-3'`
+- `form_fields.paso`: 1-N (agrupa campos por pasos/paneles)
+- `form_fields.opciones`: JSON array `["opción1", "opción2", ...]`
+- `form_responses.respuestas`: JSON `{ "field_slug": "respuesta" }`
+
+**Índices críticos:**
+```sql
+INDEX idx_estado (estado)  -- Filtrar formularios por estado rápidamente
+INDEX idx_form_id (form_id) -- Obtener campos de un formulario
+```
+
+---
+
+## Componentes y Responsabilidades
+
+### Frontend Principal
+
+**App.jsx:**
+- Ruteador central (step = 'intro' | 1-5 | 'done' | 'admin' | 'admin-usuarios')
+- Carga `publishedForms` al montar: `fetch('/api/forms.php?estado=publicado')`
+- Si hay formularios publicados → renderiza StepIntro, etc.
+- Si NO hay → muestra "No hay formularios disponibles"
+
+**Dashboard.jsx:**
+- Página para usuarios autenticados (admin/evaluador)
+- Tabs: "Propuestas" (lista de submissions) | "Formularios" (solo admin)
+
+**FormsList.jsx:**
+- Gestión CRUD de formularios (admin only)
+- Carga: `fetch('/api/forms.php')` sin filtro → todos los estados
+- Permite crear, editar, publicar, eliminar formularios
+- Subcomponente: lista de fields con drag/edit
+
+**LoginScreen.jsx:**
+- Modal de login
+- POST `/api/auth/login.php` con email + password
+- Guarda token en localStorage
+
+**UsersList.jsx** (admin only):
+- Gestión de usuarios (crear, editar, cambiar rol, activar/desactivar)
+- POST/PUT/DELETE `/api/users.php`
+
+### Hooks Customizados
+
+**useAuth.js:**
+- Estado global de autenticación
+- Lee token de localStorage al montar
+- Verifica validez con `/api/auth/me.php`
+- Expone: `{ user, token, isAuthenticated, isAdmin, login(), logout() }`
+
+---
+
+## API Endpoints
+
+### Autenticación
+
+```
+POST /api/auth/login.php
+  Body: { email, password }
+  Response: { success, token, user: { id, nombre, email, role } }
+
+POST /api/auth/logout.php
+  Headers: Authorization: Bearer <token>
+
+GET /api/auth/me.php
+  Headers: Authorization: Bearer <token>
+  Response: { user: { ... } }
+```
+
+### Formularios (CRUD)
+
+```
+GET /api/forms.php                      # Listar todos (sin filtro)
+GET /api/forms.php?estado=publicado     # Solo publicados
+GET /api/forms.php?id=X                 # Detalle + fields
+
+POST /api/forms.php
+  Headers: Authorization: Bearer <token> (admin only)
+  Body: { titulo, descripcion, estado: 'borrador'|'publicado'|'archivado' }
+
+PUT /api/forms.php?id=X
+  Headers: Authorization: Bearer <token>
+  Body: { titulo?, descripcion?, estado? }
+
+DELETE /api/forms.php?id=X
+  Headers: Authorization: Bearer <token>
+```
+
+### Form Fields
+
+```
+POST /api/form_fields.php
+  Headers: Authorization: Bearer <token>
+  Body: { 
+    form_id, paso, orden, tipo, label, descripcion, obligatorio,
+    opciones?, max_seleccion?, max_length?
+  }
+
+PUT /api/form_fields.php?id=X
+  Headers: Authorization: Bearer <token>
+
+DELETE /api/form_fields.php?id=X
+  Headers: Authorization: Bearer <token>
+```
+
+### Form Responses (envío de formularios)
+
+```
+POST /api/form_responses.php
+  Body: { form_id, nombre, email, respuestas: { field_slug: valor, ... } }
+  Response: { success, id }
+
+GET /api/form_responses.php?form_id=X
+  Headers: Authorization: Bearer <token> (admin/evaluador)
+  Response: [ { id, nombre, email, respuestas, created_at }, ... ]
+```
+
+### Submissions (formulario "Radar" original)
+
+```
+GET /api/submissions.php
+  Headers: Authorization: Bearer <token>
+  Response: [ { id, nombre, sector, score, veredicto, ... }, ... ]
+
+GET /api/submission.php?id=X
+  Headers: Authorization: Bearer <token>
+
+POST /api/submit.php
+  Body: { nombre, email, nombreProyecto, sector, ... }  # Form "Radar"
+  Response: { success, score, veredicto }
+```
+
+### Users (admin only)
+
+```
+GET /api/users.php
+  Headers: Authorization: Bearer <token> (admin)
+
+POST /api/users.php
+  Headers: Authorization: Bearer <token> (admin)
+  Body: { nombre, email, password, role: 'admin'|'evaluador', activo: 1|0 }
+
+PUT /api/users.php?id=X
+  Headers: Authorization: Bearer <token> (admin)
+
+DELETE /api/users.php?id=X
+  Headers: Authorization: Bearer <token> (admin)
+```
+
+---
+
+## Patrones Clave
+
+### 1. Autenticación en Endpoints
+
+Todos los endpoints críticos incluyen middleware `requireAuth()` en PHP:
+
+```php
+// api/middleware.php
+function requireAuth() {
+    $token = getBearer();  // Extrae Bearer token del header
+    if (!$token) { 
+        http_response_code(401); 
+        exit; 
+    }
+    $user = verifyToken($token);
+    return $user;  // { id, email, role, nombre }
 }
 ```
 
-### Estilos CSS
+### 2. JSON en MySQL
 
-- **Variables globales** definidas en `:root` en `styles.css`
-- **Clases reutilizables:** `.chip`, `.selector-card`, `.radio-box`, `.button`
-- **Mobile-first:** Media query único en `@media (max-width: 500px)`
-- **Sin !important** salvo en excepciones controladas
-- **Nombrado BEM-like:** `.form-group`, `.submission-card`, `.detail-row`
-
-Variables principales:
-
-```css
-:root {
-  --primary: #5B5BD6;
-  --primary-light: #EEEDFE;
-  --primary-dark: #3C3489;
-  --text-main: #1A1A2E;
-  --text-body: #333333;
-  --text-muted: #888888;
-  --border: #E0E0E0;
-  --bg-light: #F5F5F5;
-  --bg-white: #FFFFFF;
-  /* Veredictos */
-  --green-bg: #E1F5EE;
-  --green-text: #085041;
-  /* ... etc */
-}
-```
-
-### Estado Global (App.jsx)
+Arrays en BD se guardan como JSON:
 
 ```javascript
-const initialFormData = {
-  // Intro
-  nombre: '', email: '', nombreProyecto: '',
-  // Paso 1
-  descripcion: '', sector: '', tweet: '',
-  // Paso 2
-  comoResuelven: '', dificultades: [], urgencia: '',
-  // Paso 3
-  madurez: '',
-  // Paso 4
-  dispositivo: '', usoDescripcion: '', necesidades: [],
-  // Paso 5
-  timeline: '', presupuesto: '', budgetScore: 0,
-  equipoInterno: '', teamScore: 0, notasAdicionales: '',
-  // Calculados
-  score: 0, veredicto: '',
-};
+// Frontend: pasar array de strings
+{ opciones: ["Opción A", "Opción B", "Opción C"] }
+
+// Backend PHP: decodificar
+$opciones = json_decode($field['opciones']);  // → array
+$opciones = json_encode($opciones);  // → guardar
 ```
 
-- **step:** `'intro' | 1 | 2 | 3 | 4 | 5 | 'done' | 'admin'`
-- **formData:** objeto con todos los campos
-- **submissions:** array de objetos guardados en localStorage
+### 3. Scoring (Formulario "Radar")
 
-### Scoring (src/utils/scoring.js)
-
-Dos funciones exportadas:
+El scoring original aún funciona, pero es específico del formulario hardcodeado:
 
 ```javascript
-export function calcularScore(formData) { ... }  // → número 0-100
-export function clasificarVeredicto(score) { ... }  // → 'startup' | 'potencial' | 'no-califica'
-export function textoVeredicto(veredicto) { ... }  // → string explicativo
+// src/utils/scoring.js
+export function calcularScore(formData) { ... }  // 0-100
+export function clasificarVeredicto(score) { ... }  // 'startup'|'potencial'|'no-califica'
 ```
 
-**Criterios (ver detalles en README.md):**
-- Madurez (0-45)
-- Presupuesto (0-30)
-- Equipo (0-30)
-- Dificultades (0-15)
-- Necesidades (0-10)
-- Tweet (0-10)
-- Sector, dispositivo, urgencia, timeline (5+5+10+10)
+Lógica:
+- Madurez (0-45), Presupuesto (0-30), Equipo (0-30), Dificultades (0-15), etc.
+- Backend PHP (`api/submit.php`) recalcula al guardar
+
+### 4. Estado Global (useAuth)
+
+No hay Redux/Zustand. Autenticación maneja estado global via hook. Otros datos son locales a componentes o via props.
 
 ---
 
-## Flujo de Navegación
+## Flujos Comunes
 
-```
-[Inicio]
-   ↓
-[Intro: nombre, email, proyecto]
-   ↓
-[Paso 1: idea, sector, problema]
-   ↓
-[Paso 2: dolor, dificultades, urgencia]
-   ↓
-[Paso 3: madurez (timeline)]
-   ↓
-[Paso 4: visión, dispositivo, necesidades]
-   ↓
-[Paso 5: viabilidad, timeline, presupuesto, equipo]
-   ↓
-[Enviar → calcularScore() + clasificarVeredicto()]
-   ↓
-[Confirmación + guardar en localStorage]
-   ↓
-[Panel Admin: ver todas las submissions]
-   └→ [Click en card → vista de detalle]
-```
+### Crear un Formulario Dinámico
 
-**Header Navigation:**
-- Tab "Enviar Iniciativa" → vuelve a intro y reinicia
-- Tab "Panel evaluador" → admin listado/detalle
+1. Admin login → Dashboard → Tab "Formularios"
+2. Click "+ Nuevo Formulario"
+3. Modal: ingresa título, descripción, estado='borrador'
+4. POST `/api/forms.php` → recibe `id`
+5. Click "Ver campos" → detalle del formulario
+6. "+ Agregar Campo": define tipo, label, opciones, etc.
+7. POST `/api/form_fields.php` con form_id
+8. Cambiar estado a 'publicado' → PUT `/api/forms.php?id=X` con `{ estado: 'publicado' }`
+9. Frontend recarga formularios publicados → usuario ve el nuevo
 
----
+### Un Usuario Llena el Formulario
 
-## Setup Local
+1. Accede a `http://localhost/starup`
+2. App.jsx carga formularios publicados
+3. Si hay, muestra StepIntro (antiguo) O el nuevo formulario dinámico (TBD: implementar renderización dinámica)
+4. Usuario completa y envía
+5. Frontend valida
+6. POST `/api/form_responses.php` → guarda respuesta
 
-### Desarrollo (sin base de datos)
+### Setup Local (Desarrollo)
 
 ```bash
-cd /Applications/XAMPP/xamppfiles/htdocs/starup
-npm install          # Ya realizado
-npm run dev          # Inicia Vite en puerto 5173
-```
-
-Abre `http://localhost:5173`. Los datos se guardan en `localStorage`.
-
-Para limpiar: `localStorage.clear()` en DevTools console.
-
-### Producción (con MySQL + PHP)
-
-```bash
-# 1. Crear DB
-mysql -u root -p < sql/schema.sql
+# 1. Crear BD
+mysql -u root -p < sql/schema_v2.sql
 
 # 2. Verificar credenciales en api/db.php
-# (Por defecto: host=localhost, user=root, pass='')
+# (host=localhost, user=root, pass='')
 
-# 3. Build
-npm run build
-
-# 4. Mover dist/ o servir desde XAMPP
-# Apache/XAMPP sirve desde: /Applications/XAMPP/xamppfiles/htdocs/starup
-```
-
-Acceso: `http://localhost/starup`
-
-**Admin default:**
-- Usuario: `admin`
-- Contraseña: `admin123`
-- ⚠️ **Cambiar en producción** (generar hash bcrypt)
-
----
-
-## Decisiones de Diseño
-
-### 1. localStorage para desarrollo
-
-**Por qué:** MVP rápido sin dependencias de base de datos. Perfecto para testing local.
-
-**Cómo migrar a API:**
-- En `App.jsx` `handleSubmit()`: reemplazar guardado localStorage con `fetch('api/submit.php')`
-- En `AdminPanel`: reemplazar carga de localStorage con `fetch('api/submissions.php')`
-
-### 2. Sin librerías UI (Bootstrap, Tailwind)
-
-**Por qué:** Especificación visual exacta. CSS vanilla permite control total.
-
-**Trade-off:** +500 líneas CSS pero 0 dependencias UI.
-
-### 3. React Hooks vanilla (sin Redux/Context)
-
-**Por qué:** Formulario simple con 15 campos. `useState` es suficiente.
-
-**Si crece:** Considerar Context API o Zustand para estado más complejo.
-
-### 4. Scoring en JavaScript Y PHP
-
-**Por qué:** Sincronía garantizada. Frontend calcula para preview, backend recalcula al guardar.
-
-**Mantener:** Ambas funciones en sync si se cambia lógica.
-
-### 5. JSON en MySQL para arrays
-
-**Por qué:** `dificultades` y `necesidades` son arrays de strings. MySQL JSON es nativo.
-
-**Query:** `json_decode()` en PHP, `JSON.parse()` en JS.
-
----
-
-## Validaciones Implementadas
-
-| Paso | Campo | Regla |
-|------|-------|-------|
-| Intro | nombre | No vacío |
-| Intro | email | No vacío + formato válido (regex simple) |
-| Intro | nombreProyecto | Opcional |
-| P1 | descripcion | Opcional |
-| P1 | **sector** | **Obligatorio** |
-| P1 | tweet | Opcional, máx 280 chars |
-| P2 | **comoResuelven** | **Obligatorio** |
-| P2 | dificultades | Opcional, múltiple |
-| P2 | **urgencia** | **Obligatorio** |
-| P3 | **madurez** | **Obligatorio** |
-| P4 | **dispositivo** | **Obligatorio** |
-| P4 | usoDescripcion | Opcional |
-| P4 | necesidades | Opcional, máximo 3 |
-| P5 | **timeline** | **Obligatorio** |
-| P5 | **presupuesto** | **Obligatorio** |
-| P5 | **equipoInterno** | **Obligatorio** |
-| P5 | notasAdicionales | Opcional |
-
-**Estilo de error:** Mensaje inline bajo el campo, color rojo #d32f2f. No avanza sin completar obligatorios.
-
----
-
-## Responsive Design
-
-**Breakpoint único:** `@media (max-width: 500px)`
-
-Cambios en móvil:
-- Grillas: 4 col → 2 col
-- Two-cols layout: 2 col → 1 col
-- Font sizes: -2-4px
-- Button nav: flex row → flex column
-
-Testear en:
-- 375px (iPhone SE)
-- 768px (iPad)
-- 1200px+ (desktop)
-
----
-
-## Base de Datos
-
-### Tabla: `submissions`
-
-```sql
-submissions (
-  id BIGINT PRIMARY KEY,
-  nombre VARCHAR(200),
-  email VARCHAR(200),
-  nombre_proyecto VARCHAR(200),
-  sector VARCHAR(100),
-  descripcion TEXT,
-  tweet VARCHAR(280),
-  como_resuelven VARCHAR(100),
-  dificultades JSON,          -- array de strings
-  urgencia VARCHAR(100),
-  madurez VARCHAR(50),
-  dispositivo VARCHAR(50),
-  uso_descripcion TEXT,
-  necesidades JSON,           -- array de strings
-  timeline VARCHAR(50),
-  presupuesto VARCHAR(100),
-  budget_score TINYINT,       -- 0-3
-  equipo_interno VARCHAR(100),
-  team_score TINYINT,         -- 0-3
-  notas TEXT,
-  score TINYINT,              -- 0-100
-  veredicto ENUM('startup','potencial','no-califica'),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_veredicto (veredicto),
-  INDEX idx_score (score),
-  INDEX idx_fecha (created_at)
-)
-```
-
-### Tabla: `admins`
-
-```sql
-admins (
-  id INT PRIMARY KEY,
-  username VARCHAR(100) UNIQUE,
-  password_hash VARCHAR(255),    -- bcrypt
-  created_at TIMESTAMP
-)
-```
-
----
-
-## Cómo Ejecutar en Local
-
-### Primer tiempo
-
-```bash
+# 3. Instalar deps y iniciar
 cd /Applications/XAMPP/xamppfiles/htdocs/starup
 npm install
-npm run dev
-# Abre automáticamente http://localhost:5173
-```
+npm run dev  # http://localhost:5173
 
-### Subsecuentes
-
-```bash
-npm run dev
-```
-
-### Build para producción
-
-```bash
-npm run build
-# Genera dist/ con archivos HTML, CSS, JS optimizados
+# 4. Login
+# Email: admin@radar.com
+# Password: admin123
 ```
 
 ---
 
-## Decisiones Futuras (TBD)
+## Cambios Desde v1.0
 
-- [ ] **Autenticación admin:** El endpoint `api/login.php` existe pero no está integrado en UI. Agregar login modal.
-- [ ] **Persistencia API en dev:** Opción de toggle localStorage ↔ API para testing.
-- [ ] **Filtros en admin:** Por veredicto, fecha, score range.
-- [ ] **Export:** CSV/PDF de iniciativas.
-- [ ] **Email notifications:** Al crear una submission.
-- [ ] **Dark mode:** Variables CSS listas para ello.
-- [ ] **Internacionalization (i18n):** Ahora solo español, estructura permite agregar idiomas.
-
----
-
-## Notas para Futuros Cambios
-
-### Si modificás el scoring:
-
-1. **Editar** `src/utils/scoring.js` (función `calcularScore`)
-2. **Editar idéntico** en `api/submit.php` (función `calcScore`)
-3. **Testear** enviando una submission y verificando que score coincida
-4. **Documentar** en README.md la nueva fórmula
-
-### Si agregás campos al formulario:
-
-1. **Agregar** al objeto `initialFormData` en `App.jsx`
-2. **Agregar** input en el componente del paso correspondiente
-3. **Agregar** a la tabla `submissions` en `schema.sql`
-4. **Agregar** a `INSERT` en `api/submit.php`
-5. **Agregar** a vista en `AdminDetail.jsx`
-
-### Si cambias estilos:
-
-1. **Preferir** variables CSS (`:root`)
-2. **No usar !important** salvo excepciones
-3. **Mobile first:** Definir en `@media (max-width: 500px)` los cambios para móvil
-4. **Mantener aspect ratio** en grillas responsivas
+| Aspecto | v1.0 | v2.0 |
+|--------|------|-----|
+| **Formularios** | Hardcodeado (5 pasos fijos) | Dinámicos, creados desde admin |
+| **Usuarios** | Solo 1 admin (tabla `admins`) | Multi-usuario con roles (tabla `users`) |
+| **Auth** | Login simple, sin token | JWT con Bearer token, middleware |
+| **Respuestas** | Solo `submissions` | `submissions` + `form_responses` |
+| **Publicación** | N/A | Formularios se publican/archivan |
+| **Banners** | Estáticos | Gestionables desde admin |
 
 ---
 
-## Archivos Críticos
+## Puntos Críticos para Futuros Cambios
 
-| Archivo | Propósito | Prioridad |
+### Si cambias la lógica de scoring:
+
+1. Editar `src/utils/scoring.js` (calcularScore)
+2. Editar idéntico en `api/submit.php` (función calcScore)
+3. Testear que ambos generan el mismo score
+
+### Si agregás un nuevo tipo de field:
+
+1. Agregar a ENUM en `form_fields` table: `CREATE TABLE form_fields (... tipo ENUM('texto', ..., 'nuevo-tipo') ...)`
+2. Agregar lógica de validación frontend (React component)
+3. Agregar lógica de guardado en `form_responses.php`
+
+### Si cambias rutas de API:
+
+1. Actualizar `const API_URL = '/api'` en archivos que usen fetch
+2. Verificar CORS headers en `api/.../*.php`
+
+### Si agregas seguridad (HTTPS en prod):
+
+1. Cambiar `localStorage` token a HttpOnly cookie (requiere cambios en middleware)
+2. Implementar CSRF tokens si agrega forms HTML nativos
+
+---
+
+## Archivos Críticos (v2.0)
+
+| Archivo | Propósito | Criticidad |
 |---------|-----------|-----------|
-| `src/App.jsx` | Navegación global, estado | 🔴 Crítico |
-| `src/utils/scoring.js` | Cálculo de score | 🔴 Crítico |
-| `src/styles.css` | Todos los estilos | 🔴 Crítico |
-| `api/submit.php` | Guardar submissions | 🔴 Crítico (prod) |
-| `sql/schema.sql` | DDL base de datos | 🔴 Crítico (prod) |
-| Componentes Step* | Lógica formulario | 🟠 Alto |
-| `AdminPanel.jsx` | Listado evaluador | 🟠 Alto |
-| `vite.config.js` | Build tool | 🟡 Medio |
-
----
-
-## Contactos / Dónde Preguntar
-
-**Prompt original:** `/Applications/XAMPP/xamppfiles/htdocs/starup/README.md`
-
-**Stack questions:**
-- React: src/components, src/App.jsx
-- Scoring: src/utils/scoring.js
-- Styles: src/styles.css
-- PHP: api/*.php
-- DB: sql/schema.sql
+| `src/App.jsx` | Router principal, carga formularios | 🔴 Crítico |
+| `src/hooks/useAuth.js` | Autenticación global | 🔴 Crítico |
+| `api/auth/login.php` | Generación de JWT token | 🔴 Crítico |
+| `api/middleware.php` | Verificación de token y permisos | 🔴 Crítico |
+| `api/forms.php` | CRUD de formularios | 🟠 Alto |
+| `api/form_fields.php` | CRUD de fields | 🟠 Alto |
+| `api/form_responses.php` | Guardado de respuestas | 🟠 Alto |
+| `src/components/Dashboard.jsx` | Panel admin | 🟠 Alto |
+| `src/components/FormsList.jsx` | Gestión de formularios | 🟠 Alto |
+| `sql/schema_v2.sql` | DDL (usar en prod) | 🔴 Crítico (prod) |
+| `src/styles.css` | Todos los estilos CSS | 🟠 Alto |
 
 ---
 
 ## Checklist para PR / Review
 
-- [ ] Tests en localhost (`npm run dev`)
-- [ ] Build sin errores (`npm run build`)
-- [ ] Validaciones funcionan en todos los pasos
-- [ ] Responsive en 375px y 1200px+
-- [ ] Si modificaste scoring: verificar en admin que el número coincide
-- [ ] Si agregaste CSS: usar variables, no hardcoded colors
-- [ ] Si cambiaste DB schema: actualizar api/submit.php
-- [ ] Si agregaste componente: seguir patrones de otros (prop names, estructura)
+- [ ] Testeado en `npm run dev` (frontend + backend)
+- [ ] `npm run build` sin errores
+- [ ] Si tocaste auth: verifica que useAuth.js y middleware.php estén en sync
+- [ ] Si tocaste BD: backup antes, migration en schema_v2.sql
+- [ ] Si tocaste API: testea con curl / Postman
+- [ ] Si tocaste formularios dinámicos: testea creación, publicación, llenado de respuestas
+- [ ] Responsive: testea en 375px y 1200px
 
 ---
 
-**Actualizado:** 31/03/2026  
-**Versión:** 1.0 MVP  
-**Estado:** ✅ Completo y funcional
+**Actualizado:** 2026-04-06  
+**Versión:** v2.0 (Multiusuario + Formularios Dinámicos)  
+**Estado:** ✅ Arquitectura moderna, en desarrollo activo

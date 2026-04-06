@@ -1736,3 +1736,23 @@ textarea {
 .modal-content.modal-lg {
   max-width: 640px;
 }
+
+/* =========================================
+   Form Selector Cards (multiple forms)
+   ========================================= */
+
+.form-selector-card {
+  padding: 1.5rem;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg-white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.form-selector-card:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+}

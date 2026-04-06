@@ -44,8 +44,8 @@ export default function FormsList({ token }) {
 
   const loadForms = () => {
     setLoading(true);
-    // Cargar solo formularios publicados (endpoint devuelve solo publicados por defecto)
-    fetch(`${API_URL}/forms.php?estado=publicado`, {
+    // Cargar todos los formularios (sin filtrar por estado)
+    fetch(`${API_URL}/forms.php`, {
       headers: { 'Authorization': `Bearer ${token}` },
     })
       .then((res) => {

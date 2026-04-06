@@ -1,19 +1,12 @@
 import { useState, useEffect } from 'react';
-import DashboardStats from './DashboardStats';
 import SubmissionsTable from './SubmissionsTable';
 import FormsList from './FormsList';
-import BannersManager from './BannersManager';
 
 const API_URL = '/api';
 
 export default function Dashboard({ user, token }) {
   const [activeTab, setActiveTab] = useState('propuestas');
   const [submissions, setSubmissions] = useState([]);
-  const [stats, setStats] = useState({
-    total: 0,
-    startup: 0,
-    potencial: 0,
-  });
   const [loading, setLoading] = useState(true);
 
   // Cargar submissions
@@ -37,18 +30,6 @@ export default function Dashboard({ user, token }) {
       })
       .then((data) => {
         setSubmissions(data);
-
-        // Calcular stats
-        const total = data.length;
-        const startup = data.filter((s) => s.veredicto === 'startup').length;
-        const potencial = data.filter((s) => s.veredicto === 'potencial' || s.veredicto === 'no-califica').length;
-
-        setStats({
-          total,
-          startup,
-          potencial,
-        });
-
         setLoading(false);
       })
       .catch((err) => {
@@ -75,27 +56,18 @@ export default function Dashboard({ user, token }) {
           Propuestas
         </button>
         {user.role === 'admin' && (
-          <>
-            <button
-              className={`dashboard-tab ${activeTab === 'formularios' ? 'active' : ''}`}
-              onClick={() => setActiveTab('formularios')}
-            >
-              Formularios
-            </button>
-            <button
-              className={`dashboard-tab ${activeTab === 'banners' ? 'active' : ''}`}
-              onClick={() => setActiveTab('banners')}
-            >
-              Banners
-            </button>
-          </>
+          <button
+            className={`dashboard-tab ${activeTab === 'formularios' ? 'active' : ''}`}
+            onClick={() => setActiveTab('formularios')}
+          >
+            Formularios
+          </button>
         )}
       </div>
 
       {/* Tab: Propuestas */}
       {activeTab === 'propuestas' && (
         <div className="dashboard-content">
-          <DashboardStats stats={stats} />
           <SubmissionsTable
             submissions={submissions}
             token={token}
@@ -109,13 +81,6 @@ export default function Dashboard({ user, token }) {
       {activeTab === 'formularios' && user.role === 'admin' && (
         <div className="dashboard-content">
           <FormsList token={token} />
-        </div>
-      )}
-
-      {/* Tab: Banners (solo admin) */}
-      {activeTab === 'banners' && user.role === 'admin' && (
-        <div className="dashboard-content">
-          <BannersManager token={token} />
         </div>
       )}
     </div>
