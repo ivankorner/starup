@@ -11,7 +11,7 @@ export default function Card3Options({ field, value, onChange, error }) {
     <div className="form-group">
       <label className="form-label">
         {field.label}
-        {field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
+        {!!field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
       </label>
       {field.descripcion && (
         <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '1rem' }}>

@@ -25,7 +25,7 @@ export default function ChipGroup({ field, value, onChange, error, multiple }) {
     <div className="form-group">
       <label className="form-label">
         {field.label}
-        {field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
+        {!!field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
       </label>
       {field.descripcion && (
         <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>

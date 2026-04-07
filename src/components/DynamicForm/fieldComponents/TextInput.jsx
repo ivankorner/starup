@@ -14,7 +14,7 @@ export default function TextInput({ field, value, onChange, error }) {
     <div className="form-group">
       <label className="form-label">
         {field.label}
-        {field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
+        {!!field.obligatorio && <span style={{ color: '#d32f2f' }}>*</span>}
       </label>
       <input
         type={field.slug === 'email' ? 'email' : 'text'}
