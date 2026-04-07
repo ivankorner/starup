@@ -23,7 +23,7 @@ export default function FormsList({ token }) {
   // Modals
   const [showFormModal, setShowFormModal] = useState(false);
   const [editingForm, setEditingForm] = useState(null);
-  const [formInput, setFormInput] = useState({ titulo: '', descripcion: '', estado: 'borrador' });
+  const [formInput, setFormInput] = useState({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
 
   const [showFieldModal, setShowFieldModal] = useState(false);
   const [editingField, setEditingField] = useState(null);
@@ -100,7 +100,7 @@ export default function FormsList({ token }) {
       if (res.ok) {
         setShowFormModal(false);
         setEditingForm(null);
-        setFormInput({ titulo: '', descripcion: '', estado: 'borrador' });
+        setFormInput({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
         loadForms();
       }
     } catch (err) {
@@ -230,10 +230,11 @@ export default function FormsList({ token }) {
         titulo: form.titulo,
         descripcion: form.descripcion || '',
         estado: form.estado,
+        email_destino: form.email_destino || '',
       });
     } else {
       setEditingForm(null);
-      setFormInput({ titulo: '', descripcion: '', estado: 'borrador' });
+      setFormInput({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
     }
     setShowFormModal(true);
   };
@@ -321,6 +322,11 @@ export default function FormsList({ token }) {
                         {form.descripcion}
                       </div>
                     )}
+                    {form.email_destino && (
+                      <div style={{ fontSize: '12px', color: 'var(--primary)', marginTop: '0.25rem' }}>
+                        📧 {form.email_destino}
+                      </div>
+                    )}
                   </div>
                   <span className={`form-status-badge form-status-${form.estado}`}>
                     {form.estado === 'publicado' ? '✓' : form.estado === 'archivado' ? '✕' : '◐'}{' '}
@@ -397,6 +403,19 @@ export default function FormsList({ token }) {
                   <option value="publicado">Publicado</option>
                   <option value="archivado">Archivado</option>
                 </select>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Email de notificación (opcional)</label>
+                <input
+                  type="email"
+                  value={formInput.email_destino}
+                  onChange={(e) => setFormInput({ ...formInput, email_destino: e.target.value })}
+                  placeholder="Ej: respuestas@empresa.com"
+                />
+                <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                  Las respuestas de este formulario se enviarán a este correo.
+                </p>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '1.5rem' }}>

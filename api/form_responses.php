@@ -120,10 +120,11 @@ try {
             exit;
         }
 
-        // Verificar que el formulario existe
-        $stmt = $pdo->prepare("SELECT id FROM forms WHERE id = ?");
+        // Verificar que el formulario existe y obtener datos
+        $stmt = $pdo->prepare("SELECT id, titulo, email_destino FROM forms WHERE id = ?");
         $stmt->execute([$formId]);
-        if (!$stmt->fetch()) {
+        $form = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$form) {
             http_response_code(404);
             echo json_encode(['error' => 'Formulario no encontrado']);
             exit;
@@ -135,14 +136,92 @@ try {
         ");
         $stmt->execute([$formId, $nombre, $email, $respuestas]);
 
+        $responseId = $pdo->lastInsertId();
+
         http_response_code(201);
         echo json_encode([
             'success' => true,
-            'id' => $pdo->lastInsertId(),
+            'id' => $responseId,
             'message' => 'Respuesta guardada',
         ]);
 
+        // Enviar respuesta al cliente inmediatamente antes de procesar email
+        if (function_exists('fastcgi_finish_request')) {
+            fastcgi_finish_request();
+        } else {
+            if (ob_get_level() > 0) ob_end_flush();
+            flush();
+        }
+
         log_message("Respuesta guardada para form $formId de $email", 'INFO');
+
+        // Enviar email de notificación si el formulario tiene email_destino
+        if (!empty($form['email_destino'])) {
+            try {
+                require_once __DIR__ . '/config.php';
+                require_once __DIR__ . '/libs/Mailer.php';
+
+                // Obtener campos del formulario para mostrar labels
+                $stmtFields = $pdo->prepare("SELECT id, label, tipo FROM form_fields WHERE form_id = ? ORDER BY paso, orden");
+                $stmtFields->execute([$formId]);
+                $fields = $stmtFields->fetchAll(PDO::FETCH_ASSOC);
+
+                $respuestasData = json_decode($respuestas, true);
+
+                // Construir tabla HTML con las respuestas
+                $filasHtml = '';
+                foreach ($fields as $field) {
+                    $fieldId = $field['id'];
+                    $valor = isset($respuestasData[$fieldId]) ? $respuestasData[$fieldId] : (isset($respuestasData[(string)$fieldId]) ? $respuestasData[(string)$fieldId] : '');
+                    if (is_array($valor)) {
+                        $valor = implode(', ', $valor);
+                    }
+                    $valor = htmlspecialchars($valor);
+                    $label = htmlspecialchars($field['label']);
+                    $filasHtml .= "<tr><td style='padding:8px 12px;border:1px solid #e0e0e0;font-weight:600;background:#f5f5f5;width:35%;'>{$label}</td><td style='padding:8px 12px;border:1px solid #e0e0e0;'>{$valor}</td></tr>";
+                }
+
+                $formTitulo = htmlspecialchars($form['titulo']);
+                $nombreHtml = htmlspecialchars($nombre);
+                $emailHtml = htmlspecialchars($email);
+                $fecha = date('d/m/Y H:i');
+
+                $htmlBody = "
+                <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>
+                    <div style='background:#6C63FF;color:white;padding:20px;border-radius:8px 8px 0 0;'>
+                        <h2 style='margin:0;'>Nueva respuesta recibida</h2>
+                        <p style='margin:5px 0 0;opacity:0.9;'>{$formTitulo}</p>
+                    </div>
+                    <div style='padding:20px;border:1px solid #e0e0e0;border-top:none;border-radius:0 0 8px 8px;'>
+                        <p><strong>Nombre:</strong> {$nombreHtml}</p>
+                        <p><strong>Email:</strong> {$emailHtml}</p>
+                        <p><strong>Fecha:</strong> {$fecha}</p>
+                        <hr style='border:none;border-top:1px solid #e0e0e0;margin:15px 0;'>
+                        <h3 style='color:#333;margin-bottom:10px;'>Respuestas</h3>
+                        <table style='width:100%;border-collapse:collapse;'>{$filasHtml}</table>
+                        <hr style='border:none;border-top:1px solid #e0e0e0;margin:15px 0;'>
+                        <p style='font-size:12px;color:#999;'>Este email fue enviado automáticamente desde Radar de Proyectos.</p>
+                    </div>
+                </div>";
+
+                $mailer = new Mailer(SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_USER, SMTP_FROM_NAME);
+                $mailer->addAddress($form['email_destino']);
+                $mailer->subject("Nueva respuesta: {$form['titulo']} - {$nombre}");
+                $mailer->body($htmlBody);
+                $mailer->isHtml(true);
+
+                log_message("Intentando enviar email a {$form['email_destino']} (SMTP: " . SMTP_HOST . ":" . SMTP_PORT . ")", 'INFO');
+
+                if ($mailer->send()) {
+                    log_message("Email enviado exitosamente a {$form['email_destino']} para respuesta $responseId", 'INFO');
+                } else {
+                    log_message("Error enviando email a {$form['email_destino']}: " . $mailer->getError(), 'ERROR');
+                    log_message("Debug SMTP: " . $mailer->getDebug(), 'ERROR');
+                }
+            } catch (Exception $e) {
+                log_message("Excepción enviando email: " . $e->getMessage(), 'ERROR');
+            }
+        }
 
     // DELETE /api/form_responses?id=X — eliminar respuesta (requiere auth)
     } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {

@@ -23,7 +23,7 @@ try {
         if ($id) {
             // GET /api/forms?id=X — obtener formulario específico con sus campos
             $stmt = $pdo->prepare("
-                SELECT id, titulo, descripcion, estado, created_by, created_at, updated_at
+                SELECT id, titulo, descripcion, estado, email_destino, created_by, created_at, updated_at
                 FROM forms
                 WHERE id = ?
             ");
@@ -59,7 +59,7 @@ try {
 
         } else {
             // GET /api/forms — listar todos los formularios (o filtrar por estado si se especifica)
-            $query = "SELECT id, titulo, descripcion, estado, created_by, created_at, updated_at FROM forms";
+            $query = "SELECT id, titulo, descripcion, estado, email_destino, created_by, created_at, updated_at FROM forms";
             $params = [];
 
             if ($estado) {
@@ -92,6 +92,7 @@ try {
         $titulo = trim($data['titulo'] ?? '');
         $descripcion = $data['descripcion'] ?? '';
         $estado = $data['estado'] ?? 'borrador';
+        $email_destino = trim($data['email_destino'] ?? '');
 
         if (!$titulo) {
             http_response_code(400);
@@ -106,10 +107,10 @@ try {
         }
 
         $stmt = $pdo->prepare("
-            INSERT INTO forms (titulo, descripcion, estado, created_by)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO forms (titulo, descripcion, estado, email_destino, created_by)
+            VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$titulo, $descripcion, $estado, $user['id']]);
+        $stmt->execute([$titulo, $descripcion, $estado, $email_destino ?: null, $user['id']]);
 
         http_response_code(201);
         echo json_encode([
@@ -169,6 +170,12 @@ try {
                 $updates[] = 'estado = ?';
                 $params[] = $data['estado'];
             }
+        }
+
+        if (array_key_exists('email_destino', $data)) {
+            $updates[] = 'email_destino = ?';
+            $email_destino = trim($data['email_destino'] ?? '');
+            $params[] = $email_destino ?: null;
         }
 
         if (empty($updates)) {

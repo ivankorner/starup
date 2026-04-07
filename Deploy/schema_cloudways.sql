@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS forms (
   titulo          VARCHAR(200) NOT NULL,
   descripcion     TEXT DEFAULT NULL,
   estado          ENUM('borrador', 'publicado', 'archivado') NOT NULL DEFAULT 'borrador',
+  email_destino   VARCHAR(200) DEFAULT NULL,
   created_by      INT UNSIGNED NOT NULL,
   created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -144,6 +145,11 @@ CREATE TABLE IF NOT EXISTS banners (
   INDEX idx_form_id (form_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+-- ============================================================================
+-- MIGRACIÓN: Agregar email_destino a forms
+-- ============================================================================
+-- ALTER TABLE forms ADD COLUMN email_destino VARCHAR(200) DEFAULT NULL AFTER estado;
 
 -- ============================================================================
 -- ADMIN POR DEFECTO

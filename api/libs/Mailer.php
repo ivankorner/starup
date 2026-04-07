@@ -1,7 +1,8 @@
 <?php
 /**
- * Clase simplificada para envío de emails via SMTP
- * Compatible con Gmail usando verificación TLS
+ * Clase para envío de emails via SMTP
+ * Soporta STARTTLS (puerto 587) y SSL directo (puerto 465)
+ * Compatible con Gmail App Passwords
  */
 
 class Mailer {
@@ -15,13 +16,13 @@ class Mailer {
     private $toName;
     private $subject;
     private $body;
-    private $altBody;
     private $isHtml = true;
     private $error = null;
+    private $debug = [];
 
     public function __construct($host, $port, $username, $password, $fromEmail, $fromName) {
         $this->host = $host;
-        $this->port = $port;
+        $this->port = (int)$port;
         $this->username = $username;
         $this->password = $password;
         $this->fromEmail = $fromEmail;
@@ -44,110 +45,158 @@ class Mailer {
         return $this;
     }
 
-    public function altBody($text) {
-        $this->altBody = $text;
-        return $this;
-    }
-
     public function isHtml($flag = true) {
         $this->isHtml = $flag;
         return $this;
     }
 
+    private function readResponse($socket) {
+        $response = '';
+        while ($line = fgets($socket, 1024)) {
+            $response .= $line;
+            // Si el 4to caracter es espacio, es la última línea de la respuesta
+            if (isset($line[3]) && $line[3] === ' ') {
+                break;
+            }
+        }
+        $this->debug[] = "S: " . trim($response);
+        return $response;
+    }
+
+    private function sendCommand($socket, $command) {
+        $this->debug[] = "C: " . trim($command);
+        fputs($socket, $command);
+        return $this->readResponse($socket);
+    }
+
     public function send() {
         try {
-            // Validaciones básicas
-            if (!$this->toEmail) {
-                $this->error = 'Email destinatario no configurado';
+            if (!$this->toEmail || !$this->subject || !$this->body) {
+                $this->error = 'Faltan datos: destinatario, asunto o cuerpo';
                 return false;
             }
 
-            if (!$this->subject) {
-                $this->error = 'Asunto no configurado';
-                return false;
-            }
+            $socket = null;
 
-            if (!$this->body && !$this->altBody) {
-                $this->error = 'Cuerpo del mensaje no configurado';
-                return false;
+            if ($this->port === 465) {
+                // Puerto 465: SSL directo
+                $socket = @fsockopen("ssl://{$this->host}", $this->port, $errno, $errstr, 30);
+            } else {
+                // Puerto 587: conexión sin encriptar, luego STARTTLS
+                $socket = @fsockopen($this->host, $this->port, $errno, $errstr, 30);
             }
-
-            // Abrir conexión SMTP
-            $socket = fsockopen("tls://{$this->host}", $this->port, $errno, $errstr, 30);
 
             if (!$socket) {
-                $this->error = "Error conectando SMTP: $errstr ($errno)";
+                $this->error = "Error conectando a {$this->host}:{$this->port} - $errstr ($errno)";
                 return false;
             }
 
-            // Leer respuesta inicial del servidor
-            $response = fgets($socket, 1024);
+            // Timeout de lectura
+            stream_set_timeout($socket, 30);
+
+            // Leer saludo del servidor
+            $response = $this->readResponse($socket);
             if (strpos($response, '220') === false) {
-                $this->error = "Error SMTP inicial: $response";
+                $this->error = "Error saludo SMTP: $response";
                 fclose($socket);
                 return false;
             }
 
             // EHLO
-            fputs($socket, "EHLO {$this->host}\r\n");
-            $response = fgets($socket, 1024);
-
-            // AUTH LOGIN
-            fputs($socket, "AUTH LOGIN\r\n");
-            $response = fgets($socket, 1024);
-
-            if (strpos($response, '334') === false) {
-                $this->error = "Error AUTH: $response";
+            $response = $this->sendCommand($socket, "EHLO localhost\r\n");
+            if (strpos($response, '250') === false) {
+                $this->error = "Error EHLO: $response";
                 fclose($socket);
                 return false;
             }
 
-            // Username (base64)
-            fputs($socket, base64_encode($this->username) . "\r\n");
-            $response = fgets($socket, 1024);
+            // STARTTLS solo para puerto 587
+            if ($this->port === 587) {
+                $response = $this->sendCommand($socket, "STARTTLS\r\n");
+                if (strpos($response, '220') === false) {
+                    $this->error = "Error STARTTLS: $response";
+                    fclose($socket);
+                    return false;
+                }
 
-            // Password (base64)
-            fputs($socket, base64_encode($this->password) . "\r\n");
-            $response = fgets($socket, 1024);
+                // Activar encriptación TLS
+                $crypto = stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+                if (!$crypto) {
+                    $this->error = "Error activando TLS";
+                    fclose($socket);
+                    return false;
+                }
 
+                // EHLO de nuevo después de TLS
+                $response = $this->sendCommand($socket, "EHLO localhost\r\n");
+                if (strpos($response, '250') === false) {
+                    $this->error = "Error EHLO post-TLS: $response";
+                    fclose($socket);
+                    return false;
+                }
+            }
+
+            // AUTH LOGIN
+            $response = $this->sendCommand($socket, "AUTH LOGIN\r\n");
+            if (strpos($response, '334') === false) {
+                $this->error = "Error AUTH LOGIN: $response";
+                fclose($socket);
+                return false;
+            }
+
+            // Username
+            $response = $this->sendCommand($socket, base64_encode($this->username) . "\r\n");
+            if (strpos($response, '334') === false) {
+                $this->error = "Error username: $response";
+                fclose($socket);
+                return false;
+            }
+
+            // Password
+            $response = $this->sendCommand($socket, base64_encode($this->password) . "\r\n");
             if (strpos($response, '235') === false) {
-                $this->error = "Error autenticación SMTP: $response";
+                $this->error = "Error autenticación: $response";
                 fclose($socket);
                 return false;
             }
 
             // MAIL FROM
-            fputs($socket, "MAIL FROM: <{$this->fromEmail}>\r\n");
-            fgets($socket, 1024);
-
-            // RCPT TO
-            fputs($socket, "RCPT TO: <{$this->toEmail}>\r\n");
-            fgets($socket, 1024);
-
-            // DATA
-            fputs($socket, "DATA\r\n");
-            fgets($socket, 1024);
-
-            // Construir headers
-            $headers = "From: {$this->fromName} <{$this->fromEmail}>\r\n";
-            $headers .= "To: {$this->toName} <{$this->toEmail}>\r\n";
-            $headers .= "Subject: {$this->subject}\r\n";
-            $headers .= "Date: " . date('r') . "\r\n";
-            $headers .= "MIME-Version: 1.0\r\n";
-
-            if ($this->isHtml) {
-                $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-                $headers .= "Content-Transfer-Encoding: 7bit\r\n";
-            } else {
-                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+            $response = $this->sendCommand($socket, "MAIL FROM: <{$this->fromEmail}>\r\n");
+            if (strpos($response, '250') === false) {
+                $this->error = "Error MAIL FROM: $response";
+                fclose($socket);
+                return false;
             }
 
-            $message = $headers . "\r\n" . $this->body;
+            // RCPT TO
+            $response = $this->sendCommand($socket, "RCPT TO: <{$this->toEmail}>\r\n");
+            if (strpos($response, '250') === false) {
+                $this->error = "Error RCPT TO: $response";
+                fclose($socket);
+                return false;
+            }
+
+            // DATA
+            $response = $this->sendCommand($socket, "DATA\r\n");
+            if (strpos($response, '354') === false) {
+                $this->error = "Error DATA: $response";
+                fclose($socket);
+                return false;
+            }
+
+            // Construir mensaje
+            $message = "From: =?UTF-8?B?" . base64_encode($this->fromName) . "?= <{$this->fromEmail}>\r\n";
+            $message .= "To: <{$this->toEmail}>\r\n";
+            $message .= "Subject: =?UTF-8?B?" . base64_encode($this->subject) . "?=\r\n";
+            $message .= "Date: " . date('r') . "\r\n";
+            $message .= "MIME-Version: 1.0\r\n";
+            $message .= "Content-Type: " . ($this->isHtml ? "text/html" : "text/plain") . "; charset=UTF-8\r\n";
+            $message .= "Content-Transfer-Encoding: base64\r\n";
+            $message .= "\r\n";
+            $message .= chunk_split(base64_encode($this->body));
 
             // Enviar mensaje
-            fputs($socket, $message . "\r\n.\r\n");
-            $response = fgets($socket, 1024);
-
+            $response = $this->sendCommand($socket, $message . "\r\n.\r\n");
             if (strpos($response, '250') === false) {
                 $this->error = "Error enviando mensaje: $response";
                 fclose($socket);
@@ -155,19 +204,26 @@ class Mailer {
             }
 
             // QUIT
-            fputs($socket, "QUIT\r\n");
+            $this->sendCommand($socket, "QUIT\r\n");
             fclose($socket);
 
             return true;
 
         } catch (Exception $e) {
             $this->error = $e->getMessage();
+            if ($socket && is_resource($socket)) {
+                fclose($socket);
+            }
             return false;
         }
     }
 
     public function getError() {
         return $this->error;
+    }
+
+    public function getDebug() {
+        return implode("\n", $this->debug);
     }
 }
 ?>
