@@ -65,6 +65,19 @@ export default function App() {
   const [dynamicFormResponse, setDynamicFormResponse] = useState(null);
   const [formKey, setFormKey] = useState(0);
 
+  // Detectar #admin en la URL para mostrar login
+  useEffect(() => {
+    const checkHash = () => {
+      if (window.location.hash === '#admin') {
+        setStep('admin');
+        window.location.hash = '';
+      }
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
+
   // Cargar formularios publicados
   useEffect(() => {
     const loadPublishedForms = async () => {
@@ -204,53 +217,54 @@ export default function App() {
           Radar de Proyectos
         </div>
         <nav className="header-nav">
-          <button
-            className={step !== 'admin' && step !== 'done' && step !== 'dynamic-done' && step !== 'admin-usuarios' ? 'active' : ''}
-            onClick={() => {
-              setStep('intro');
-              setFormData(initialFormData);
-              setDynamicFormResponse(null);
-              setFormKey((k) => k + 1);
-              // Re-seleccionar si hay un solo formulario publicado
-              if (publishedForms.length === 1) {
-                setSelectedFormId(publishedForms[0].id);
-              } else {
-                setSelectedFormId(null);
-              }
-              window.scrollTo(0, 0);
-            }}
-          >
-            Enviar Iniciativa
-          </button>
-          <button
-            className={step === 'admin' ? 'active' : ''}
-            onClick={handleShowAdmin}
-          >
-            Dashboard
-          </button>
           {auth.isAuthenticated && (
-            <div className="header-nav-auth">
-              {auth.isAdmin && (
-                <button onClick={() => setStep('admin-usuarios')}>
-                  👥 Usuarios
-                </button>
-              )}
+            <>
               <button
-                className="header-nav-user"
-                title={`${auth.user.nombre} (${auth.user.role})`}
-              >
-                👤 {auth.user.nombre}
-              </button>
-              <button
+                className={step !== 'admin' && step !== 'done' && step !== 'dynamic-done' && step !== 'admin-usuarios' ? 'active' : ''}
                 onClick={() => {
-                  auth.logout();
                   setStep('intro');
+                  setFormData(initialFormData);
+                  setDynamicFormResponse(null);
+                  setFormKey((k) => k + 1);
+                  if (publishedForms.length === 1) {
+                    setSelectedFormId(publishedForms[0].id);
+                  } else {
+                    setSelectedFormId(null);
+                  }
                   window.scrollTo(0, 0);
                 }}
               >
-                Salir
+                Enviar Iniciativa
               </button>
-            </div>
+              <button
+                className={step === 'admin' ? 'active' : ''}
+                onClick={handleShowAdmin}
+              >
+                Dashboard
+              </button>
+              <div className="header-nav-auth">
+                {auth.isAdmin && (
+                  <button onClick={() => setStep('admin-usuarios')}>
+                    👥 Usuarios
+                  </button>
+                )}
+                <button
+                  className="header-nav-user"
+                  title={`${auth.user.nombre} (${auth.user.role})`}
+                >
+                  👤 {auth.user.nombre}
+                </button>
+                <button
+                  onClick={() => {
+                    auth.logout();
+                    setStep('intro');
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  Salir
+                </button>
+              </div>
+            </>
           )}
         </nav>
       </header>
