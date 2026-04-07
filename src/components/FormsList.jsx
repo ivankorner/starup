@@ -252,9 +252,9 @@ export default function FormsList({ token }) {
         label: field.label,
         descripcion: field.descripcion || '',
         tipo: field.tipo,
-        obligatorio: field.obligatorio,
-        paso: field.paso,
-        orden: field.orden,
+        obligatorio: Number(field.obligatorio) ? 1 : 0,
+        paso: Number(field.paso) || 0,
+        orden: Number(field.orden) || 0,
         opciones: !isCard3 && Array.isArray(field.opciones) ? field.opciones.join('\n') : '',
         max_seleccion: field.max_seleccion || 3,
         max_length: field.max_length || 255,
@@ -469,7 +469,7 @@ export default function FormsList({ token }) {
                           <div style={{ flex: 1 }}>
                             <div style={{ fontWeight: '500', color: 'var(--text-main)' }}>
                               {field.label}
-                              {field.obligatorio && (
+                              {!!Number(field.obligatorio) && (
                                 <span style={{ color: '#d32f2f', marginLeft: '0.25rem' }}>*</span>
                               )}
                             </div>
