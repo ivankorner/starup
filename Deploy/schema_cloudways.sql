@@ -144,10 +144,11 @@ CREATE TABLE IF NOT EXISTS banners (
   INDEX idx_form_id (form_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- ============================================================================
 -- ADMIN POR DEFECTO
 -- Email: admin@radar.com | Password: admin123
 -- IMPORTANTE: Cambiar la contraseña despues del primer login
 -- ============================================================================
 INSERT INTO users (nombre, email, password_hash, role, activo) VALUES
-('Administrador', 'admin@radar.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1);
+('Administrador', 'admin@radar.com', '$2y$10$hQ8HL8B2FmIZRXnNcu3tXubXwAD3QxfqqZlCVtfpxM46IDthzWGbS', 'admin', 1);
