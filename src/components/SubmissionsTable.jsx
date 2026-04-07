@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import SubmissionEditModal from './SubmissionEditModal';
 import ResponseDetailModal from './ResponseDetailModal';
 import { exportAllResponsesToXLS } from '../utils/exportXLS';
@@ -70,6 +71,37 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
     });
   };
 
+  const deleteResponse = async (id, nombre) => {
+    const result = await Swal.fire({
+      title: '¿Eliminar esta respuesta?',
+      text: `Se eliminará la respuesta de "${nombre}". Esta acción no se puede deshacer.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`/api/form_responses.php?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (res.ok) {
+        Swal.fire({ icon: 'success', title: 'Respuesta eliminada', timer: 1500, showConfirmButton: false });
+        onRefresh();
+      } else {
+        const data = await res.json();
+        Swal.fire({ icon: 'error', title: 'Error', text: data.error || 'Error al eliminar' });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({ icon: 'error', title: 'Error', text: 'Error de conexión' });
+    }
+  };
+
   const formatResponses = (respuestas) => {
     if (!respuestas || typeof respuestas !== 'object') return '';
     return Object.values(respuestas).slice(0, 2).join(' • ');
@@ -123,13 +155,20 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
                 </div>
                 <div className="submission-email">{submission.email}</div>
 
-                <div className="submission-footer">
+                <div className="submission-footer" style={{ display: 'flex', gap: '0.75rem' }}>
                   <button
                     className="button button-text"
                     onClick={() => setSelectedSubmission(submission)}
                     style={{ fontSize: '12px' }}
                   >
                     Ver detalle
+                  </button>
+                  <button
+                    className="button button-text"
+                    onClick={() => deleteResponse(submission.id, submission.nombre)}
+                    style={{ fontSize: '12px', color: '#d32f2f' }}
+                  >
+                    Eliminar
                   </button>
                 </div>
               </div>

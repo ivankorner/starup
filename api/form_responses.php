@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -143,6 +143,35 @@ try {
         ]);
 
         log_message("Respuesta guardada para form $formId de $email", 'INFO');
+
+    // DELETE /api/form_responses?id=X — eliminar respuesta (requiere auth)
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        $user = requireAuth();
+
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['error' => 'ID requerido']);
+            exit;
+        }
+
+        // Verificar que existe
+        $stmt = $pdo->prepare("SELECT id FROM form_responses WHERE id = ?");
+        $stmt->execute([$id]);
+        if (!$stmt->fetch()) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Respuesta no encontrada']);
+            exit;
+        }
+
+        $stmt = $pdo->prepare("DELETE FROM form_responses WHERE id = ?");
+        $stmt->execute([$id]);
+
+        http_response_code(200);
+        echo json_encode(['success' => true, 'message' => 'Respuesta eliminada']);
+
+        log_message("Respuesta eliminada: id=$id por {$user['email']}", 'INFO');
 
     } else {
         http_response_code(405);
