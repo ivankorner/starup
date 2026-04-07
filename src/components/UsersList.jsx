@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import UserModal from './UserModal';
+import Swal from 'sweetalert2';
 
 const API_URL = '/api';
 
@@ -34,7 +35,17 @@ export default function UsersList({ token }) {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Eliminar este usuario?')) return;
+    const result = await Swal.fire({
+      title: '¿Eliminar este usuario?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+    if (!result.isConfirmed) return;
 
     fetch(`${API_URL}/users.php?id=${id}`, {
       method: 'DELETE',
@@ -44,6 +55,7 @@ export default function UsersList({ token }) {
     })
       .then((res) => {
         if (res.ok) {
+          Swal.fire({ icon: 'success', title: 'Usuario eliminado', timer: 1500, showConfirmButton: false });
           loadUsers();
         }
       })

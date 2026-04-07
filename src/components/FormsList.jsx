@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const API_URL = '/api';
 
@@ -106,7 +107,12 @@ export default function FormsList({ token }) {
   // Field Modal - Save
   const saveField = async () => {
     if (!fieldInput.label.trim()) {
-      alert('El label del campo es requerido');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campo requerido',
+        text: 'El label del campo es requerido',
+        confirmButtonColor: 'var(--primary)',
+      });
       return;
     }
 
@@ -153,8 +159,18 @@ export default function FormsList({ token }) {
     }
   };
 
-  const deleteField = (fieldId) => {
-    if (!window.confirm('¿Eliminar este campo?')) return;
+  const deleteField = async (fieldId) => {
+    const result = await Swal.fire({
+      title: '¿Eliminar este campo?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+    if (!result.isConfirmed) return;
 
     fetch(`${API_URL}/form_fields.php?id=${fieldId}`, {
       method: 'DELETE',
@@ -162,7 +178,38 @@ export default function FormsList({ token }) {
     })
       .then((res) => {
         if (res.ok) {
+          Swal.fire({ icon: 'success', title: 'Campo eliminado', timer: 1500, showConfirmButton: false });
           loadFormDetail(selectedForm.id);
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const deleteForm = async (formId) => {
+    const result = await Swal.fire({
+      title: '¿Eliminar este formulario?',
+      text: 'Se eliminarán todos sus campos y respuestas. Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+    if (!result.isConfirmed) return;
+
+    fetch(`${API_URL}/forms.php?id=${formId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (res.ok) {
+          Swal.fire({ icon: 'success', title: 'Formulario eliminado', timer: 1500, showConfirmButton: false });
+          loadForms();
+        } else {
+          return res.json().then(data => {
+            Swal.fire({ icon: 'error', title: 'Error', text: data.error || 'Error al eliminar el formulario' });
+          });
         }
       })
       .catch((err) => console.error(err));
@@ -275,6 +322,13 @@ export default function FormsList({ token }) {
                     onClick={() => openFormModal(form)}
                   >
                     Editar formulario
+                  </button>
+                  <button
+                    className="button button-text"
+                    style={{ color: '#d32f2f' }}
+                    onClick={() => deleteForm(form.id)}
+                  >
+                    Eliminar
                   </button>
                 </div>
               </div>
