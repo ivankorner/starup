@@ -1,9 +1,11 @@
+import { parseCardOption, renderIcon } from '../../../utils/cardIcons';
+
 export default function Card3Options({ field, value, onChange, error }) {
-  const handleSelect = (option) => {
-    onChange(value === option ? '' : option);
+  const handleSelect = (optionText) => {
+    onChange(value === optionText ? '' : optionText);
   };
 
-  const options = field.opciones || [];
+  const options = (field.opciones || []).map(parseCardOption);
 
   return (
     <div className="form-group">
@@ -26,47 +28,62 @@ export default function Card3Options({ field, value, onChange, error }) {
           marginBottom: '1rem',
         }}
       >
-        {options.map((option) => (
-          <label
-            key={option}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '1.25rem',
-              borderRadius: '8px',
-              border: value === option ? '2px solid var(--primary)' : '1px solid var(--border)',
-              backgroundColor: value === option ? 'var(--primary-light)' : 'var(--bg-white)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              minHeight: '120px',
-              justifyContent: 'center',
-              textAlign: 'center',
-            }}
-          >
-            <input
-              type="radio"
-              name={field.id}
-              value={option}
-              checked={value === option}
-              onChange={() => handleSelect(option)}
-              style={{
-                marginBottom: '0.5rem',
-                cursor: 'pointer',
-                accentColor: 'var(--primary)',
-              }}
-            />
+        {options.map(({ text, icon }) => {
+          const isSelected = value === text;
+          return (
             <div
+              key={text}
+              onClick={() => handleSelect(text)}
               style={{
-                fontWeight: '500',
-                fontSize: '14px',
-                color: value === option ? 'var(--primary)' : 'var(--text-body)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '1.25rem',
+                borderRadius: '12px',
+                border: isSelected ? '2px solid var(--primary)' : '1.5px solid var(--border)',
+                backgroundColor: isSelected ? 'var(--primary-light)' : 'var(--bg-white)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                minHeight: '120px',
+                justifyContent: 'center',
+                textAlign: 'center',
+                gap: '0.5rem',
               }}
             >
-              {option}
+              {icon ? (
+                <div style={{
+                  color: isSelected ? 'var(--primary)' : '#8b95a5',
+                  marginBottom: '0.25rem',
+                  transition: 'color 0.2s ease',
+                }}>
+                  {renderIcon(icon, 32)}
+                </div>
+              ) : (
+                <input
+                  type="radio"
+                  name={field.id}
+                  value={text}
+                  checked={isSelected}
+                  readOnly
+                  style={{
+                    marginBottom: '0.5rem',
+                    cursor: 'pointer',
+                    accentColor: 'var(--primary)',
+                  }}
+                />
+              )}
+              <div
+                style={{
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  color: isSelected ? 'var(--primary)' : 'var(--text-body)',
+                }}
+              >
+                {text}
+              </div>
             </div>
-          </label>
-        ))}
+          );
+        })}
       </div>
 
       {error && (

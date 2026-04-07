@@ -127,10 +127,24 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
     setSubmitting(true);
 
     try {
+      // Find nombre/email by slug, or fallback to label pattern
+      const findField = (slugs, labelPatterns) => {
+        let field = form.fields.find((f) => f.slug && slugs.includes(f.slug.toLowerCase()));
+        if (!field) {
+          field = form.fields.find((f) =>
+            labelPatterns.some((p) => f.label.toLowerCase().includes(p))
+          );
+        }
+        return field;
+      };
+
+      const nombreField = findField(['nombre', 'name'], ['nombre', 'name']);
+      const emailField = findField(['email', 'correo'], ['email', 'correo']);
+
       const payload = {
         form_id: formId,
-        nombre: responses[form.fields.find((f) => f.slug === 'nombre')?.id] || '',
-        email: responses[form.fields.find((f) => f.slug === 'email')?.id] || '',
+        nombre: nombreField ? responses[nombreField.id] || '' : 'Anónimo',
+        email: emailField ? responses[emailField.id] || '' : 'sin-email@formulario.local',
         respuestas: responses,
       };
 
@@ -142,13 +156,10 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
 
       if (res.ok) {
         const data = await res.json();
-        // Pasar nombre y email junto con la respuesta del servidor
-        const nombreField = form.fields.find((f) => f.slug === 'nombre');
-        const emailField = form.fields.find((f) => f.slug === 'email');
         onSubmit({
           ...data,
-          nombre: nombreField ? responses[nombreField.id] : '',
-          email: emailField ? responses[emailField.id] : '',
+          nombre: payload.nombre,
+          email: payload.email,
         });
       } else {
         setErrors({ submit: 'Error al enviar el formulario. Intenta nuevamente.' });

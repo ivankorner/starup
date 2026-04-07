@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { ICON_NAMES, renderIcon, parseCardOption, searchIcons } from '../utils/cardIcons';
 
 const API_URL = '/api';
 
@@ -36,7 +37,10 @@ export default function FormsList({ token }) {
     opciones: '',
     max_seleccion: 3,
     max_length: 255,
+    card3Options: [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }],
   });
+  const [showIconPicker, setShowIconPicker] = useState(null);
+  const [iconSearch, setIconSearch] = useState('');
 
   // Cargar formularios
   useEffect(() => {
@@ -126,7 +130,11 @@ export default function FormsList({ token }) {
         obligatorio: fieldInput.obligatorio ? 1 : 0,
       };
 
-      if (['chip-single', 'chip-multi', 'selector-grid', 'timeline', 'card-3'].includes(fieldInput.tipo)) {
+      if (fieldInput.tipo === 'card-3') {
+        payload.opciones = fieldInput.card3Options
+          .filter((o) => o.text.trim())
+          .map((o) => o.icon ? { text: o.text.trim(), icon: o.icon } : o.text.trim());
+      } else if (['chip-single', 'chip-multi', 'selector-grid', 'timeline'].includes(fieldInput.tipo)) {
         payload.opciones = fieldInput.opciones
           .split('\n')
           .map((o) => o.trim())
@@ -233,6 +241,13 @@ export default function FormsList({ token }) {
   const openFieldModal = (field = null) => {
     if (field) {
       setEditingField(field);
+      const isCard3 = field.tipo === 'card-3';
+      const card3Opts = isCard3 && Array.isArray(field.opciones)
+        ? field.opciones.map(parseCardOption)
+        : [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }];
+      // Ensure at least 3 slots
+      while (card3Opts.length < 3) card3Opts.push({ text: '', icon: '' });
+
       setFieldInput({
         label: field.label,
         descripcion: field.descripcion || '',
@@ -240,14 +255,16 @@ export default function FormsList({ token }) {
         obligatorio: field.obligatorio,
         paso: field.paso,
         orden: field.orden,
-        opciones: Array.isArray(field.opciones) ? field.opciones.join('\n') : '',
+        opciones: !isCard3 && Array.isArray(field.opciones) ? field.opciones.join('\n') : '',
         max_seleccion: field.max_seleccion || 3,
         max_length: field.max_length || 255,
+        card3Options: card3Opts,
       });
     } else {
       setEditingField(null);
       resetFieldInput();
     }
+    setShowIconPicker(null);
     setShowFieldModal(true);
   };
 
@@ -262,6 +279,7 @@ export default function FormsList({ token }) {
       opciones: '',
       max_seleccion: 3,
       max_length: 255,
+      card3Options: [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }],
     });
   };
 
@@ -561,7 +579,7 @@ export default function FormsList({ token }) {
                 </div>
               </div>
 
-              {['chip-single', 'chip-multi', 'selector-grid', 'timeline', 'card-3'].includes(fieldInput.tipo) && (
+              {['chip-single', 'chip-multi', 'selector-grid', 'timeline'].includes(fieldInput.tipo) && (
                 <div className="form-group">
                   <label className="form-label">Opciones (una por línea)</label>
                   <textarea
@@ -570,6 +588,156 @@ export default function FormsList({ token }) {
                     placeholder="Opción 1&#10;Opción 2&#10;Opción 3"
                     rows="4"
                   />
+                </div>
+              )}
+
+              {fieldInput.tipo === 'card-3' && (
+                <div className="form-group">
+                  <label className="form-label">Opciones de tarjeta (con iconos opcionales)</label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {fieldInput.card3Options.map((opt, idx) => (
+                      <div key={idx} style={{
+                        display: 'flex', alignItems: 'center', gap: '0.75rem',
+                        padding: '0.75rem', border: '1px solid var(--border)', borderRadius: '8px',
+                        background: 'var(--bg-light)',
+                      }}>
+                        <div style={{ position: 'relative' }}>
+                          <button
+                            type="button"
+                            onClick={() => { setShowIconPicker(showIconPicker === idx ? null : idx); setIconSearch(''); }}
+                            style={{
+                              width: '48px', height: '48px', border: '1px dashed var(--border)',
+                              borderRadius: '8px', background: 'var(--bg-white)', cursor: 'pointer',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              color: opt.icon ? 'var(--primary)' : '#ccc',
+                              transition: 'all 0.2s',
+                            }}
+                            title="Seleccionar icono"
+                          >
+                            {opt.icon ? renderIcon(opt.icon, 24) : (
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+                              </svg>
+                            )}
+                          </button>
+
+                          {showIconPicker === idx && (
+                            <div style={{
+                              position: 'absolute', top: '52px', left: 0, zIndex: 1000,
+                              background: 'var(--bg-white)', border: '1px solid var(--border)',
+                              borderRadius: '12px', padding: '0.75rem',
+                              boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                              width: '320px',
+                            }}>
+                              <input
+                                type="text"
+                                value={iconSearch}
+                                onChange={(e) => setIconSearch(e.target.value)}
+                                placeholder="Buscar icono..."
+                                autoFocus
+                                style={{
+                                  width: '100%', padding: '6px 10px', marginBottom: '8px',
+                                  border: '1px solid var(--border)', borderRadius: '6px',
+                                  fontSize: '13px', boxSizing: 'border-box',
+                                }}
+                              />
+                              <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px' }}>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updated = [...fieldInput.card3Options];
+                                    updated[idx] = { ...updated[idx], icon: '' };
+                                    setFieldInput({ ...fieldInput, card3Options: updated });
+                                    setShowIconPicker(null);
+                                    setIconSearch('');
+                                  }}
+                                  style={{
+                                    width: '38px', height: '38px', border: '1px solid var(--border)',
+                                    borderRadius: '6px', background: 'var(--bg-light)', cursor: 'pointer',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: '#999',
+                                  }}
+                                  title="Sin icono"
+                                >
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                  </svg>
+                                </button>
+                                {searchIcons(iconSearch).map((name) => (
+                                  <button
+                                    key={name}
+                                    type="button"
+                                    onClick={() => {
+                                      const updated = [...fieldInput.card3Options];
+                                      updated[idx] = { ...updated[idx], icon: name };
+                                      setFieldInput({ ...fieldInput, card3Options: updated });
+                                      setShowIconPicker(null);
+                                      setIconSearch('');
+                                    }}
+                                    style={{
+                                      width: '38px', height: '38px',
+                                      border: opt.icon === name ? '2px solid var(--primary)' : '1px solid var(--border)',
+                                      borderRadius: '6px',
+                                      background: opt.icon === name ? 'var(--primary-light)' : 'var(--bg-white)',
+                                      cursor: 'pointer',
+                                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                      color: opt.icon === name ? 'var(--primary)' : '#666',
+                                      transition: 'all 0.15s',
+                                    }}
+                                    title={name}
+                                  >
+                                    {renderIcon(name, 18)}
+                                  </button>
+                                ))}
+                              </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={opt.text}
+                          onChange={(e) => {
+                            const updated = [...fieldInput.card3Options];
+                            updated[idx] = { ...updated[idx], text: e.target.value };
+                            setFieldInput({ ...fieldInput, card3Options: updated });
+                          }}
+                          placeholder={`Opción ${idx + 1}`}
+                          style={{ flex: 1 }}
+                        />
+                        {fieldInput.card3Options.length > 2 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = fieldInput.card3Options.filter((_, i) => i !== idx);
+                              setFieldInput({ ...fieldInput, card3Options: updated });
+                            }}
+                            style={{
+                              background: 'none', border: 'none', color: '#d32f2f',
+                              cursor: 'pointer', padding: '4px', fontSize: '18px',
+                            }}
+                            title="Eliminar opción"
+                          >
+                            &times;
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    {fieldInput.card3Options.length < 6 && (
+                      <button
+                        type="button"
+                        className="button button-text"
+                        onClick={() => setFieldInput({
+                          ...fieldInput,
+                          card3Options: [...fieldInput.card3Options, { text: '', icon: '' }],
+                        })}
+                        style={{ alignSelf: 'flex-start' }}
+                      >
+                        + Agregar opción
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
