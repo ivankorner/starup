@@ -1,9 +1,62 @@
 import { useState } from 'react';
 import SubmissionEditModal from './SubmissionEditModal';
 import ResponseDetailModal from './ResponseDetailModal';
+import { exportAllResponsesToXLS } from '../utils/exportXLS';
+import { exportAllResponsesToPDF } from '../utils/exportPDF';
 
 export default function SubmissionsTable({ submissions, token, onRefresh, loading }) {
   const [selectedSubmission, setSelectedSubmission] = useState(null);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportAllXLS = async () => {
+    setExporting(true);
+    try {
+      // Cargar fields para todas las respuestas si no existen
+      const responsesWithFields = await Promise.all(
+        submissions.map(async (response) => {
+          if (response.fields) return response;
+          // Si no tiene fields, cargar el detalle completo
+          const res = await fetch(`/api/form_responses.php?id=${response.id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            return res.json();
+          }
+          return response;
+        })
+      );
+      exportAllResponsesToXLS(responsesWithFields);
+    } catch (err) {
+      console.error('Error exportando XLS:', err);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportAllPDF = async () => {
+    setExporting(true);
+    try {
+      // Cargar fields para todas las respuestas si no existen
+      const responsesWithFields = await Promise.all(
+        submissions.map(async (response) => {
+          if (response.fields) return response;
+          // Si no tiene fields, cargar el detalle completo
+          const res = await fetch(`/api/form_responses.php?id=${response.id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            return res.json();
+          }
+          return response;
+        })
+      );
+      await exportAllResponsesToPDF(responsesWithFields);
+    } catch (err) {
+      console.error('Error exportando PDF:', err);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return '';
@@ -25,6 +78,28 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
   return (
     <>
       <div style={{ marginBottom: '2rem' }}>
+        {/* Export buttons */}
+        {submissions.length > 0 && (
+          <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <button
+              className="button button-secondary"
+              onClick={handleExportAllXLS}
+              disabled={exporting || loading}
+              title="Descargar todas las respuestas como archivo Excel"
+            >
+              {exporting ? 'Exportando...' : '📊 Exportar Todas (XLS)'}
+            </button>
+            <button
+              className="button button-secondary"
+              onClick={handleExportAllPDF}
+              disabled={exporting || loading}
+              title="Descargar todas las respuestas como archivo PDF"
+            >
+              {exporting ? 'Exportando...' : '📄 Exportar Todas (PDF)'}
+            </button>
+          </div>
+        )}
+
         {loading ? (
           <p style={{ color: 'var(--text-muted)' }}>Cargando...</p>
         ) : submissions.length === 0 ? (
