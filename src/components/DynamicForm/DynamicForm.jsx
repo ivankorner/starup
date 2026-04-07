@@ -18,6 +18,18 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
         const res = await fetch(`${API_URL}/forms.php?id=${formId}`);
         if (res.ok) {
           const data = await res.json();
+          // Parsear campos numéricos (PHP PDO devuelve strings)
+          if (data.fields) {
+            data.fields = data.fields.map(f => ({
+              ...f,
+              id: Number(f.id),
+              paso: Number(f.paso),
+              orden: Number(f.orden),
+              obligatorio: Number(f.obligatorio),
+              max_seleccion: f.max_seleccion ? Number(f.max_seleccion) : null,
+              max_length: f.max_length ? Number(f.max_length) : null,
+            }));
+          }
           setForm(data);
 
           // Inicializar respuestas vacías
