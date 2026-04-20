@@ -298,6 +298,12 @@ export default function FormsList({ token }) {
     } else {
       setEditingField(null);
       resetFieldInput();
+      // Autocalcular paso/orden según campos existentes
+      const existing = selectedForm?.fields || [];
+      const maxPaso = existing.length ? Math.max(...existing.map(f => Number(f.paso) || 1)) : 1;
+      const inSamePaso = existing.filter(f => Number(f.paso) === maxPaso);
+      const nextOrden = inSamePaso.length ? Math.max(...inSamePaso.map(f => Number(f.orden) || 0)) + 1 : 0;
+      setFieldInput(prev => ({ ...prev, paso: maxPaso, orden: nextOrden }));
     }
     setShowIconPicker(null);
     setShowFieldModal(true);
