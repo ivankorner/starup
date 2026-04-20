@@ -186,6 +186,7 @@ try {
                 // Construir tabla HTML con las respuestas
                 $filasHtml = '';
                 foreach ($fields as $field) {
+                    if (($field['tipo'] ?? '') === 'titulo') continue;
                     $fieldId = $field['id'];
                     $valor = isset($respuestasData[$fieldId]) ? $respuestasData[$fieldId] : (isset($respuestasData[(string)$fieldId]) ? $respuestasData[(string)$fieldId] : '');
                     if (is_array($valor)) {

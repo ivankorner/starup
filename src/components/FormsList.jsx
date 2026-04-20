@@ -13,6 +13,7 @@ const FIELD_TYPES = [
   { value: 'selector-grid', label: 'Selector Grid' },
   { value: 'timeline', label: 'Timeline' },
   { value: 'card-3', label: 'Tarjetas (3 opciones)' },
+  { value: 'titulo', label: 'Título (separador de sección)' },
 ];
 
 export default function FormsList({ token }) {
@@ -130,14 +131,20 @@ export default function FormsList({ token }) {
       const method = editingField ? 'PUT' : 'POST';
       const url = editingField ? `${API_URL}/form_fields.php?id=${editingField.id}` : `${API_URL}/form_fields.php`;
 
+      const isTitulo = fieldInput.tipo === 'titulo';
+
       const payload = {
         ...fieldInput,
         form_id: selectedForm.id,
-        obligatorio: fieldInput.obligatorio ? 1 : 0,
-        puntaje_completo: Number(fieldInput.puntaje_completo) || 0,
+        obligatorio: isTitulo ? 0 : (fieldInput.obligatorio ? 1 : 0),
+        puntaje_completo: isTitulo ? 0 : (Number(fieldInput.puntaje_completo) || 0),
       };
 
-      if (fieldInput.tipo === 'card-3') {
+      if (isTitulo) {
+        payload.opciones = null;
+        payload.max_length = null;
+        payload.max_seleccion = null;
+      } else if (fieldInput.tipo === 'card-3') {
         payload.opciones = fieldInput.card3Options
           .filter((o) => (o.texto || '').trim())
           .map((o) => ({
@@ -595,15 +602,17 @@ export default function FormsList({ token }) {
                 </div>
 
                 <div style={{ flex: 1 }}>
-                  <label className="form-label">
-                    <input
-                      type="checkbox"
-                      checked={fieldInput.obligatorio === 1}
-                      onChange={(e) => setFieldInput({ ...fieldInput, obligatorio: e.target.checked ? 1 : 0 })}
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    Obligatorio
-                  </label>
+                  {fieldInput.tipo !== 'titulo' && (
+                    <label className="form-label">
+                      <input
+                        type="checkbox"
+                        checked={fieldInput.obligatorio === 1}
+                        onChange={(e) => setFieldInput({ ...fieldInput, obligatorio: e.target.checked ? 1 : 0 })}
+                        style={{ marginRight: '0.5rem' }}
+                      />
+                      Obligatorio
+                    </label>
+                  )}
                 </div>
               </div>
 

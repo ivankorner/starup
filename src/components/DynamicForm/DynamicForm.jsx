@@ -35,6 +35,7 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
           // Inicializar respuestas vacías
           const init = {};
           data.fields.forEach((field) => {
+            if (field.tipo === 'titulo') return;
             const isMulti = field.tipo === 'chip-multi' ||
               (field.tipo === 'selector-grid' && field.max_seleccion);
             init[field.id] = isMulti ? [] : '';
@@ -61,6 +62,7 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
     const newErrors = {};
 
     fieldsInStep.forEach((field) => {
+      if (field.tipo === 'titulo') return;
       const value = responses[field.id];
 
       if (field.obligatorio) {

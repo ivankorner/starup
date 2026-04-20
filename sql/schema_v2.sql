@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS form_fields (
   form_id         INT UNSIGNED NOT NULL,
   paso            INT DEFAULT 1,
   orden           INT DEFAULT 0,
-  tipo            ENUM('texto', 'textarea', 'chip-single', 'chip-multi', 'selector-grid', 'timeline', 'card-3') NOT NULL DEFAULT 'texto',
+  tipo            ENUM('texto', 'textarea', 'chip-single', 'chip-multi', 'selector-grid', 'timeline', 'card-3', 'titulo') NOT NULL DEFAULT 'texto',
   label           VARCHAR(255) NOT NULL,
   descripcion     TEXT DEFAULT NULL,
   obligatorio     TINYINT DEFAULT 1,

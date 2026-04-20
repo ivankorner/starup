@@ -14,6 +14,14 @@ export default function FieldRenderer({ field, value, onChange, error }) {
   };
 
   switch (field.tipo) {
+    case 'titulo':
+      return (
+        <div className="form-section-title">
+          <h3>{field.label}</h3>
+          {field.descripcion && <p>{field.descripcion}</p>}
+        </div>
+      );
+
     case 'texto':
       return <TextInput {...commonProps} />;
 
