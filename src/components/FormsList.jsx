@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { ICON_NAMES, renderIcon, parseCardOption, searchIcons } from '../utils/cardIcons';
+import { ICON_NAMES, renderIcon, searchIcons } from '../utils/cardIcons';
+import { normalizeOptions } from '../utils/fieldOptions';
 
 const API_URL = '/api';
 
@@ -34,10 +35,15 @@ export default function FormsList({ token }) {
     obligatorio: 1,
     paso: 1,
     orden: 0,
-    opciones: '',
+    scoredOptions: [{ texto: '', puntos: 0 }, { texto: '', puntos: 0 }],
     max_seleccion: 3,
     max_length: 255,
-    card3Options: [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }],
+    puntaje_completo: 0,
+    card3Options: [
+      { texto: '', puntos: 0, icon: '' },
+      { texto: '', puntos: 0, icon: '' },
+      { texto: '', puntos: 0, icon: '' },
+    ],
   });
   const [showIconPicker, setShowIconPicker] = useState(null);
   const [iconSearch, setIconSearch] = useState('');
@@ -128,17 +134,24 @@ export default function FormsList({ token }) {
         ...fieldInput,
         form_id: selectedForm.id,
         obligatorio: fieldInput.obligatorio ? 1 : 0,
+        puntaje_completo: Number(fieldInput.puntaje_completo) || 0,
       };
 
       if (fieldInput.tipo === 'card-3') {
         payload.opciones = fieldInput.card3Options
-          .filter((o) => o.text.trim())
-          .map((o) => o.icon ? { text: o.text.trim(), icon: o.icon } : o.text.trim());
+          .filter((o) => (o.texto || '').trim())
+          .map((o) => ({
+            texto: o.texto.trim(),
+            puntos: Number(o.puntos) || 0,
+            ...(o.icon ? { icon: o.icon } : {}),
+          }));
       } else if (['chip-single', 'chip-multi', 'selector-grid', 'timeline'].includes(fieldInput.tipo)) {
-        payload.opciones = fieldInput.opciones
-          .split('\n')
-          .map((o) => o.trim())
-          .filter((o) => o);
+        payload.opciones = fieldInput.scoredOptions
+          .filter((o) => (o.texto || '').trim())
+          .map((o) => ({
+            texto: o.texto.trim(),
+            puntos: Number(o.puntos) || 0,
+          }));
       } else {
         payload.opciones = null;
       }
@@ -146,6 +159,10 @@ export default function FormsList({ token }) {
       if (!['texto', 'textarea'].includes(fieldInput.tipo)) {
         payload.max_length = null;
       }
+
+      // Limpiar campos UI-only
+      delete payload.scoredOptions;
+      delete payload.card3Options;
 
       const res = await fetch(url, {
         method,
@@ -243,11 +260,20 @@ export default function FormsList({ token }) {
     if (field) {
       setEditingField(field);
       const isCard3 = field.tipo === 'card-3';
-      const card3Opts = isCard3 && Array.isArray(field.opciones)
-        ? field.opciones.map(parseCardOption)
-        : [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }];
-      // Ensure at least 3 slots
-      while (card3Opts.length < 3) card3Opts.push({ text: '', icon: '' });
+      const normalized = normalizeOptions(field.opciones || []);
+
+      const card3Opts = isCard3 && normalized.length
+        ? normalized.map((o) => ({ texto: o.texto, puntos: o.puntos, icon: o.icon || '' }))
+        : [
+            { texto: '', puntos: 0, icon: '' },
+            { texto: '', puntos: 0, icon: '' },
+            { texto: '', puntos: 0, icon: '' },
+          ];
+      while (card3Opts.length < 3) card3Opts.push({ texto: '', puntos: 0, icon: '' });
+
+      const scoredOpts = !isCard3 && normalized.length
+        ? normalized.map((o) => ({ texto: o.texto, puntos: o.puntos }))
+        : [{ texto: '', puntos: 0 }, { texto: '', puntos: 0 }];
 
       setFieldInput({
         label: field.label,
@@ -256,9 +282,10 @@ export default function FormsList({ token }) {
         obligatorio: Number(field.obligatorio) ? 1 : 0,
         paso: Number(field.paso) || 0,
         orden: Number(field.orden) || 0,
-        opciones: !isCard3 && Array.isArray(field.opciones) ? field.opciones.join('\n') : '',
+        scoredOptions: scoredOpts,
         max_seleccion: field.max_seleccion || 3,
         max_length: field.max_length || 255,
+        puntaje_completo: Number(field.puntaje_completo) || 0,
         card3Options: card3Opts,
       });
     } else {
@@ -277,10 +304,15 @@ export default function FormsList({ token }) {
       obligatorio: 1,
       paso: 1,
       orden: 0,
-      opciones: '',
+      scoredOptions: [{ texto: '', puntos: 0 }, { texto: '', puntos: 0 }],
       max_seleccion: 3,
       max_length: 255,
-      card3Options: [{ text: '', icon: '' }, { text: '', icon: '' }, { text: '', icon: '' }],
+      puntaje_completo: 0,
+      card3Options: [
+        { texto: '', puntos: 0, icon: '' },
+        { texto: '', puntos: 0, icon: '' },
+        { texto: '', puntos: 0, icon: '' },
+      ],
     });
   };
 
@@ -600,19 +632,77 @@ export default function FormsList({ token }) {
 
               {['chip-single', 'chip-multi', 'selector-grid', 'timeline'].includes(fieldInput.tipo) && (
                 <div className="form-group">
-                  <label className="form-label">Opciones (una por línea)</label>
-                  <textarea
-                    value={fieldInput.opciones}
-                    onChange={(e) => setFieldInput({ ...fieldInput, opciones: e.target.value })}
-                    placeholder="Opción 1&#10;Opción 2&#10;Opción 3"
-                    rows="4"
-                  />
+                  <label className="form-label">Opciones y puntaje</label>
+                  <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '-0.25rem', marginBottom: '0.5rem' }}>
+                    Asigná puntos a cada opción. Mayor puntaje = respuesta más favorable para la viabilidad.
+                    {fieldInput.tipo === 'timeline' && ' (Para timeline, usa "Título|||Descripción" en el texto).'}
+                    {fieldInput.tipo === 'chip-multi' && ' (Multi-selección: se suman los puntos de todas las elegidas).'}
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {fieldInput.scoredOptions.map((opt, idx) => (
+                      <div key={idx} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <input
+                          type="text"
+                          value={opt.texto}
+                          onChange={(e) => {
+                            const updated = [...fieldInput.scoredOptions];
+                            updated[idx] = { ...updated[idx], texto: e.target.value };
+                            setFieldInput({ ...fieldInput, scoredOptions: updated });
+                          }}
+                          placeholder={`Opción ${idx + 1}`}
+                          style={{ flex: 1 }}
+                        />
+                        <input
+                          type="number"
+                          value={opt.puntos}
+                          onChange={(e) => {
+                            const updated = [...fieldInput.scoredOptions];
+                            updated[idx] = { ...updated[idx], puntos: parseInt(e.target.value) || 0 };
+                            setFieldInput({ ...fieldInput, scoredOptions: updated });
+                          }}
+                          placeholder="Puntos"
+                          style={{ width: '90px' }}
+                          title="Puntos para esta opción"
+                        />
+                        {fieldInput.scoredOptions.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = fieldInput.scoredOptions.filter((_, i) => i !== idx);
+                              setFieldInput({ ...fieldInput, scoredOptions: updated });
+                            }}
+                            style={{
+                              background: 'none', border: 'none', color: '#d32f2f',
+                              cursor: 'pointer', padding: '4px', fontSize: '18px',
+                            }}
+                            title="Eliminar opción"
+                          >
+                            &times;
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      className="button button-text"
+                      onClick={() => setFieldInput({
+                        ...fieldInput,
+                        scoredOptions: [...fieldInput.scoredOptions, { texto: '', puntos: 0 }],
+                      })}
+                      style={{ alignSelf: 'flex-start' }}
+                    >
+                      + Agregar opción
+                    </button>
+                  </div>
                 </div>
               )}
 
               {fieldInput.tipo === 'card-3' && (
                 <div className="form-group">
-                  <label className="form-label">Opciones de tarjeta (con iconos opcionales)</label>
+                  <label className="form-label">Opciones de tarjeta (con iconos y puntaje)</label>
+                  <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '-0.25rem', marginBottom: '0.5rem' }}>
+                    Icono + texto + puntos. Mayor puntaje = respuesta más favorable.
+                  </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     {fieldInput.card3Options.map((opt, idx) => (
                       <div key={idx} style={{
@@ -716,14 +806,26 @@ export default function FormsList({ token }) {
                         </div>
                         <input
                           type="text"
-                          value={opt.text}
+                          value={opt.texto}
                           onChange={(e) => {
                             const updated = [...fieldInput.card3Options];
-                            updated[idx] = { ...updated[idx], text: e.target.value };
+                            updated[idx] = { ...updated[idx], texto: e.target.value };
                             setFieldInput({ ...fieldInput, card3Options: updated });
                           }}
                           placeholder={`Opción ${idx + 1}`}
                           style={{ flex: 1 }}
+                        />
+                        <input
+                          type="number"
+                          value={opt.puntos}
+                          onChange={(e) => {
+                            const updated = [...fieldInput.card3Options];
+                            updated[idx] = { ...updated[idx], puntos: parseInt(e.target.value) || 0 };
+                            setFieldInput({ ...fieldInput, card3Options: updated });
+                          }}
+                          placeholder="Puntos"
+                          style={{ width: '80px' }}
+                          title="Puntos para esta opción"
                         />
                         {fieldInput.card3Options.length > 2 && (
                           <button
@@ -749,7 +851,7 @@ export default function FormsList({ token }) {
                         className="button button-text"
                         onClick={() => setFieldInput({
                           ...fieldInput,
-                          card3Options: [...fieldInput.card3Options, { text: '', icon: '' }],
+                          card3Options: [...fieldInput.card3Options, { texto: '', puntos: 0, icon: '' }],
                         })}
                         style={{ alignSelf: 'flex-start' }}
                       >
@@ -761,15 +863,31 @@ export default function FormsList({ token }) {
               )}
 
               {['texto', 'textarea'].includes(fieldInput.tipo) && (
-                <div className="form-group">
-                  <label className="form-label">Máximo de caracteres</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={fieldInput.max_length}
-                    onChange={(e) => setFieldInput({ ...fieldInput, max_length: parseInt(e.target.value) })}
-                  />
-                </div>
+                <>
+                  <div className="form-group">
+                    <label className="form-label">Máximo de caracteres</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={fieldInput.max_length}
+                      onChange={(e) => setFieldInput({ ...fieldInput, max_length: parseInt(e.target.value) })}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Puntos si está respondido</label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={fieldInput.puntaje_completo}
+                      onChange={(e) => setFieldInput({ ...fieldInput, puntaje_completo: parseInt(e.target.value) || 0 })}
+                      placeholder="0"
+                    />
+                    <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                      Se suman al puntaje total si el usuario completa este campo. Dejar en 0 si el campo no debe puntuar.
+                    </p>
+                  </div>
+                </>
               )}
 
               {['chip-multi'].includes(fieldInput.tipo) && (

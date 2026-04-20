@@ -1686,6 +1686,48 @@ textarea {
   color: var(--text-muted);
 }
 
+/* Viability badge (score + veredicto) */
+.viability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.viability-badge .viability-score {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.viability-badge .viability-label {
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 10px;
+}
+
+.viability-viable {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-color: #a5d6a7;
+}
+
+.viability-potencial {
+  background: #fff8e1;
+  color: #b28704;
+  border-color: #ffe08a;
+}
+
+.viability-no-viable {
+  background: #ffebee;
+  color: #c62828;
+  border-color: #ef9a9a;
+}
+
 .field-tipo-badge {
   display: inline-block;
   padding: 0.25rem 0.6rem;

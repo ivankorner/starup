@@ -1,3 +1,5 @@
+import { normalizeOptions } from '../../../utils/fieldOptions';
+
 export default function SelectorGrid({ field, value, onChange, error, multiple }) {
   const handleClick = (option) => {
     if (multiple) {
@@ -18,7 +20,7 @@ export default function SelectorGrid({ field, value, onChange, error, multiple }
     }
   };
 
-  const options = field.opciones || [];
+  const options = normalizeOptions(field.opciones).map((o) => o.texto);
   const currentValue = Array.isArray(value) ? value : value ? [value] : [];
 
   return (

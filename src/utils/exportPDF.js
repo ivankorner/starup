@@ -7,6 +7,22 @@ function getFieldLabel(key, fields) {
   return field ? field.label : key;
 }
 
+const VEREDICTO_LABELS = {
+  viable: 'Viable',
+  potencial: 'Potencial',
+  'no-viable': 'No viable',
+};
+
+const VEREDICTO_COLORS = {
+  viable: [46, 125, 50],
+  potencial: [178, 135, 4],
+  'no-viable': [198, 40, 40],
+};
+
+function hasScoring(response) {
+  return response && response.veredicto && Number(response.raw_maximo) > 0;
+}
+
 export async function exportResponseToPDF(response) {
   const pdf = new jsPDF({
     unit: 'mm',
@@ -56,6 +72,25 @@ export async function exportResponseToPDF(response) {
   pdf.setFont(undefined, 'normal');
   pdf.text(formatDate(response.created_at), margin + 50, yPosition);
   yPosition += 12;
+
+  // Viabilidad block
+  if (hasScoring(response)) {
+    const color = VEREDICTO_COLORS[response.veredicto] || [80, 80, 80];
+    pdf.setFillColor(color[0], color[1], color[2]);
+    pdf.rect(margin, yPosition, pageWidth - 2 * margin, 18, 'F');
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFont(undefined, 'bold');
+    pdf.setFontSize(11);
+    pdf.text('VIABILIDAD', margin + 3, yPosition + 6);
+    pdf.setFontSize(14);
+    pdf.text(
+      `${VEREDICTO_LABELS[response.veredicto] || response.veredicto} — ${response.score}/100 (${response.raw_obtenido}/${response.raw_maximo} pts)`,
+      margin + 3,
+      yPosition + 13
+    );
+    pdf.setTextColor(0, 0, 0);
+    yPosition += 24;
+  }
 
   // Responses section
   pdf.setFontSize(13);
@@ -158,7 +193,22 @@ export async function exportAllResponsesToPDF(responses) {
     pdf.text(`Email: ${response.email} | Formulario: ${response.form_titulo}`, margin, yPosition);
     yPosition += 6;
     pdf.text(`Enviado: ${formatDate(response.created_at)}`, margin, yPosition);
-    yPosition += 8;
+    yPosition += 6;
+
+    if (hasScoring(response)) {
+      const color = VEREDICTO_COLORS[response.veredicto] || [80, 80, 80];
+      pdf.setFont(undefined, 'bold');
+      pdf.setTextColor(color[0], color[1], color[2]);
+      pdf.text(
+        `Viabilidad: ${VEREDICTO_LABELS[response.veredicto] || response.veredicto} · Score: ${response.score}/100 (${response.raw_obtenido}/${response.raw_maximo} pts)`,
+        margin,
+        yPosition
+      );
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFont(undefined, 'normal');
+      yPosition += 6;
+    }
+    yPosition += 2;
 
     // Responses
     pdf.setFontSize(8);

@@ -81,6 +81,13 @@ export default function ResponseDetailModal({ response, onClose, token }) {
     return field ? field.label : key;
   };
 
+  const VEREDICTO_LABELS = {
+    viable: 'Viable',
+    potencial: 'Potencial',
+    'no-viable': 'No viable',
+  };
+  const hasViability = fullResponse.veredicto && fullResponse.raw_maximo > 0;
+
   if (loading) {
     return (
       <div className="modal-overlay" onClick={onClose}>
@@ -103,6 +110,33 @@ export default function ResponseDetailModal({ response, onClose, token }) {
             ✕
           </button>
         </div>
+
+        {hasViability && (
+          <div className={`viability-panel viability-${fullResponse.veredicto}`} style={{
+            padding: '1rem 1.25rem',
+            borderRadius: '12px',
+            marginBottom: '1.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+          }}>
+            <div>
+              <div style={{ fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.6px', opacity: 0.8 }}>
+                Viabilidad
+              </div>
+              <div style={{ fontSize: '20px', fontWeight: 700, marginTop: '0.25rem' }}>
+                {VEREDICTO_LABELS[fullResponse.veredicto] || fullResponse.veredicto}
+              </div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '0.25rem' }}>
+                Puntos: {fullResponse.raw_obtenido}/{fullResponse.raw_maximo}
+              </div>
+            </div>
+            <div style={{ fontSize: '36px', fontWeight: 800, lineHeight: 1 }}>
+              {fullResponse.score}<span style={{ fontSize: '14px', fontWeight: 500, opacity: 0.7 }}>/100</span>
+            </div>
+          </div>
+        )}
 
         <div style={{ marginBottom: '1.5rem' }}>
           <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Email:</p>

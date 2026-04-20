@@ -107,6 +107,12 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
     return Object.values(respuestas).slice(0, 2).join(' • ');
   };
 
+  const VEREDICTO_LABELS = {
+    viable: 'Viable',
+    potencial: 'Potencial',
+    'no-viable': 'No viable',
+  };
+
   return (
     <>
       <div style={{ marginBottom: '2rem' }}>
@@ -138,16 +144,24 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
           <p style={{ color: 'var(--text-muted)' }}>No hay respuestas</p>
         ) : (
           <div className="submissions-list">
-            {submissions.map((submission) => (
+            {submissions.map((submission) => {
+              const hasViability = submission.veredicto && submission.raw_maximo > 0;
+              return (
               <div key={submission.id} className="submission-card">
-                <div className="submission-header">
-                  <div>
+                <div className="submission-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.75rem' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <div className="submission-name">{submission.nombre}</div>
                     <div className="submission-meta">
                       {submission.form_titulo && `${submission.form_titulo} · `}
                       {formatDate(submission.created_at)}
                     </div>
                   </div>
+                  {hasViability && (
+                    <div className={`viability-badge viability-${submission.veredicto}`} title={`Score: ${submission.score}/100`}>
+                      <span className="viability-score">{submission.score}</span>
+                      <span className="viability-label">{VEREDICTO_LABELS[submission.veredicto] || submission.veredicto}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="submission-tweet" style={{ fontSize: '13px' }}>
@@ -172,7 +186,8 @@ export default function SubmissionsTable({ submissions, token, onRefresh, loadin
                   </button>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

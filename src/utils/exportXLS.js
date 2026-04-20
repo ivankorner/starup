@@ -6,6 +6,16 @@ function getFieldLabel(key, fields) {
   return field ? field.label : key;
 }
 
+const VEREDICTO_LABELS = {
+  viable: 'Viable',
+  potencial: 'Potencial',
+  'no-viable': 'No viable',
+};
+
+function hasScoring(response) {
+  return response && response.veredicto && Number(response.raw_maximo) > 0;
+}
+
 export function exportResponseToXLS(response) {
   const data = [];
 
@@ -16,6 +26,13 @@ export function exportResponseToXLS(response) {
   data.push(['Email:', response.email]);
   data.push(['Formulario:', response.form_titulo]);
   data.push(['Enviado:', formatDate(response.created_at)]);
+  if (hasScoring(response)) {
+    data.push([]);
+    data.push(['VIABILIDAD']);
+    data.push(['Veredicto:', VEREDICTO_LABELS[response.veredicto] || response.veredicto]);
+    data.push(['Score:', `${response.score}/100`]);
+    data.push(['Puntos:', `${response.raw_obtenido}/${response.raw_maximo}`]);
+  }
   data.push([]);
   data.push(['RESPUESTAS']);
   data.push([]);
@@ -61,6 +78,10 @@ export function exportAllResponsesToXLS(responses) {
       data.push([`${response.nombre} - ${response.form_titulo}`]);
       data.push(['Email:', response.email]);
       data.push(['Enviado:', formatDate(response.created_at)]);
+      if (hasScoring(response)) {
+        data.push(['Viabilidad:', VEREDICTO_LABELS[response.veredicto] || response.veredicto]);
+        data.push(['Score:', `${response.score}/100 (${response.raw_obtenido}/${response.raw_maximo} pts)`]);
+      }
       data.push([]);
       data.push(['Pregunta', 'Respuesta']);
 
@@ -89,14 +110,16 @@ export function exportAllResponsesToXLS(responses) {
     data.push([`Generado: ${formatDate(new Date().toISOString())}`]);
     data.push([`Total de respuestas: ${responses.length}`]);
     data.push([]);
-    data.push(['Nombre', 'Email', 'Formulario', 'Fecha de Envío']);
+    data.push(['Nombre', 'Email', 'Formulario', 'Fecha de Envío', 'Score', 'Viabilidad']);
 
     responses.forEach(response => {
       data.push([
         response.nombre,
         response.email,
         response.form_titulo,
-        formatDate(response.created_at)
+        formatDate(response.created_at),
+        hasScoring(response) ? `${response.score}/100` : '—',
+        hasScoring(response) ? (VEREDICTO_LABELS[response.veredicto] || response.veredicto) : '—',
       ]);
     });
 
@@ -105,7 +128,9 @@ export function exportAllResponsesToXLS(responses) {
       { wch: 25 },
       { wch: 25 },
       { wch: 25 },
-      { wch: 20 }
+      { wch: 20 },
+      { wch: 12 },
+      { wch: 14 },
     ];
 
     XLSX.utils.book_append_sheet(wb, ws, 'Respuestas');

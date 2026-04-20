@@ -1,14 +1,16 @@
+import { normalizeOptions } from '../../../utils/fieldOptions';
+
 export default function TimelineSelector({ field, value, onChange, error }) {
   // Parsear opciones: formato "Título|||Descripción"
-  const parseOption = (opt) => {
-    const parts = opt.split('|||');
+  const parseOption = (texto) => {
+    const parts = String(texto).split('|||');
     return {
-      title: parts[0] || opt,
+      title: parts[0] || texto,
       description: parts[1] || '',
     };
   };
 
-  const options = (field.opciones || []).map(parseOption);
+  const options = normalizeOptions(field.opciones).map((o) => parseOption(o.texto));
 
   const handleSelect = (title) => {
     onChange(value === title ? '' : title);

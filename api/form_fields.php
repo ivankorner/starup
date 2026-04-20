@@ -24,7 +24,8 @@ try {
             // GET /api/form_fields?id=X
             $stmt = $pdo->prepare("
                 SELECT id, form_id, paso, orden, tipo, label, descripcion,
-                       obligatorio, opciones, max_seleccion, max_length, slug
+                       obligatorio, opciones, max_seleccion, max_length, slug,
+                       puntaje_completo
                 FROM form_fields
                 WHERE id = ?
             ");
@@ -46,7 +47,8 @@ try {
             // GET /api/form_fields?form_id=X
             $stmt = $pdo->prepare("
                 SELECT id, form_id, paso, orden, tipo, label, descripcion,
-                       obligatorio, opciones, max_seleccion, max_length, slug
+                       obligatorio, opciones, max_seleccion, max_length, slug,
+                       puntaje_completo
                 FROM form_fields
                 WHERE form_id = ?
                 ORDER BY paso, orden
@@ -90,6 +92,7 @@ try {
         $maxSeleccion = $data['max_seleccion'] ?? null;
         $maxLength = $data['max_length'] ?? null;
         $slug = $data['slug'] ?? null;
+        $puntajeCompleto = isset($data['puntaje_completo']) ? (int)$data['puntaje_completo'] : 0;
 
         if (!$formId || !$label) {
             http_response_code(400);
@@ -109,12 +112,12 @@ try {
         $stmt = $pdo->prepare("
             INSERT INTO form_fields
             (form_id, paso, orden, tipo, label, descripcion, obligatorio,
-             opciones, max_seleccion, max_length, slug)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             opciones, max_seleccion, max_length, slug, puntaje_completo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([
             $formId, $paso, $orden, $tipo, $label, $descripcion, $obligatorio,
-            $opciones, $maxSeleccion, $maxLength, $slug,
+            $opciones, $maxSeleccion, $maxLength, $slug, $puntajeCompleto,
         ]);
 
         http_response_code(201);
@@ -195,6 +198,11 @@ try {
         if (isset($data['orden'])) {
             $updates[] = 'orden = ?';
             $params[] = $data['orden'];
+        }
+
+        if (isset($data['puntaje_completo'])) {
+            $updates[] = 'puntaje_completo = ?';
+            $params[] = (int)$data['puntaje_completo'];
         }
 
         if (empty($updates)) {

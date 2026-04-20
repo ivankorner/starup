@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once 'db.php';
 require_once 'middleware.php';
+require_once 'scoring.php';
 
 try {
     // GET /api/form_responses — obtener respuestas de un formulario (requiere auth)
@@ -26,6 +27,7 @@ try {
             // GET /api/form_responses?id=X — detalle con campos del formulario
             $stmt = $pdo->prepare("
                 SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
                        f.titulo AS form_titulo
                 FROM form_responses fr
                 JOIN forms f ON f.id = fr.form_id
@@ -44,7 +46,7 @@ try {
 
             // Incluir campos del formulario para mostrar labels
             $stmtFields = $pdo->prepare("
-                SELECT id, label, tipo, slug, paso, orden, opciones
+                SELECT id, label, tipo, slug, paso, orden, opciones, puntaje_completo
                 FROM form_fields
                 WHERE form_id = ?
                 ORDER BY paso ASC, orden ASC
@@ -64,6 +66,7 @@ try {
             // GET /api/form_responses?form_id=X
             $stmt = $pdo->prepare("
                 SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
                        f.titulo AS form_titulo
                 FROM form_responses fr
                 JOIN forms f ON f.id = fr.form_id
@@ -84,6 +87,7 @@ try {
             // GET /api/form_responses — todas las respuestas de todos los formularios
             $stmt = $pdo->query("
                 SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.created_at,
+                       fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
                        f.titulo AS form_titulo
                 FROM form_responses fr
                 JOIN forms f ON f.id = fr.form_id
@@ -112,7 +116,8 @@ try {
         $formId = $data['form_id'] ?? null;
         $nombre = $data['nombre'] ?? '';
         $email = $data['email'] ?? '';
-        $respuestas = json_encode($data['respuestas'] ?? []);
+        $respuestasArr = $data['respuestas'] ?? [];
+        $respuestas = json_encode($respuestasArr);
 
         if (!$formId || !$nombre || !$email) {
             http_response_code(400);
@@ -130,11 +135,19 @@ try {
             exit;
         }
 
+        // Calcular scoring de viabilidad
+        $scoring = calcularScore($pdo, $formId, $respuestasArr);
+
         $stmt = $pdo->prepare("
-            INSERT INTO form_responses (form_id, nombre, email, respuestas)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO form_responses
+            (form_id, nombre, email, respuestas, score, veredicto, raw_obtenido, raw_maximo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$formId, $nombre, $email, $respuestas]);
+        $stmt->execute([
+            $formId, $nombre, $email, $respuestas,
+            $scoring['score'], $scoring['veredicto'],
+            $scoring['raw_obtenido'], $scoring['raw_maximo'],
+        ]);
 
         $responseId = $pdo->lastInsertId();
 
@@ -142,6 +155,8 @@ try {
         echo json_encode([
             'success' => true,
             'id' => $responseId,
+            'score' => $scoring['score'],
+            'veredicto' => $scoring['veredicto'],
             'message' => 'Respuesta guardada',
         ]);
 

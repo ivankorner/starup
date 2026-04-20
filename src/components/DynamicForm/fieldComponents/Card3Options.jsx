@@ -1,11 +1,12 @@
-import { parseCardOption, renderIcon } from '../../../utils/cardIcons';
+import { renderIcon } from '../../../utils/cardIcons';
+import { normalizeOptions } from '../../../utils/fieldOptions';
 
 export default function Card3Options({ field, value, onChange, error }) {
   const handleSelect = (optionText) => {
     onChange(value === optionText ? '' : optionText);
   };
 
-  const options = (field.opciones || []).map(parseCardOption);
+  const options = normalizeOptions(field.opciones).map((o) => ({ text: o.texto, icon: o.icon }));
 
   return (
     <div className="form-group">
