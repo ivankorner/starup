@@ -26,6 +26,10 @@ export default function FormsList({ token }) {
   const [showFormModal, setShowFormModal] = useState(false);
   const [editingForm, setEditingForm] = useState(null);
   const [formInput, setFormInput] = useState({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
+  const [coverFile, setCoverFile] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
+  const [existingCoverUrl, setExistingCoverUrl] = useState(null);
+  const [uploadingCover, setUploadingCover] = useState(false);
 
   const [showFieldModal, setShowFieldModal] = useState(false);
   const [editingField, setEditingField] = useState(null);
@@ -104,15 +108,77 @@ export default function FormsList({ token }) {
         body: JSON.stringify(formInput),
       });
 
-      if (res.ok) {
-        setShowFormModal(false);
-        setEditingForm(null);
-        setFormInput({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
-        loadForms();
+      if (!res.ok) return;
+
+      const data = await res.json().catch(() => ({}));
+      const formId = editingForm ? editingForm.id : data.id;
+
+      // Subir portada si se seleccionó una nueva
+      if (coverFile && formId) {
+        setUploadingCover(true);
+        const fd = new FormData();
+        fd.append('form_id', formId);
+        fd.append('image', coverFile);
+        await fetch(`${API_URL}/form_covers.php`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: fd,
+        });
+        setUploadingCover(false);
       }
+
+      setShowFormModal(false);
+      setEditingForm(null);
+      setFormInput({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
+      setCoverFile(null);
+      setCoverPreview(null);
+      setExistingCoverUrl(null);
+      loadForms();
     } catch (err) {
       console.error(err);
+      setUploadingCover(false);
     }
+  };
+
+  const removeCover = async () => {
+    if (!editingForm) {
+      setCoverFile(null);
+      setCoverPreview(null);
+      return;
+    }
+    const result = await Swal.fire({
+      title: '¿Eliminar portada?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d32f2f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+    if (!result.isConfirmed) return;
+
+    const res = await fetch(`${API_URL}/form_covers.php?form_id=${editingForm.id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    if (res.ok) {
+      setCoverFile(null);
+      setCoverPreview(null);
+      setExistingCoverUrl(null);
+    }
+  };
+
+  const handleCoverChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5242880) {
+      Swal.fire({ icon: 'error', title: 'Archivo muy grande', text: 'Máximo 5MB' });
+      return;
+    }
+    setCoverFile(file);
+    const reader = new FileReader();
+    reader.onload = (ev) => setCoverPreview(ev.target.result);
+    reader.readAsDataURL(file);
   };
 
   // Field Modal - Save
@@ -248,6 +314,8 @@ export default function FormsList({ token }) {
   };
 
   const openFormModal = (form = null) => {
+    setCoverFile(null);
+    setCoverPreview(null);
     if (form) {
       setEditingForm(form);
       setFormInput({
@@ -256,9 +324,11 @@ export default function FormsList({ token }) {
         estado: form.estado,
         email_destino: form.email_destino || '',
       });
+      setExistingCoverUrl(form.cover_image_url || null);
     } else {
       setEditingForm(null);
       setFormInput({ titulo: '', descripcion: '', estado: 'borrador', email_destino: '' });
+      setExistingCoverUrl(null);
     }
     setShowFormModal(true);
   };
@@ -439,6 +509,41 @@ export default function FormsList({ token }) {
               </div>
 
               <div className="form-group">
+                <label className="form-label">Imagen de portada (opcional)</label>
+                {(coverPreview || existingCoverUrl) && (
+                  <div style={{ marginBottom: '0.5rem' }}>
+                    <img
+                      src={coverPreview || existingCoverUrl}
+                      alt="Portada"
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '180px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--border)',
+                        display: 'block',
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="button button-text"
+                      onClick={removeCover}
+                      style={{ color: '#d32f2f', marginTop: '0.25rem' }}
+                    >
+                      Eliminar portada
+                    </button>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/gif,image/webp"
+                  onChange={handleCoverChange}
+                />
+                <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                  Se mostrará debajo del título del formulario publicado. JPG, PNG, GIF o WebP. Máx 5MB.
+                </p>
+              </div>
+
+              <div className="form-group">
                 <label className="form-label">Estado</label>
                 <select
                   value={formInput.estado}
@@ -467,8 +572,8 @@ export default function FormsList({ token }) {
                 <button className="button" onClick={() => setShowFormModal(false)}>
                   Cancelar
                 </button>
-                <button className="button button-primary" onClick={saveForm}>
-                  {editingForm ? 'Guardar Cambios' : 'Crear Formulario'}
+                <button className="button button-primary" onClick={saveForm} disabled={uploadingCover}>
+                  {uploadingCover ? 'Subiendo...' : (editingForm ? 'Guardar Cambios' : 'Crear Formulario')}
                 </button>
               </div>
             </div>

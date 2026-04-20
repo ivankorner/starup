@@ -217,6 +217,21 @@ export default function DynamicForm({ formId, onSubmit, onClose }) {
         <h1 className="step-title" style={{ fontSize: '28px', marginBottom: '0.5rem' }}>
           {form.titulo}
         </h1>
+        {form.cover_image_url && currentStep === 0 && (
+          <img
+            src={form.cover_image_url}
+            alt={form.titulo}
+            className="form-cover-image"
+            style={{
+              width: '100%',
+              maxHeight: '280px',
+              objectFit: 'cover',
+              borderRadius: '12px',
+              margin: '0.75rem 0 1rem',
+              display: 'block',
+            }}
+          />
+        )}
         {form.descripcion && (
           <p className="step-subtitle" style={{ marginBottom: '1rem' }}>
             {form.descripcion}

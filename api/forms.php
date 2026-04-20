@@ -23,7 +23,7 @@ try {
         if ($id) {
             // GET /api/forms?id=X — obtener formulario específico con sus campos
             $stmt = $pdo->prepare("
-                SELECT id, titulo, descripcion, estado, email_destino, created_by, created_at, updated_at
+                SELECT id, titulo, descripcion, cover_image, estado, email_destino, created_by, created_at, updated_at
                 FROM forms
                 WHERE id = ?
             ");
@@ -35,6 +35,10 @@ try {
                 echo json_encode(['error' => 'Formulario no encontrado']);
                 exit;
             }
+
+            $form['cover_image_url'] = !empty($form['cover_image'])
+                ? '/api/uploads/form_covers/' . basename($form['cover_image'])
+                : null;
 
             // Obtener los campos del formulario
             $stmt = $pdo->prepare("
@@ -59,7 +63,7 @@ try {
 
         } else {
             // GET /api/forms — listar todos los formularios (o filtrar por estado si se especifica)
-            $query = "SELECT id, titulo, descripcion, estado, email_destino, created_by, created_at, updated_at FROM forms";
+            $query = "SELECT id, titulo, descripcion, cover_image, estado, email_destino, created_by, created_at, updated_at FROM forms";
             $params = [];
 
             if ($estado) {
@@ -72,6 +76,12 @@ try {
             $stmt = $pdo->prepare($query);
             $stmt->execute($params);
             $forms = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($forms as &$f) {
+                $f['cover_image_url'] = !empty($f['cover_image'])
+                    ? '/api/uploads/form_covers/' . basename($f['cover_image'])
+                    : null;
+            }
 
             http_response_code(200);
             echo json_encode($forms);
