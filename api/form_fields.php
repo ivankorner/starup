@@ -165,6 +165,22 @@ try {
             $params[] = $data['label'];
         }
 
+        if (isset($data['tipo'])) {
+            $validTipos = ['texto','textarea','chip-single','chip-multi','selector-grid','timeline','card-3'];
+            if (!in_array($data['tipo'], $validTipos, true)) {
+                http_response_code(400);
+                echo json_encode(['error' => 'tipo inválido']);
+                exit;
+            }
+            $updates[] = 'tipo = ?';
+            $params[] = $data['tipo'];
+        }
+
+        if (array_key_exists('slug', $data)) {
+            $updates[] = 'slug = ?';
+            $params[] = $data['slug'] ?: null;
+        }
+
         if (isset($data['descripcion'])) {
             $updates[] = 'descripcion = ?';
             $params[] = $data['descripcion'];
