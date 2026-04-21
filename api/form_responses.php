@@ -202,6 +202,32 @@ try {
                 $emailHtml = htmlspecialchars($email);
                 $fecha = date('d/m/Y H:i');
 
+                // Bloque de viabilidad (mismo formato que el PDF)
+                $viabilidadHtml = '';
+                if (!empty($scoring['veredicto']) && !empty($scoring['raw_maximo']) && $scoring['raw_maximo'] > 0) {
+                    $veredictoLabels = [
+                        'viable' => 'Viable',
+                        'potencial' => 'Potencial',
+                        'no-viable' => 'No viable',
+                    ];
+                    $veredictoColors = [
+                        'viable' => '#2E7D32',
+                        'potencial' => '#B28704',
+                        'no-viable' => '#C62828',
+                    ];
+                    $vKey = $scoring['veredicto'];
+                    $vLabel = $veredictoLabels[$vKey] ?? $vKey;
+                    $vColor = $veredictoColors[$vKey] ?? '#505050';
+                    $vScore = (int)$scoring['score'];
+                    $vRaw = (int)$scoring['raw_obtenido'];
+                    $vMax = (int)$scoring['raw_maximo'];
+                    $viabilidadHtml = "
+                        <div style='background:{$vColor};color:white;padding:14px 18px;border-radius:6px;margin:15px 0;'>
+                            <div style='font-size:12px;font-weight:700;letter-spacing:1px;opacity:0.9;'>VIABILIDAD</div>
+                            <div style='font-size:18px;font-weight:700;margin-top:4px;'>{$vLabel} — {$vScore}/100 ({$vRaw}/{$vMax} pts)</div>
+                        </div>";
+                }
+
                 $htmlBody = "
                 <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>
                     <div style='background:#6C63FF;color:white;padding:20px;border-radius:8px 8px 0 0;'>
@@ -212,6 +238,7 @@ try {
                         <p><strong>Nombre:</strong> {$nombreHtml}</p>
                         <p><strong>Email:</strong> {$emailHtml}</p>
                         <p><strong>Fecha:</strong> {$fecha}</p>
+                        {$viabilidadHtml}
                         <hr style='border:none;border-top:1px solid #e0e0e0;margin:15px 0;'>
                         <h3 style='color:#333;margin-bottom:10px;'>Respuestas</h3>
                         <table style='width:100%;border-collapse:collapse;'>{$filasHtml}</table>
