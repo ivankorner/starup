@@ -1,12 +1,13 @@
 :root {
-  --primary: #5B5BD6;
-  --primary-light: #EEEDFE;
-  --primary-dark: #3C3489;
-  --text-main: #1A1A2E;
-  --text-body: #333333;
-  --text-muted: #888888;
-  --border: #E0E0E0;
-  --bg-light: #F5F5F5;
+  /* Paleta SIMI - Blanco y Negro minimalista */
+  --primary: #000000;
+  --primary-light: #F5F5F5;
+  --primary-dark: #000000;
+  --text-main: #000000;
+  --text-body: #1A1A1A;
+  --text-muted: #666666;
+  --border: #D9D9D9;
+  --bg-light: #EFEFEF;
   --bg-white: #FFFFFF;
 
   /* Veredictos */
@@ -21,13 +22,13 @@
   --red-border: #A32D2D;
 
   /* Errors & States */
-  --color-danger: #d32f2f;
+  --color-danger: #D32F2F;
   --color-danger-light: #FEEEEE;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10);
 
   /* Border Radius */
   --radius-sm: 6px;
@@ -40,8 +41,9 @@
   --transition: 0.2s ease;
   --transition-slow: 0.35s ease;
 
-  /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #5B5BD6 0%, #7B7FF5 100%);
+  /* Gradients - footer Silicon Misiones */
+  --gradient-primary: linear-gradient(135deg, #000000 0%, #333333 100%);
+  --gradient-footer: linear-gradient(90deg, #E63946 0%, #8B1E3F 20%, #3D348B 45%, #1F2A6D 65%, #0B1A4C 85%, #E26D5A 100%);
 }
 
 * {
