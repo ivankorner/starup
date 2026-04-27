@@ -65,78 +65,81 @@ export function exportResponseToXLS(response) {
 export function exportAllResponsesToXLS(responses) {
   const wb = XLSX.utils.book_new();
 
-  // Si tenemos respuestas, usamos los fields de la primera para crear headers
-  if (responses.length > 0 && responses[0].fields) {
-    const firstResponse = responses[0];
-    const fields = firstResponse.fields;
+  // Agrupar respuestas por formulario
+  const byForm = {};
+  responses.forEach(r => {
+    const key = r.form_titulo || 'Sin formulario';
+    if (!byForm[key]) byForm[key] = [];
+    byForm[key].push(r);
+  });
 
-    // Crear una hoja por cada respuesta
-    responses.forEach((response, index) => {
-      const data = [];
+  Object.entries(byForm).forEach(([formTitle, formResponses]) => {
+    // Recolectar todos los slugs/labels únicos de todas las respuestas de este formulario
+    const slugOrder = [];
+    const slugToLabel = {};
 
-      // Header individual
-      data.push([`${response.nombre} - ${response.form_titulo}`]);
-      data.push(['Email:', response.email]);
-      data.push(['Enviado:', formatDate(response.created_at)]);
-      if (hasScoring(response)) {
-        data.push(['Viabilidad:', VEREDICTO_LABELS[response.veredicto] || response.veredicto]);
-        data.push(['Score:', `${response.score}/100 (${response.raw_obtenido}/${response.raw_maximo} pts)`]);
-      }
-      data.push([]);
-      data.push(['Pregunta', 'Respuesta']);
-
-      // Respuestas con labels
-      if (response.respuestas && typeof response.respuestas === 'object') {
-        Object.entries(response.respuestas).forEach(([slug, value]) => {
-          const label = getFieldLabel(slug, response.fields);
-          const displayValue = Array.isArray(value) ? value.join(', ') : String(value || '');
-          data.push([label, displayValue]);
+    formResponses.forEach(r => {
+      const fields = r.fields || [];
+      if (r.respuestas && typeof r.respuestas === 'object') {
+        Object.keys(r.respuestas).forEach(slug => {
+          if (!slugToLabel[slug]) {
+            slugOrder.push(slug);
+            slugToLabel[slug] = getFieldLabel(slug, fields);
+          }
         });
       }
-
-      const ws = XLSX.utils.aoa_to_sheet(data);
-      ws['!cols'] = [
-        { wch: 30 },
-        { wch: 50 }
-      ];
-
-      const sheetName = `${response.nombre}`.substring(0, 31); // Excel límite de 31 caracteres
-      XLSX.utils.book_append_sheet(wb, ws, sheetName);
     });
-  } else {
-    // Fallback: crear tabla resumen simple
-    const data = [];
-    data.push(['REPORTE DE RESPUESTAS']);
-    data.push([`Generado: ${formatDate(new Date().toISOString())}`]);
-    data.push([`Total de respuestas: ${responses.length}`]);
-    data.push([]);
-    data.push(['Nombre', 'Email', 'Formulario', 'Fecha de Envío', 'Score', 'Viabilidad']);
 
-    responses.forEach(response => {
-      data.push([
-        response.nombre,
-        response.email,
-        response.form_titulo,
-        formatDate(response.created_at),
-        hasScoring(response) ? `${response.score}/100` : '—',
-        hasScoring(response) ? (VEREDICTO_LABELS[response.veredicto] || response.veredicto) : '—',
-      ]);
+    // Detectar si alguna respuesta tiene scoring
+    const anyScoring = formResponses.some(hasScoring);
+
+    // Cabecera: campos fijos + preguntas del formulario + scoring si aplica
+    const fixedHeaders = ['Nombre', 'Email', 'Formulario', 'Fecha de Envío'];
+    const scoringHeaders = anyScoring ? ['Score', 'Viabilidad'] : [];
+    const questionHeaders = slugOrder.map(s => slugToLabel[s]);
+    const header = [...fixedHeaders, ...scoringHeaders, ...questionHeaders];
+
+    const data = [header];
+
+    formResponses.forEach(r => {
+      const fixedCols = [
+        r.nombre || '',
+        r.email || '',
+        r.form_titulo || '',
+        formatDate(r.created_at),
+      ];
+      const scoringCols = anyScoring
+        ? [
+            hasScoring(r) ? `${r.score}/100` : '—',
+            hasScoring(r) ? (VEREDICTO_LABELS[r.veredicto] || r.veredicto) : '—',
+          ]
+        : [];
+      const questionCols = slugOrder.map(slug => {
+        const val = r.respuestas ? r.respuestas[slug] : '';
+        return Array.isArray(val) ? val.join(', ') : String(val ?? '');
+      });
+
+      data.push([...fixedCols, ...scoringCols, ...questionCols]);
     });
 
     const ws = XLSX.utils.aoa_to_sheet(data);
-    ws['!cols'] = [
-      { wch: 25 },
-      { wch: 25 },
-      { wch: 25 },
-      { wch: 20 },
-      { wch: 12 },
-      { wch: 14 },
+
+    // Anchos de columna
+    const colWidths = [
+      { wch: 25 }, // Nombre
+      { wch: 25 }, // Email
+      { wch: 25 }, // Formulario
+      { wch: 20 }, // Fecha
+      ...scoringHeaders.map(() => ({ wch: 14 })),
+      ...questionHeaders.map(() => ({ wch: 30 })),
     ];
+    ws['!cols'] = colWidths;
 
-    XLSX.utils.book_append_sheet(wb, ws, 'Respuestas');
-  }
+    // Nombre de hoja: truncar a 31 chars (límite Excel), único por índice si hay colisión
+    const sheetName = formTitle.substring(0, 31);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+  });
 
-  // Download
   const filename = `respuestas_${new Date().getTime()}.xlsx`;
   XLSX.writeFile(wb, filename);
 }
