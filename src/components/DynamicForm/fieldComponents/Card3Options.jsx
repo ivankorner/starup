@@ -53,7 +53,7 @@ export default function Card3Options({ field, value, onChange, error }) {
             >
               {icon ? (
                 <div style={{
-                  color: isSelected ? 'var(--primary)' : '#8b95a5',
+                  color: isSelected ? 'var(--primary)' : '#4f5969',
                   marginBottom: '0.25rem',
                   transition: 'color 0.2s ease',
                 }}>
