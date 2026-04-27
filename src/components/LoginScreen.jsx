@@ -65,12 +65,6 @@ export default function LoginScreen({ onLogin }) {
           </button>
         </form>
 
-        <div className="login-footer">
-          <p style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center' }}>
-            Usuario de demo: <strong>admin@radar.com</strong><br />
-            Contraseña: <strong>admin123</strong>
-          </p>
-        </div>
       </div>
     </div>
   );
