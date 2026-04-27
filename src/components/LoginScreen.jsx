@@ -23,7 +23,7 @@ export default function LoginScreen({ onLogin }) {
     <div className="login-container">
       <div className="login-box">
         <div className="login-header">
-          <span style={{ fontSize: '48px', marginBottom: '1rem', display: 'block' }}>📡</span>
+          <img src="/branding/logonuevo.svg" alt="SIMI" style={{ height: '60px', marginBottom: '1rem', display: 'block', margin: '0 auto 1rem' }} />
           <h1>Radar de Proyectos</h1>
           <p className="login-subtitle">Panel del Evaluador</p>
         </div>
