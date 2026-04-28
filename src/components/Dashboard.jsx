@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SubmissionsTable from './SubmissionsTable';
+import ResponsesTable from './ResponsesTable';
 import FormsList from './FormsList';
 
 const API_URL = '/api';
@@ -68,7 +68,7 @@ export default function Dashboard({ user, token }) {
       {/* Tab: Respuestas */}
       {activeTab === 'respuestas' && (
         <div className="dashboard-content">
-          <SubmissionsTable
+          <ResponsesTable
             submissions={submissions}
             token={token}
             onRefresh={loadSubmissions}

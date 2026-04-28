@@ -1,0 +1,47 @@
+<h2>¿Dónde va la tabla en el Dashboard?</h2>
+<p class="subtitle">El tab "Respuestas" actual muestra tarjetas. ¿Cómo integramos la tabla?</p>
+
+<div class="options">
+  <div class="option" data-choice="nuevo-tab" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Nuevo tab "Inscritos"</h3>
+      <div style="margin: 8px 0; font-family:monospace; font-size:11px; background:#f0f0f0; padding:6px 10px; border-radius:4px; display:inline-flex; gap:12px;">
+        <span style="background:#fff; padding:2px 8px; border-radius:3px; border:1px solid #ccc; font-weight:bold;">Respuestas</span>
+        <span style="background:#1a1a2e; color:#fff; padding:2px 8px; border-radius:3px;">Inscritos ★</span>
+        <span style="padding:2px 8px;">Formularios</span>
+      </div>
+      <p>Tab separado. "Respuestas" queda como está (tarjetas). "Inscritos" es la nueva vista tabla con filtros y búsqueda.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="toggle" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Toggle dentro de "Respuestas"</h3>
+      <div style="margin: 8px 0; font-family:monospace; font-size:11px; background:#f0f0f0; padding:6px 10px; border-radius:4px;">
+        <div style="margin-bottom:6px; display:inline-flex; gap:12px;">
+          <span style="background:#1a1a2e; color:#fff; padding:2px 8px; border-radius:3px;">Respuestas</span>
+          <span style="padding:2px 8px; color:#888;">Formularios</span>
+        </div>
+        <div style="display:flex; gap:4px; font-size:10px;">
+          <span style="background:#fff; border:1px solid #ccc; padding:1px 8px; border-radius:3px;">🃏 Tarjetas</span>
+          <span style="background:#1a1a2e; color:#fff; border:1px solid #1a1a2e; padding:1px 8px; border-radius:3px;">📋 Tabla</span>
+        </div>
+      </div>
+      <p>Botones "Tarjetas / Tabla" dentro del tab Respuestas. Mismo contenido, dos formas de ver. Menos tabs, más compacto.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="reemplazar" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Reemplazar — solo tabla</h3>
+      <div style="margin: 8px 0; font-family:monospace; font-size:11px; background:#f0f0f0; padding:6px 10px; border-radius:4px; display:inline-flex; gap:12px;">
+        <span style="background:#1a1a2e; color:#fff; padding:2px 8px; border-radius:3px;">Respuestas</span>
+        <span style="padding:2px 8px; color:#888;">Formularios</span>
+      </div>
+      <p>El tab "Respuestas" pasa a ser directamente la tabla. Las tarjetas desaparecen. Más simple, una sola vista.</p>
+    </div>
+  </div>
+</div>

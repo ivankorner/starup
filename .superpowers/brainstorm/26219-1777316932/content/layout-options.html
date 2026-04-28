@@ -1,0 +1,111 @@
+<h2>¿Cómo querés ver los inscritos?</h2>
+<p class="subtitle">Elegí el layout que mejor se adapta a cómo trabajás con los datos</p>
+
+<div class="cards">
+  <div class="card" data-choice="tabla" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 1rem; background: #f8f9fa; border-radius: 6px; font-family: monospace; font-size: 11px;">
+      <div style="background:#1a1a2e; color:#fff; padding:6px 10px; border-radius:4px 4px 0 0; display:flex; gap:8px; align-items:center; font-size:10px;">
+        <span style="opacity:.6">🔍 Buscar...</span>
+        <span style="margin-left:auto; opacity:.6">Formulario ▾</span>
+        <span style="opacity:.6">Fecha ▾</span>
+      </div>
+      <table style="width:100%; border-collapse:collapse; font-size:10px; background:#fff;">
+        <tr style="background:#f0f0f0; font-weight:bold;">
+          <td style="padding:4px 6px; border:1px solid #ddd;">Nombre</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Email</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Formulario</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Fecha</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Proyecto</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Descripción</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Ivan</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">ivan@...</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Radar SIMI</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">24 abr</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">AulaTrack</td>
+          <td style="padding:4px 6px; border:1px solid #ddd; color:#888;">Lorem ipsum...</td>
+        </tr>
+        <tr style="background:#fafafa;">
+          <td style="padding:4px 6px; border:1px solid #ddd;">Luciano</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">luciano@...</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Radar SIMI</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">22 abr</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">BOT</td>
+          <td style="padding:4px 6px; border:1px solid #ddd; color:#888;">Bot que determina...</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 6px; border:1px solid #ddd;">prueba_1</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">prueba@...</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">Radar</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">14 abr</td>
+          <td style="padding:4px 6px; border:1px solid #ddd;">—</td>
+          <td style="padding:4px 6px; border:1px solid #ddd; color:#888;">—</td>
+        </tr>
+      </table>
+      <div style="padding:4px 10px; background:#fff; border:1px solid #ddd; border-top:none; font-size:9px; color:#888;">3 inscritos · Click fila para ver detalle completo</div>
+    </div>
+    <div class="card-body">
+      <h3>A — Tabla / Planilla</h3>
+      <p>Vista tipo Excel dentro de la plataforma. Todas las columnas visibles, scroll horizontal para respuestas largas. Click en fila abre detalle. Búsqueda y filtros arriba de la tabla.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 1rem; background: #f8f9fa; border-radius: 6px;">
+      <div style="background:#1a1a2e; color:#fff; padding:6px 10px; border-radius:4px 4px 0 0; font-size:10px; opacity:.8;">
+        🔍 Buscar inscritos...
+      </div>
+      <div style="display:flex; gap:0; border:1px solid #ddd; border-top:none; min-height:120px; background:#fff; font-size:10px;">
+        <div style="width:45%; border-right:1px solid #ddd; padding:0;">
+          <div style="padding:6px 8px; background:#e8f0fe; border-bottom:1px solid #ddd; font-weight:bold;">▶ Ivan · Radar SIMI</div>
+          <div style="padding:6px 8px; border-bottom:1px solid #eee; color:#555;">Luciano · Radar SIMI</div>
+          <div style="padding:6px 8px; border-bottom:1px solid #eee; color:#555;">prueba_1 · Radar</div>
+          <div style="padding:6px 8px; color:#aaa; font-size:9px;">+ 1 más</div>
+        </div>
+        <div style="flex:1; padding:8px; font-size:10px;">
+          <div style="font-weight:bold; margin-bottom:4px;">Ivan · ssdfsd@gmail.com</div>
+          <div style="color:#888; margin-bottom:6px; font-size:9px;">Radar SIMI · 24 abr 2026</div>
+          <div style="font-size:9px; line-height:1.6;">
+            <b>Nombre del proyecto:</b> AulaTrack<br>
+            <b>Descripción:</b> asdas<br>
+            <b>Sector:</b> EdTech<br>
+            <span style="color:#aaa">...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Lista + Panel lateral</h3>
+      <p>Lista de inscritos a la izquierda, detalle completo a la derecha sin abrir modal. Ideal para revisar respuestas rápidamente sin perder el contexto de la lista.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="cards-plus" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 1rem; background: #f8f9fa; border-radius: 6px; font-size:10px;">
+      <div style="background:#1a1a2e; color:#fff; padding:6px 10px; border-radius:4px 4px 0 0; display:flex; gap:8px; align-items:center; font-size:10px;">
+        <span>🔍 Buscar...</span>
+        <span style="margin-left:auto;">Formulario ▾</span>
+      </div>
+      <div style="background:#fff; border:1px solid #ddd; border-top:none; padding:6px 8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="background:#e8f0fe; padding:2px 6px; border-radius:10px; font-size:9px;">Radar SIMI ×</span>
+      </div>
+      <div style="background:#fff; border:1px solid #ddd; border-top:none; padding:8px;">
+        <div style="border-left:3px solid #1a1a2e; padding:4px 8px; margin-bottom:6px;">
+          <div style="font-weight:bold;">Ivan</div>
+          <div style="color:#888; font-size:9px;">Radar SIMI · 24 abr · ssdfsd@gmail.com</div>
+          <div style="font-size:9px; margin-top:3px; color:#555;">AulaTrack · EdTech · asdas...</div>
+          <div style="font-size:9px; margin-top:4px;"><span style="color:#1a73e8;">Ver todo ▾</span></div>
+        </div>
+        <div style="border-left:3px solid #ddd; padding:4px 8px; color:#888;">
+          <div style="font-weight:bold; color:#333;">Luciano</div>
+          <div style="font-size:9px;">Radar SIMI · 22 abr · luciano@...</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Tarjetas expandibles + Filtros</h3>
+      <p>Evolución del diseño actual. Tarjetas con preview de respuestas clave, expandibles inline. Filtros por formulario con chips. Más familiar, sin romper la estética actual.</p>
+    </div>
+  </div>
+</div>
