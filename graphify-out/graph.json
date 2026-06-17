@@ -1,0 +1,4224 @@
+{
+  "nodes": [
+    {
+      "id": "src:app",
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:app_initialformdata",
+      "label": "initialFormData",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:app_app",
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L56",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_admindetail",
+      "label": "AdminDetail.jsx",
+      "file_type": "code",
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_admindetail_admindetail",
+      "label": "AdminDetail()",
+      "file_type": "code",
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_adminpanel",
+      "label": "AdminPanel.jsx",
+      "file_type": "code",
+      "source_file": "src/components/AdminPanel.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_adminpanel_adminpanel",
+      "label": "AdminPanel()",
+      "file_type": "code",
+      "source_file": "src/components/AdminPanel.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_bannersmanager",
+      "label": "BannersManager.jsx",
+      "file_type": "code",
+      "source_file": "src/components/BannersManager.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_bannersmanager_bannersmanager",
+      "label": "BannersManager()",
+      "file_type": "code",
+      "source_file": "src/components/BannersManager.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dashboard",
+      "label": "Dashboard.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dashboard_dashboard",
+      "label": "Dashboard()",
+      "file_type": "code",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dashboardstats",
+      "label": "DashboardStats.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DashboardStats.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dashboardstats_dashboardstats",
+      "label": "DashboardStats()",
+      "file_type": "code",
+      "source_file": "src/components/DashboardStats.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:dynamicform_dynamicform",
+      "label": "DynamicForm.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/DynamicForm.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:dynamicform_dynamicform_dynamicform",
+      "label": "DynamicForm()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/DynamicForm.jsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:dynamicform_fieldrenderer",
+      "label": "FieldRenderer.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:dynamicform_fieldrenderer_fieldrenderer",
+      "label": "FieldRenderer()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_card3options",
+      "label": "Card3Options.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_card3options_card3options",
+      "label": "Card3Options()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_chipgroup",
+      "label": "ChipGroup.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_chipgroup_chipgroup",
+      "label": "ChipGroup()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_selectorgrid",
+      "label": "SelectorGrid.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_selectorgrid_selectorgrid",
+      "label": "SelectorGrid()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_textareainput",
+      "label": "TextAreaInput.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextAreaInput.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_textareainput_textareainput",
+      "label": "TextAreaInput()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextAreaInput.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_textinput",
+      "label": "TextInput.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextInput.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_textinput_textinput",
+      "label": "TextInput()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextInput.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_timelineselector",
+      "label": "TimelineSelector.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:fieldcomponents_timelineselector_timelineselector",
+      "label": "TimelineSelector()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dynamicformdone",
+      "label": "DynamicFormDone.jsx",
+      "file_type": "code",
+      "source_file": "src/components/DynamicFormDone.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_dynamicformdone_dynamicformdone",
+      "label": "DynamicFormDone()",
+      "file_type": "code",
+      "source_file": "src/components/DynamicFormDone.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_formbanner",
+      "label": "FormBanner.jsx",
+      "file_type": "code",
+      "source_file": "src/components/FormBanner.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_formbanner_formbanner",
+      "label": "FormBanner()",
+      "file_type": "code",
+      "source_file": "src/components/FormBanner.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_formslist",
+      "label": "FormsList.jsx",
+      "file_type": "code",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_formslist_field_types",
+      "label": "FIELD_TYPES",
+      "file_type": "code",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_formslist_formslist",
+      "label": "FormsList()",
+      "file_type": "code",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_loginscreen",
+      "label": "LoginScreen.jsx",
+      "file_type": "code",
+      "source_file": "src/components/LoginScreen.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_loginscreen_loginscreen",
+      "label": "LoginScreen()",
+      "file_type": "code",
+      "source_file": "src/components/LoginScreen.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_progressbar",
+      "label": "ProgressBar.jsx",
+      "file_type": "code",
+      "source_file": "src/components/ProgressBar.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_progressbar_progressbar",
+      "label": "ProgressBar()",
+      "file_type": "code",
+      "source_file": "src/components/ProgressBar.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsedetailmodal",
+      "label": "ResponseDetailModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsedetailmodal_responsedetailmodal",
+      "label": "ResponseDetailModal()",
+      "file_type": "code",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable",
+      "label": "ResponsesTable.jsx",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_veredicto_labels",
+      "label": "VEREDICTO_LABELS",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_veredicto_style",
+      "label": "VEREDICTO_STYLE",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_responsestable",
+      "label": "ResponsesTable()",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_labelstyle",
+      "label": "labelStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L423",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_inputstyle",
+      "label": "inputStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L433",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_exportbtnstyle",
+      "label": "exportBtnStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L446",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_thstyle",
+      "label": "thStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L461",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_tdstyle",
+      "label": "tdStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L472",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_responsestable_iconbtnstyle",
+      "label": "iconBtnStyle",
+      "file_type": "code",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L477",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step1idea",
+      "label": "Step1Idea.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step1idea_sectores",
+      "label": "SECTORES",
+      "file_type": "code",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step1idea_step1idea",
+      "label": "Step1Idea()",
+      "file_type": "code",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step2dolor",
+      "label": "Step2Dolor.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step2dolor_como_resuelven",
+      "label": "COMO_RESUELVEN",
+      "file_type": "code",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step2dolor_dificultades",
+      "label": "DIFICULTADES",
+      "file_type": "code",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step2dolor_urgencia_options",
+      "label": "URGENCIA_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step2dolor_step2dolor",
+      "label": "Step2Dolor()",
+      "file_type": "code",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L31",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step3madurez",
+      "label": "Step3Madurez.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step3madurez_madurez_options",
+      "label": "MADUREZ_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step3madurez_step3madurez",
+      "label": "Step3Madurez()",
+      "file_type": "code",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step4vision",
+      "label": "Step4Vision.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step4vision_dispositivos",
+      "label": "DISPOSITIVOS",
+      "file_type": "code",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step4vision_necesidades",
+      "label": "NECESIDADES",
+      "file_type": "code",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step4vision_step4vision",
+      "label": "Step4Vision()",
+      "file_type": "code",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step5viabilidad",
+      "label": "Step5Viabilidad.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step5viabilidad_timeline_options",
+      "label": "TIMELINE_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step5viabilidad_presupuesto_options",
+      "label": "PRESUPUESTO_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step5viabilidad_equipo_options",
+      "label": "EQUIPO_OPTIONS",
+      "file_type": "code",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_step5viabilidad_step5viabilidad",
+      "label": "Step5Viabilidad()",
+      "file_type": "code",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L26",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_stepdone",
+      "label": "StepDone.jsx",
+      "file_type": "code",
+      "source_file": "src/components/StepDone.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_stepdone_stepdone",
+      "label": "StepDone()",
+      "file_type": "code",
+      "source_file": "src/components/StepDone.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_stepintro",
+      "label": "StepIntro.jsx",
+      "file_type": "code",
+      "source_file": "src/components/StepIntro.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_stepintro_stepintro",
+      "label": "StepIntro()",
+      "file_type": "code",
+      "source_file": "src/components/StepIntro.jsx",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_submissioneditmodal",
+      "label": "SubmissionEditModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_submissioneditmodal_submissioneditmodal",
+      "label": "SubmissionEditModal()",
+      "file_type": "code",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_submissionstable",
+      "label": "SubmissionsTable.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_submissionstable_submissionstable",
+      "label": "SubmissionsTable()",
+      "file_type": "code",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_usermodal",
+      "label": "UserModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/UserModal.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_usermodal_usermodal",
+      "label": "UserModal()",
+      "file_type": "code",
+      "source_file": "src/components/UserModal.jsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_userslist",
+      "label": "UsersList.jsx",
+      "file_type": "code",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:components_userslist_userslist",
+      "label": "UsersList()",
+      "file_type": "code",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:hooks_useauth",
+      "label": "useAuth.js",
+      "file_type": "code",
+      "source_file": "src/hooks/useAuth.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:hooks_useauth_useauth",
+      "label": "useAuth()",
+      "file_type": "code",
+      "source_file": "src/hooks/useAuth.js",
+      "source_location": "L5",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:index",
+      "label": "index.jsx",
+      "file_type": "code",
+      "source_file": "src/index.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons",
+      "label": "cardIcons.jsx",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_s",
+      "label": "S()",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_icondefs",
+      "label": "iconDefs",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_icon_names",
+      "label": "ICON_NAMES",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1069",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_rendericon",
+      "label": "renderIcon()",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1072",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_searchicons",
+      "label": "searchIcons()",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1079",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_cardicons_parsecardoption",
+      "label": "parseCardOption()",
+      "file_type": "code",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1090",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf",
+      "label": "exportPDF.js",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_getfieldlabel",
+      "label": "getFieldLabel()",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_veredicto_labels",
+      "label": "VEREDICTO_LABELS",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_veredicto_colors",
+      "label": "VEREDICTO_COLORS",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L16",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_hasscoring",
+      "label": "hasScoring()",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L22",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_exportresponsetopdf",
+      "label": "exportResponseToPDF()",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L26",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_exportallresponsestopdf",
+      "label": "exportAllResponsesToPDF()",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L142",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportpdf_formatdate",
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L249",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls",
+      "label": "exportXLS.js",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_getfieldlabel",
+      "label": "getFieldLabel()",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_veredicto_labels",
+      "label": "VEREDICTO_LABELS",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L9",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_hasscoring",
+      "label": "hasScoring()",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L15",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_exportresponsetoxls",
+      "label": "exportResponseToXLS()",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L19",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_exportallresponsestoxls",
+      "label": "exportAllResponsesToXLS()",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L65",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_exportxls_formatdate",
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L147",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions",
+      "label": "fieldOptions.js",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions_normalizeoption",
+      "label": "normalizeOption()",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions_normalizeoptions",
+      "label": "normalizeOptions()",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L23",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions_getoptiondisplaytext",
+      "label": "getOptionDisplayText()",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L29",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions_optionmatches",
+      "label": "optionMatches()",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L35",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_fieldoptions_findpointsforvalue",
+      "label": "findPointsForValue()",
+      "file_type": "code",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L43",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_scoring",
+      "label": "scoring.js",
+      "file_type": "code",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_scoring_calcularscore",
+      "label": "calcularScore()",
+      "file_type": "code",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_scoring_clasificarveredicto",
+      "label": "clasificarVeredicto()",
+      "file_type": "code",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L48",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "src:utils_scoring_textoveredicto",
+      "label": "textoVeredicto()",
+      "file_type": "code",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L53",
+      "_origin": "ast",
+      "graphify_scope": "src"
+    },
+    {
+      "id": "api:auth_login",
+      "label": "login.php",
+      "file_type": "code",
+      "source_file": "api/auth/login.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:auth_logout",
+      "label": "logout.php",
+      "file_type": "code",
+      "source_file": "api/auth/logout.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:auth_me",
+      "label": "me.php",
+      "file_type": "code",
+      "source_file": "api/auth/me.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:banners",
+      "label": "banners.php",
+      "file_type": "code",
+      "source_file": "api/banners.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:config",
+      "label": "config.php",
+      "file_type": "code",
+      "source_file": "api/config.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:config_log_message",
+      "label": "log_message()",
+      "file_type": "code",
+      "source_file": "api/config.php",
+      "source_location": "L65",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:db",
+      "label": "db.php",
+      "file_type": "code",
+      "source_file": "api/db.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:form_covers",
+      "label": "form_covers.php",
+      "file_type": "code",
+      "source_file": "api/form_covers.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:form_fields",
+      "label": "form_fields.php",
+      "file_type": "code",
+      "source_file": "api/form_fields.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:form_responses",
+      "label": "form_responses.php",
+      "file_type": "code",
+      "source_file": "api/form_responses.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:forms",
+      "label": "forms.php",
+      "file_type": "code",
+      "source_file": "api/forms.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_exception",
+      "label": "Exception.php",
+      "file_type": "code",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_exception_exception",
+      "label": "Exception",
+      "file_type": "code",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_exception_exception_errormessage",
+      "label": ".errorMessage()",
+      "file_type": "code",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L11",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer",
+      "label": "Mailer.php",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer",
+      "label": "Mailer",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L8",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_construct",
+      "label": ".__construct()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L23",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_addaddress",
+      "label": ".addAddress()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L32",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_subject",
+      "label": ".subject()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L38",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_body",
+      "label": ".body()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L43",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_ishtml",
+      "label": ".isHtml()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L48",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_readresponse",
+      "label": ".readResponse()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L53",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_sendcommand",
+      "label": ".sendCommand()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L66",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_send",
+      "label": ".send()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L72",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_geterror",
+      "label": ".getError()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L221",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:libs_mailer_mailer_getdebug",
+      "label": ".getDebug()",
+      "file_type": "code",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L225",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:login",
+      "label": "login.php",
+      "file_type": "code",
+      "source_file": "api/login.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:middleware",
+      "label": "middleware.php",
+      "file_type": "code",
+      "source_file": "api/middleware.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:middleware_getcurrentuser",
+      "label": "getCurrentUser()",
+      "file_type": "code",
+      "source_file": "api/middleware.php",
+      "source_location": "L15",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:middleware_requireauth",
+      "label": "requireAuth()",
+      "file_type": "code",
+      "source_file": "api/middleware.php",
+      "source_location": "L60",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:middleware_requirerole",
+      "label": "requireRole()",
+      "file_type": "code",
+      "source_file": "api/middleware.php",
+      "source_location": "L79",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:middleware_requireadmin",
+      "label": "requireAdmin()",
+      "file_type": "code",
+      "source_file": "api/middleware.php",
+      "source_location": "L97",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:scoring",
+      "label": "scoring.php",
+      "file_type": "code",
+      "source_file": "api/scoring.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:scoring_normalizeoption",
+      "label": "normalizeOption()",
+      "file_type": "code",
+      "source_file": "api/scoring.php",
+      "source_location": "L26",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:scoring_optionmatches",
+      "label": "optionMatches()",
+      "file_type": "code",
+      "source_file": "api/scoring.php",
+      "source_location": "L37",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:scoring_resolvefieldvalue",
+      "label": "resolveFieldValue()",
+      "file_type": "code",
+      "source_file": "api/scoring.php",
+      "source_location": "L46",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:scoring_calcularscore",
+      "label": "calcularScore()",
+      "file_type": "code",
+      "source_file": "api/scoring.php",
+      "source_location": "L55",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:submission",
+      "label": "submission.php",
+      "file_type": "code",
+      "source_file": "api/submission.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:submissions",
+      "label": "submissions.php",
+      "file_type": "code",
+      "source_file": "api/submissions.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:submit",
+      "label": "submit.php",
+      "file_type": "code",
+      "source_file": "api/submit.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:submit_calcscore",
+      "label": "calcScore()",
+      "file_type": "code",
+      "source_file": "api/submit.php",
+      "source_location": "L25",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "api:users",
+      "label": "users.php",
+      "file_type": "code",
+      "source_file": "api/users.php",
+      "source_location": "L1",
+      "_origin": "ast",
+      "graphify_scope": "api"
+    },
+    {
+      "id": "sql:migrate_form_cover",
+      "label": "migrate_form_cover.sql",
+      "file_type": "code",
+      "source_file": "sql/migrate_form_cover.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_form_cover_forms",
+      "label": "forms",
+      "file_type": "code",
+      "source_file": "sql/migrate_form_cover.sql",
+      "source_location": "L6",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_radar_dynamic",
+      "label": "migrate_radar_dynamic.sql",
+      "file_type": "code",
+      "source_file": "sql/migrate_radar_dynamic.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_scoring",
+      "label": "migrate_scoring.sql",
+      "file_type": "code",
+      "source_file": "sql/migrate_scoring.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_scoring_form_fields",
+      "label": "form_fields",
+      "file_type": "code",
+      "source_file": "sql/migrate_scoring.sql",
+      "source_location": "L23",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_scoring_form_responses",
+      "label": "form_responses",
+      "file_type": "code",
+      "source_file": "sql/migrate_scoring.sql",
+      "source_location": "L27",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_titulo_field",
+      "label": "migrate_titulo_field.sql",
+      "file_type": "code",
+      "source_file": "sql/migrate_titulo_field.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:migrate_titulo_field_form_fields",
+      "label": "form_fields",
+      "file_type": "code",
+      "source_file": "sql/migrate_titulo_field.sql",
+      "source_location": "L3",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema",
+      "label": "schema.sql",
+      "file_type": "code",
+      "source_file": "sql/schema.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_submissions",
+      "label": "submissions",
+      "file_type": "code",
+      "source_file": "sql/schema.sql",
+      "source_location": "L4",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_admins",
+      "label": "admins",
+      "file_type": "code",
+      "source_file": "sql/schema.sql",
+      "source_location": "L33",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_banners",
+      "label": "banners",
+      "file_type": "code",
+      "source_file": "sql/schema.sql",
+      "source_location": "L44",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2",
+      "label": "schema_v2.sql",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": null,
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_users",
+      "label": "users",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L11",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_sessions",
+      "label": "sessions",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L27",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_submissions",
+      "label": "submissions",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L40",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_forms",
+      "label": "forms",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L77",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_form_fields",
+      "label": "form_fields",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L93",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    },
+    {
+      "id": "sql:schema_v2_form_responses",
+      "label": "form_responses",
+      "file_type": "code",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L117",
+      "_origin": "ast",
+      "graphify_scope": "sql"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src:app",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_stepintro",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_step1idea",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_step2dolor",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_step3madurez",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_step4vision",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_step5viabilidad",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_stepdone",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_dashboard",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_userslist",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_loginscreen",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_formbanner",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:dynamicform_dynamicform",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:components_dynamicformdone",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:utils_scoring",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:utils_scoring_calcularscore",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:utils_scoring_clasificarveredicto",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:hooks_useauth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:hooks_useauth_useauth",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:applications_xampp_xamppfiles_htdocs_starup_src_styles_css",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:app_initialformdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app",
+      "target": "src:app_app",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_admindetail",
+      "target": "src:utils_scoring",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_admindetail",
+      "target": "src:utils_scoring_textoveredicto",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_admindetail",
+      "target": "src:components_admindetail_admindetail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_adminpanel",
+      "target": "src:components_adminpanel_adminpanel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AdminPanel.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_bannersmanager",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/BannersManager.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_bannersmanager",
+      "target": "src:components_bannersmanager_bannersmanager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/BannersManager.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dashboard",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dashboard",
+      "target": "src:components_responsestable",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dashboard",
+      "target": "src:components_formslist",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dashboard",
+      "target": "src:components_dashboard_dashboard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Dashboard.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dashboardstats",
+      "target": "src:components_dashboardstats_dashboardstats",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DashboardStats.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_dynamicform",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/DynamicForm.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_dynamicform",
+      "target": "src:dynamicform_fieldrenderer",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/DynamicForm.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_dynamicform",
+      "target": "src:dynamicform_dynamicform_dynamicform",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/DynamicForm.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_textinput",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_textareainput",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_chipgroup",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_selectorgrid",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_timelineselector",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:fieldcomponents_card3options",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:dynamicform_fieldrenderer",
+      "target": "src:dynamicform_fieldrenderer_fieldrenderer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/FieldRenderer.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options",
+      "target": "src:utils_cardicons",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options",
+      "target": "src:utils_cardicons_rendericon",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options",
+      "target": "src:utils_fieldoptions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options",
+      "target": "src:fieldcomponents_card3options_card3options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_chipgroup",
+      "target": "src:utils_fieldoptions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_chipgroup",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_chipgroup",
+      "target": "src:fieldcomponents_chipgroup_chipgroup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_selectorgrid",
+      "target": "src:utils_fieldoptions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_selectorgrid",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_selectorgrid",
+      "target": "src:fieldcomponents_selectorgrid_selectorgrid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_textareainput",
+      "target": "src:fieldcomponents_textareainput_textareainput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextAreaInput.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_textinput",
+      "target": "src:fieldcomponents_textinput_textinput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/TextInput.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_timelineselector",
+      "target": "src:utils_fieldoptions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_timelineselector",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_timelineselector",
+      "target": "src:fieldcomponents_timelineselector_timelineselector",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_dynamicformdone",
+      "target": "src:components_dynamicformdone_dynamicformdone",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DynamicFormDone.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formbanner",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormBanner.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formbanner",
+      "target": "src:components_formbanner_formbanner",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormBanner.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:sweetalert2",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_cardicons",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_cardicons_icon_names",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_cardicons_rendericon",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_cardicons_searchicons",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_fieldoptions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:components_formslist_field_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_formslist",
+      "target": "src:components_formslist_formslist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FormsList.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_loginscreen",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/LoginScreen.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_loginscreen",
+      "target": "src:components_loginscreen_loginscreen",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/LoginScreen.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_progressbar",
+      "target": "src:components_progressbar_progressbar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ProgressBar.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:utils_exportxls",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:utils_exportxls_exportresponsetoxls",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:utils_exportpdf",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:utils_exportpdf_exportresponsetopdf",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsedetailmodal",
+      "target": "src:components_responsedetailmodal_responsedetailmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponseDetailModal.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:sweetalert2",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsedetailmodal",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_submissioneditmodal",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:utils_exportxls",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:utils_exportxls_exportallresponsestoxls",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:utils_exportpdf",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:utils_exportpdf_exportallresponsestopdf",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_veredicto_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_veredicto_style",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_responsestable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_labelstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L423",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_inputstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L433",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_exportbtnstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L446",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_thstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L461",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_tdstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L472",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_responsestable",
+      "target": "src:components_responsestable_iconbtnstyle",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ResponsesTable.jsx",
+      "source_location": "L477",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step1idea",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step1idea",
+      "target": "src:components_progressbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step1idea",
+      "target": "src:components_step1idea_sectores",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step1idea",
+      "target": "src:components_step1idea_step1idea",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step1Idea.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:components_progressbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:components_step2dolor_como_resuelven",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:components_step2dolor_dificultades",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:components_step2dolor_urgencia_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step2dolor",
+      "target": "src:components_step2dolor_step2dolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step2Dolor.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step3madurez",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step3madurez",
+      "target": "src:components_progressbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step3madurez",
+      "target": "src:components_step3madurez_madurez_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step3madurez",
+      "target": "src:components_step3madurez_step3madurez",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step3Madurez.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step4vision",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step4vision",
+      "target": "src:components_progressbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step4vision",
+      "target": "src:components_step4vision_dispositivos",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step4vision",
+      "target": "src:components_step4vision_necesidades",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step4vision",
+      "target": "src:components_step4vision_step4vision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step4Vision.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:components_progressbar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:components_step5viabilidad_timeline_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:components_step5viabilidad_presupuesto_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:components_step5viabilidad_equipo_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_step5viabilidad",
+      "target": "src:components_step5viabilidad_step5viabilidad",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Step5Viabilidad.jsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_stepdone",
+      "target": "src:components_stepdone_stepdone",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/StepDone.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_stepintro",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/StepIntro.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_stepintro",
+      "target": "src:components_stepintro_stepintro",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/StepIntro.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissioneditmodal",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissioneditmodal",
+      "target": "src:utils_scoring",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissioneditmodal",
+      "target": "src:utils_scoring_textoveredicto",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissioneditmodal",
+      "target": "src:components_submissioneditmodal_submissioneditmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:sweetalert2",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:components_submissioneditmodal",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:components_responsedetailmodal",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:utils_exportxls",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:utils_exportxls_exportallresponsestoxls",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:utils_exportpdf",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:utils_exportpdf_exportallresponsestopdf",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissionstable",
+      "target": "src:components_submissionstable_submissionstable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SubmissionsTable.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_usermodal",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UserModal.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_usermodal",
+      "target": "src:components_usermodal_usermodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UserModal.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_userslist",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_userslist",
+      "target": "src:components_usermodal",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_userslist",
+      "target": "src:sweetalert2",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_userslist",
+      "target": "src:components_userslist_userslist",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/UsersList.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:hooks_useauth",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useAuth.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:hooks_useauth",
+      "target": "src:hooks_useauth_useauth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useAuth.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:index",
+      "target": "src:react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:index",
+      "target": "src:client",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:index",
+      "target": "src:app",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/index.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_s",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_icondefs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_icon_names",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1069",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_rendericon",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1072",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_searchicons",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1079",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_cardicons",
+      "target": "src:utils_cardicons_parsecardoption",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/cardIcons.jsx",
+      "source_location": "L1090",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:jspdf",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:html2canvas",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_getfieldlabel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_veredicto_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_veredicto_colors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L16",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_hasscoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_exportresponsetopdf",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_exportallresponsestopdf",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L142",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf",
+      "target": "src:utils_exportpdf_formatdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L249",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf_exportresponsetopdf",
+      "target": "src:utils_exportpdf_formatdate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L73",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf_exportresponsetopdf",
+      "target": "src:utils_exportpdf_hasscoring",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L77",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportpdf_exportallresponsestopdf",
+      "target": "src:utils_exportpdf_formatdate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportPDF.js",
+      "source_location": "L166",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:xlsx",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_getfieldlabel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_veredicto_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_hasscoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_exportresponsetoxls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_exportallresponsestoxls",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L65",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls",
+      "target": "src:utils_exportxls_formatdate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L147",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls_exportresponsetoxls",
+      "target": "src:utils_exportxls_formatdate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L28",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_exportxls_exportresponsetoxls",
+      "target": "src:utils_exportxls_hasscoring",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/exportXLS.js",
+      "source_location": "L29",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions",
+      "target": "src:utils_fieldoptions_normalizeoption",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions",
+      "target": "src:utils_fieldoptions_getoptiondisplaytext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L29",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions",
+      "target": "src:utils_fieldoptions_optionmatches",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L35",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions",
+      "target": "src:utils_fieldoptions_findpointsforvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions_optionmatches",
+      "target": "src:utils_fieldoptions_getoptiondisplaytext",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L39",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions_findpointsforvalue",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L44",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_fieldoptions_findpointsforvalue",
+      "target": "src:utils_fieldoptions_optionmatches",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/fieldOptions.js",
+      "source_location": "L46",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_scoring",
+      "target": "src:utils_scoring_calcularscore",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_scoring",
+      "target": "src:utils_scoring_clasificarveredicto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L48",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:utils_scoring",
+      "target": "src:utils_scoring_textoveredicto",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/scoring.js",
+      "source_location": "L53",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:app_app",
+      "target": "src:hooks_useauth_useauth",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.jsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_admindetail_admindetail",
+      "target": "src:utils_scoring_textoveredicto",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/AdminDetail.jsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_card3options_card3options",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/DynamicForm/fieldComponents/Card3Options.jsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_chipgroup_chipgroup",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/DynamicForm/fieldComponents/ChipGroup.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_selectorgrid_selectorgrid",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/DynamicForm/fieldComponents/SelectorGrid.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:fieldcomponents_timelineselector_timelineselector",
+      "target": "src:utils_fieldoptions_normalizeoptions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/DynamicForm/fieldComponents/TimelineSelector.jsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "src:components_submissioneditmodal_submissioneditmodal",
+      "target": "src:utils_scoring_textoveredicto",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/SubmissionEditModal.jsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "graphify_scope": "src"
+    },
+    {
+      "source": "api:config",
+      "target": "api:config_log_message",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/config.php",
+      "source_location": "L65",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_exception",
+      "target": "api:libs_exception_exception",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_exception_exception",
+      "target": "api:libs_exception_exception",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_exception_exception",
+      "target": "api:libs_exception_exception_errormessage",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Exception.php",
+      "source_location": "L11",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer",
+      "target": "api:libs_mailer_mailer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L8",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_construct",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_addaddress",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L32",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_subject",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L38",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_body",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L43",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_ishtml",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L48",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_readresponse",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L53",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_sendcommand",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L66",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_send",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L72",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_geterror",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L221",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer",
+      "target": "api:libs_mailer_mailer_getdebug",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L225",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer_sendcommand",
+      "target": "api:libs_mailer_mailer_readresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L69",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer_send",
+      "target": "api:libs_mailer_mailer_readresponse",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L98",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:libs_mailer_mailer_send",
+      "target": "api:libs_mailer_mailer_sendcommand",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/libs/Mailer.php",
+      "source_location": "L106",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware",
+      "target": "api:middleware_getcurrentuser",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L15",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware",
+      "target": "api:middleware_requireauth",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L60",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware",
+      "target": "api:middleware_requirerole",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L79",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware",
+      "target": "api:middleware_requireadmin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L97",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware_requireauth",
+      "target": "api:middleware_getcurrentuser",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L61",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware_requirerole",
+      "target": "api:middleware_requireauth",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L80",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware_requireadmin",
+      "target": "api:middleware_requirerole",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/middleware.php",
+      "source_location": "L98",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring",
+      "target": "api:scoring_normalizeoption",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L26",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring",
+      "target": "api:scoring_optionmatches",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L37",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring",
+      "target": "api:scoring_resolvefieldvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L46",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring",
+      "target": "api:scoring_calcularscore",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L55",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring_calcularscore",
+      "target": "api:scoring_resolvefieldvalue",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L73",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring_calcularscore",
+      "target": "api:scoring_normalizeoption",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L83",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:scoring_calcularscore",
+      "target": "api:scoring_optionmatches",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "api/scoring.php",
+      "source_location": "L92",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:submit",
+      "target": "api:submit_calcscore",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api/submit.php",
+      "source_location": "L25",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "api:middleware_getcurrentuser",
+      "target": "api:config_log_message",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "api/middleware.php",
+      "source_location": "L49",
+      "weight": 1.0,
+      "graphify_scope": "api"
+    },
+    {
+      "source": "sql:migrate_form_cover",
+      "target": "sql:migrate_form_cover_forms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/migrate_form_cover.sql",
+      "source_location": "L6",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:migrate_scoring",
+      "target": "sql:migrate_scoring_form_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/migrate_scoring.sql",
+      "source_location": "L23",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:migrate_scoring",
+      "target": "sql:migrate_scoring_form_responses",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/migrate_scoring.sql",
+      "source_location": "L27",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:migrate_titulo_field",
+      "target": "sql:migrate_titulo_field_form_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/migrate_titulo_field.sql",
+      "source_location": "L3",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema",
+      "target": "sql:schema_submissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema.sql",
+      "source_location": "L4",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema",
+      "target": "sql:schema_admins",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema.sql",
+      "source_location": "L33",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema",
+      "target": "sql:schema_banners",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema.sql",
+      "source_location": "L44",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_users",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L11",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_sessions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L27",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2_sessions",
+      "target": "sql:schema_v2_users",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L27",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_submissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L40",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_forms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L77",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2_forms",
+      "target": "sql:schema_v2_users",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L77",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_form_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L93",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2_form_fields",
+      "target": "sql:schema_v2_forms",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L93",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2",
+      "target": "sql:schema_v2_form_responses",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L117",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    },
+    {
+      "source": "sql:schema_v2_form_responses",
+      "target": "sql:schema_v2_forms",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "sql/schema_v2.sql",
+      "source_location": "L117",
+      "weight": 1.0,
+      "graphify_scope": "sql"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "directed": false,
+  "graphify_note": "Partial code-only graph generated from src, api, and sql because full extraction requires an LLM API key for docs/images."
+}
