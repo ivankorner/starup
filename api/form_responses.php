@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once 'db.php';
+require_once 'config.php';
 require_once 'middleware.php';
 require_once 'scoring.php';
+require_once 'libs/Mailer.php';
 
 try {
     // GET /api/form_responses — obtener respuestas de un formulario (requiere auth)
@@ -170,12 +172,57 @@ try {
 
         log_message("Respuesta guardada para form $formId de $email", 'INFO');
 
+        // Enviar correo de confirmación al usuario que completó el formulario
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            try {
+                $nombreHtml = htmlspecialchars($nombre);
+                $formTituloHtml = htmlspecialchars($form['titulo']);
+                $emailHtml = htmlspecialchars($email);
+                $fecha = date('d/m/Y H:i');
+
+                $confirmacionHtml = "
+                <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e5e5e5;border-radius:12px;overflow:hidden;'>
+                    <div style='background:#111827;color:#ffffff;padding:24px 28px;'>
+                        <h2 style='margin:0;font-size:24px;line-height:1.2;'>Datos registrados correctamente</h2>
+                        <p style='margin:8px 0 0;color:#d1d5db;font-size:15px;'>{$formTituloHtml}</p>
+                    </div>
+                    <div style='padding:28px;color:#1f2937;font-size:15px;line-height:1.7;'>
+                        <p style='margin-top:0;'>Hola {$nombreHtml},</p>
+                        <p>Tus datos fueron correctamente registrados en nuestro sistema. Nos comunicaremos a la brevedad al correo {$emailHtml}.</p>
+                        <div style='background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;margin:20px 0;'>
+                            <p style='margin:0 0 6px;font-weight:700;'>Resumen del envío</p>
+                            <p style='margin:0;color:#4b5563;'><strong>Formulario:</strong> {$formTituloHtml}</p>
+                            <p style='margin:4px 0 0;color:#4b5563;'><strong>Fecha:</strong> {$fecha}</p>
+                        </div>
+                        <p style='margin-bottom:0;color:#4b5563;'>Este correo fue enviado automáticamente. No es necesario responderlo.</p>
+                    </div>
+                </div>";
+
+                $confirmMailer = new Mailer(SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_USER, SMTP_FROM_NAME);
+                $confirmMailer
+                    ->addAddress($email, $nombre)
+                    ->subject("Confirmación de registro: {$form['titulo']}")
+                    ->body($confirmacionHtml)
+                    ->isHtml(true);
+
+                log_message("Intentando enviar confirmación a {$email} para respuesta $responseId", 'INFO');
+
+                if ($confirmMailer->send()) {
+                    log_message("Correo de confirmación enviado exitosamente a {$email} para respuesta $responseId", 'INFO');
+                } else {
+                    log_message("Error enviando confirmación a {$email}: " . $confirmMailer->getError(), 'ERROR');
+                    log_message("Debug SMTP confirmación: " . $confirmMailer->getDebug(), 'ERROR');
+                }
+            } catch (Exception $e) {
+                log_message("Excepción enviando confirmación a {$email}: " . $e->getMessage(), 'ERROR');
+            }
+        } else {
+            log_message("No se envió confirmación porque el email es inválido: {$email}", 'WARNING');
+        }
+
         // Enviar email de notificación si el formulario tiene email_destino
         if (!empty($form['email_destino'])) {
             try {
-                require_once __DIR__ . '/config.php';
-                require_once __DIR__ . '/libs/Mailer.php';
-
                 // Obtener campos del formulario para mostrar labels
                 $stmtFields = $pdo->prepare("SELECT id, label, tipo FROM form_fields WHERE form_id = ? ORDER BY paso, orden");
                 $stmtFields->execute([$formId]);
