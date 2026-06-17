@@ -1,9 +1,30 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Swal from 'sweetalert2';
 import ResponseDetailModal from './ResponseDetailModal';
 import SubmissionEditModal from './SubmissionEditModal';
 import { exportAllResponsesToXLS } from '../utils/exportXLS';
 import { exportAllResponsesToPDF } from '../utils/exportPDF';
+
+const API_URL = '/api';
+
+const STATUS_OPTIONS = [
+  { value: 'recepcionado', label: 'Recepcionado', bg: '#E8F1FF', text: '#1E5AA8' },
+  { value: 'pendiente_revision', label: 'Pendiente de revisión', bg: '#FFF4D6', text: '#A06A00' },
+  { value: 'derivado', label: 'Derivado', bg: '#F3E8FF', text: '#7B3FA3' },
+  { value: 'leido', label: 'Leído', bg: '#EAF7F5', text: '#157A6E' },
+  { value: 'en_analisis', label: 'En análisis', bg: '#FFE9D6', text: '#B45509' },
+  { value: 'solicita_informacion', label: 'Solicita información', bg: '#FDE2E2', text: '#B42318' },
+  { value: 'en_proceso', label: 'En proceso', bg: '#E3F2FD', text: '#1565C0' },
+  { value: 'aprobado', label: 'Aprobado', bg: '#E8F5E9', text: '#2E7D32' },
+  { value: 'rechazado', label: 'Rechazado', bg: '#FFEBEE', text: '#C62828' },
+  { value: 'implementado', label: 'Implementado', bg: '#E6F4EA', text: '#1B5E20' },
+  { value: 'archivado', label: 'Archivado', bg: '#ECEFF1', text: '#455A64' },
+];
+
+const STATUS_MAP = STATUS_OPTIONS.reduce((acc, option) => {
+  acc[option.value] = option;
+  return acc;
+}, {});
 
 const VEREDICTO_LABELS = {
   viable: 'Viable',
@@ -25,26 +46,47 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [veredictoFilter, setVeredictoFilter] = useState('');
+  const [rows, setRows] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [savingRowId, setSavingRowId] = useState(null);
+
+  useEffect(() => {
+    setRows(submissions);
+  }, [submissions]);
+
+  useEffect(() => {
+    if (!token) return;
+
+    fetch(`${API_URL}/users.php`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('Error cargando usuarios');
+      })
+      .then((data) => setUsers(Array.isArray(data) ? data.filter((user) => user.activo) : []))
+      .catch((err) => console.error(err));
+  }, [token]);
 
   const uniqueForms = useMemo(() => {
     const map = new Map();
-    submissions.forEach((s) => {
+    rows.forEach((s) => {
       if (s.form_titulo && !map.has(s.form_id)) map.set(s.form_id, s.form_titulo);
     });
     return Array.from(map.entries()).map(([id, titulo]) => ({ id, titulo }));
-  }, [submissions]);
+  }, [rows]);
 
   const stats = useMemo(() => {
-    const total = submissions.length;
-    const viable = submissions.filter(s => s.veredicto === 'viable').length;
-    const potencial = submissions.filter(s => s.veredicto === 'potencial').length;
-    const noViable = submissions.filter(s => s.veredicto === 'no-viable').length;
+    const total = rows.length;
+    const viable = rows.filter(s => s.veredicto === 'viable').length;
+    const potencial = rows.filter(s => s.veredicto === 'potencial').length;
+    const noViable = rows.filter(s => s.veredicto === 'no-viable').length;
     return { total, viable, potencial, noViable };
-  }, [submissions]);
+  }, [rows]);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
-    return submissions.filter((s) => {
+    return rows.filter((s) => {
       if (q && !s.nombre?.toLowerCase().includes(q) && !s.email?.toLowerCase().includes(q)) return false;
       if (formFilter && String(s.form_id) !== String(formFilter)) return false;
       if (veredictoFilter) {
@@ -61,7 +103,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
       }
       return true;
     });
-  }, [submissions, search, formFilter, veredictoFilter, dateFrom, dateTo]);
+  }, [rows, search, formFilter, veredictoFilter, dateFrom, dateTo]);
 
   const hasActiveFilters = search || formFilter || veredictoFilter || dateFrom || dateTo;
 
@@ -127,6 +169,42 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
     try { await exportAllResponsesToPDF(await fetchWithFields(filtered)); }
     catch (err) { console.error(err); }
     finally { setExporting(false); }
+  };
+
+  const getStatusOption = (value) => STATUS_MAP[value] || STATUS_OPTIONS[0];
+
+  const updateRow = async (row, patch) => {
+    const previousRow = row;
+    setSavingRowId(row.id);
+    setRows((currentRows) => currentRows.map((item) => (item.id === row.id ? { ...item, ...patch } : item)));
+
+    try {
+      const res = await fetch(`${API_URL}/form_responses.php?id=${row.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(patch),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Error al guardar');
+      }
+
+      if (data.response) {
+        setRows((currentRows) => currentRows.map((item) => (item.id === row.id ? { ...item, ...data.response } : item)));
+      }
+
+      onRefresh();
+      Swal.fire({ icon: 'success', title: 'Actualizado', timer: 1100, showConfirmButton: false });
+    } catch (err) {
+      setRows((currentRows) => currentRows.map((item) => (item.id === row.id ? previousRow : item)));
+      Swal.fire({ icon: 'error', title: 'Error', text: err.message || 'No se pudo guardar el cambio' });
+    } finally {
+      setSavingRowId(null);
+    }
   };
 
   return (
@@ -313,6 +391,8 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
                     <th style={{ ...thStyle, width: '44px', textAlign: 'center' }}>#</th>
                     <th style={thStyle}>Nombre</th>
                     <th style={thStyle}>Email</th>
+                    <th style={thStyle}>Estado del Proyecto</th>
+                    <th style={thStyle}>Designado</th>
                     <th style={thStyle}>Formulario</th>
                     <th style={thStyle}>Fecha</th>
                     <th style={{ ...thStyle, textAlign: 'center' }}>Score</th>
@@ -323,6 +403,8 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
                   {filtered.map((row, idx) => {
                     const hasViability = row.veredicto && row.raw_maximo > 0;
                     const vs = hasViability ? VEREDICTO_STYLE[row.veredicto] : null;
+                    const statusOption = getStatusOption(row.estado_proyecto || 'recepcionado');
+                    const assignedUser = users.find((user) => String(user.id) === String(row.designado_user_id));
                     return (
                       <tr
                         key={row.id}
@@ -336,6 +418,39 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
                         </td>
                         <td style={{ ...tdStyle, fontWeight: 600 }}>{row.nombre}</td>
                         <td style={{ ...tdStyle, color: 'var(--text-muted)' }}>{row.email}</td>
+                        <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
+                          <select
+                            value={row.estado_proyecto || 'recepcionado'}
+                            disabled={savingRowId === row.id}
+                            onChange={(e) => updateRow(row, { estado_proyecto: e.target.value })}
+                            style={{
+                              ...statusSelectStyle,
+                              background: statusOption.bg,
+                              color: statusOption.text,
+                              borderColor: statusOption.text,
+                            }}
+                          >
+                            {STATUS_OPTIONS.map((option) => (
+                              <option key={option.value} value={option.value}>{option.label}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td style={tdStyle} onClick={(e) => e.stopPropagation()}>
+                          <select
+                            value={row.designado_user_id || ''}
+                            disabled={savingRowId === row.id}
+                            onChange={(e) => updateRow(row, { designado_user_id: e.target.value ? Number(e.target.value) : null })}
+                            style={assignmentSelectStyle}
+                          >
+                            <option value="">Sin designar</option>
+                            {users.map((user) => (
+                              <option key={user.id} value={user.id}>{user.nombre}</option>
+                            ))}
+                          </select>
+                          <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                            {assignedUser ? assignedUser.email : '—'}
+                          </div>
+                        </td>
                         <td style={tdStyle}>
                           <span style={{
                             display: 'inline-block',
@@ -456,6 +571,35 @@ const exportBtnStyle = {
   fontWeight: 600,
   cursor: 'pointer',
   fontFamily: 'inherit',
+};
+
+const statusSelectStyle = {
+  width: '100%',
+  minWidth: '180px',
+  padding: '0.45rem 0.65rem',
+  borderRadius: '999px',
+  border: '1px solid var(--border)',
+  fontSize: '12px',
+  fontWeight: 700,
+  boxSizing: 'border-box',
+  outline: 'none',
+  fontFamily: 'inherit',
+  cursor: 'pointer',
+};
+
+const assignmentSelectStyle = {
+  width: '100%',
+  minWidth: '180px',
+  padding: '0.45rem 0.65rem',
+  borderRadius: '8px',
+  border: '1px solid var(--border)',
+  background: 'var(--bg-light)',
+  color: 'var(--text-body)',
+  fontSize: '12px',
+  boxSizing: 'border-box',
+  outline: 'none',
+  fontFamily: 'inherit',
+  cursor: 'pointer',
 };
 
 const thStyle = {

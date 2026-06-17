@@ -53,6 +53,19 @@ if ($dbOk) {
             echo "<p>❌ Tabla <code>$table</code>: <span class='fail'>NO existe</span></p>";
         }
     }
+
+    echo '<h2>Columnas nuevas</h2>';
+    try {
+        $stmt = $pdo->query("SHOW COLUMNS FROM form_responses LIKE 'estado_proyecto'");
+        $exists = (bool)$stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<p>' . ($exists ? '✅' : '❌') . ' Columna <code>estado_proyecto</code>: ' . ($exists ? '<span class="ok">Existe</span>' : '<span class="fail">NO existe</span>') . '</p>';
+
+        $stmt = $pdo->query("SHOW COLUMNS FROM form_responses LIKE 'designado_user_id'");
+        $exists = (bool)$stmt->fetch(PDO::FETCH_ASSOC);
+        echo '<p>' . ($exists ? '✅' : '❌') . ' Columna <code>designado_user_id</code>: ' . ($exists ? '<span class="ok">Existe</span>' : '<span class="fail">NO existe</span>') . '</p>';
+    } catch (PDOException $e) {
+        echo '<p>❌ Verificacion de columnas nuevas: <span class="fail">' . $e->getMessage() . '</span></p>';
+    }
 }
 
 // 6. Archivos clave

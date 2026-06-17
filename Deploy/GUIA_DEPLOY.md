@@ -33,6 +33,14 @@ npm run build
 
 Esto genera la carpeta `dist/` con el frontend compilado.
 
+## Paso 2.5: Migracion de BD (aditiva)
+
+Antes de subir los archivos, ejecutar en la base remota el contenido de:
+
+- `sql/migrate_estado_designado.sql`
+
+Esta migracion solo agrega columnas e indices nuevos en `form_responses`. No elimina tablas, no borra datos y no modifica archivos existentes de la base actual.
+
 ---
 
 ## Paso 3: Subir archivos por FTP
@@ -125,6 +133,12 @@ chmod 644 public_html/api/db.php
 2. Abrir `https://tu-dominio.com/api/forms.php?estado=publicado` — debe devolver `[]` (JSON vacio)
 3. Login: `admin@radar.com` / `admin123`
 4. Si funciona, **cambiar la contraseña del admin** desde el panel de usuarios
+
+## Importante
+
+- No borrar ningun archivo SQL existente del proyecto.
+- No ejecutar `DROP TABLE`, `DROP COLUMN` ni scripts destructivos sobre la BD actual.
+- Si la base remota ya tiene datos, aplicar solo la migracion aditiva indicada arriba.
 
 ---
 

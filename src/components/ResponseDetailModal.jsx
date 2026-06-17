@@ -86,6 +86,19 @@ export default function ResponseDetailModal({ response, onClose, token }) {
     potencial: 'Potencial',
     'no-viable': 'No viable',
   };
+  const ESTADO_LABELS = {
+    recepcionado: 'Recepcionado',
+    pendiente_revision: 'Pendiente de revisión',
+    derivado: 'Derivado',
+    leido: 'Leído',
+    en_analisis: 'En análisis',
+    solicita_informacion: 'Solicita información',
+    en_proceso: 'En proceso',
+    aprobado: 'Aprobado',
+    rechazado: 'Rechazado',
+    implementado: 'Implementado',
+    archivado: 'Archivado',
+  };
   const hasViability = fullResponse.veredicto && fullResponse.raw_maximo > 0;
 
   if (loading) {
@@ -141,6 +154,16 @@ export default function ResponseDetailModal({ response, onClose, token }) {
         <div style={{ marginBottom: '1.5rem' }}>
           <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Email:</p>
           <p style={{ fontSize: '14px', marginBottom: '1rem' }}>{fullResponse.email}</p>
+
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Estado del Proyecto:</p>
+          <p style={{ fontSize: '14px', marginBottom: '1rem' }}>
+            {ESTADO_LABELS[fullResponse.estado_proyecto] || fullResponse.estado_proyecto || 'Recepcionado'}
+          </p>
+
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Designado:</p>
+          <p style={{ fontSize: '14px', marginBottom: '1rem' }}>
+            {fullResponse.designado_nombre ? `${fullResponse.designado_nombre}${fullResponse.designado_email ? ` · ${fullResponse.designado_email}` : ''}` : '—'}
+          </p>
 
           <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>Enviado:</p>
           <p style={{ fontSize: '14px', marginBottom: '1rem' }}>{formatDate(fullResponse.created_at)}</p>
