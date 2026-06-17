@@ -385,7 +385,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
             overflow: 'hidden',
           }}>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', minWidth: '700px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', minWidth: '1100px' }}>
                 <thead>
                   <tr style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
                     <th style={{ ...thStyle, width: '44px', textAlign: 'center' }}>#</th>
@@ -575,7 +575,7 @@ const exportBtnStyle = {
 
 const statusSelectStyle = {
   width: '100%',
-  minWidth: '180px',
+  minWidth: '160px',
   padding: '0.45rem 0.65rem',
   borderRadius: '999px',
   border: '1px solid var(--border)',
@@ -589,7 +589,7 @@ const statusSelectStyle = {
 
 const assignmentSelectStyle = {
   width: '100%',
-  minWidth: '180px',
+  minWidth: '160px',
   padding: '0.45rem 0.65rem',
   borderRadius: '8px',
   border: '1px solid var(--border)',
@@ -603,7 +603,7 @@ const assignmentSelectStyle = {
 };
 
 const thStyle = {
-  padding: '0.75rem 1rem',
+  padding: '0.75rem 0.75rem',
   textAlign: 'left',
   fontWeight: 700,
   fontSize: '11px',
@@ -614,7 +614,7 @@ const thStyle = {
 };
 
 const tdStyle = {
-  padding: '0.85rem 1rem',
+  padding: '0.85rem 0.75rem',
   verticalAlign: 'middle',
 };
 

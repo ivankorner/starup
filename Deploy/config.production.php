@@ -38,8 +38,18 @@ define('NOTIFY_EMAIL', 'ivankorner@gmail.com');
 // APLICACIÓN — Cambiar por tu dominio real
 // ============================================================================
 define('APP_NAME', 'Radar de Proyectos');
-define('APP_URL', 'https://phpstack-998749-6320828.cloudwaysapps.com/');     // ← CAMBIAR
-define('API_URL', 'https://phpstack-998749-6320828.cloudwaysapps.com/api');  // ← CAMBIAR
+
+function detectAppBaseUrl() {
+    $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    $scheme = $isHttps ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+
+    return $scheme . '://' . $host;
+}
+
+define('APP_URL', detectAppBaseUrl());
+define('API_URL', detectAppBaseUrl() . '/api');
 
 // ============================================================================
 // LOGGING

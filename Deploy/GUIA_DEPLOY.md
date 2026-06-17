@@ -104,12 +104,16 @@ public_html/
 
 ## Paso 4: Configurar dominio
 
-1. En `public_html/api/config.php`, cambiar:
+1. Si desplegás en la raíz del dominio, `APP_URL` y `API_URL` se detectan solos desde el host del servidor.
+2. Si vas a usar un subdirectorio, ajustá las constantes en `public_html/api/config.php` antes de publicar.
+3. Abrir `public_html/api/config.php` solo para revisar credenciales de BD, JWT y SMTP si hiciera falta.
+
+Si necesitás fijarlas manualmente, usar:
    ```php
    define('APP_URL', 'https://tu-dominio.com');
    define('API_URL', 'https://tu-dominio.com/api');
    ```
-2. Si usas SSL (recomendado), activarlo en Cloudways Panel → SSL Certificate
+4. Si usas SSL (recomendado), activarlo en Cloudways Panel → SSL Certificate
 
 ---
 
@@ -187,3 +191,7 @@ Cuando hagas cambios al codigo:
 2. **Backend:** Subir solo los `.php` modificados a `api/`
 3. **NUNCA** sobreescribir `api/config.php` y `api/db.php` del servidor (tienen las credenciales de produccion)
 4. **BD:** Si cambias el schema, ejecutar los ALTER TABLE necesarios en Adminer
+
+## Nota de despliegue remoto
+
+La plantilla `Deploy/config.production.php` ya calcula `APP_URL` y `API_URL` desde el host remoto, así que el paquete queda listo para FTP sin dejar URLs de localhost en producción.

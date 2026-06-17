@@ -300,9 +300,13 @@ body {
 
 .dashboard-container {
   width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
+  max-width: 1600px;
+  padding: 1.5rem;
   margin: 0 auto;
+}
+
+.dashboard-content {
+  width: 100%;
 }
 
 /* Progress bar */
