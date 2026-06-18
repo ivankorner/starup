@@ -29,10 +29,10 @@ define('SESSION_TIMEOUT', 86400); // 24 horas
 // ============================================================================
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USER', 'ivankorner@gmail.com');
-define('SMTP_PASS', 'vlzy eaiw xnuh ykhl');
+define('SMTP_USER', 'noreplymisiones@gmail.com');
+define('SMTP_PASS', 'gfsq qjvw kbiu mjtx');
 define('SMTP_FROM_NAME', 'Radar de Proyectos');
-define('NOTIFY_EMAIL', 'ivankorner@gmail.com');
+define('NOTIFY_EMAIL', 'noreplymisiones@gmail.com');
 
 // ============================================================================
 // APLICACIÓN — Cambiar por tu dominio real

@@ -32,12 +32,12 @@ define('SESSION_TIMEOUT', 86400); // 24 horas en segundos
 
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USER', 'ivankorner@gmail.com'); // ← CAMBIAR: tu correo Gmail
-define('SMTP_PASS', 'vlzy eaiw xnuh ykhl'); // ← CAMBIAR: App Password de Google (sin espacios: xxxxxxxxxxxxxxxx)
+define('SMTP_USER', 'noreplymisiones@gmail.com'); // ← CAMBIAR: tu correo Gmail
+define('SMTP_PASS', 'gfsq qjvw kbiu mjtx'); // ← CAMBIAR: App Password de Google (sin espacios: xxxxxxxxxxxxxxxx)
 define('SMTP_FROM_NAME', 'Radar de Proyectos');
 
 // Email destino para notificaciones
-define('NOTIFY_EMAIL', 'ivankorner@gmail.com');
+define('NOTIFY_EMAIL', 'noreplymisiones@gmail.com');
 
 // ============================================================================
 // APLICACIÓN
