@@ -9,6 +9,26 @@
 -- ============================================================================
 
 -- ============================================================================
+-- TABLA: work_areas
+-- ============================================================================
+CREATE TABLE IF NOT EXISTS work_areas (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nombre          VARCHAR(120) NOT NULL UNIQUE,
+  activo          TINYINT DEFAULT 1,
+  created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_nombre (nombre),
+  INDEX idx_activo (activo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO work_areas (nombre, activo) VALUES
+('OCE', 1),
+('Conocimiento', 1),
+('Negocios', 1),
+('Comunicación', 1),
+('IDi', 1);
+
+-- ============================================================================
 -- TABLA: users
 -- ============================================================================
 CREATE TABLE IF NOT EXISTS users (
@@ -17,11 +37,14 @@ CREATE TABLE IF NOT EXISTS users (
   email           VARCHAR(200) NOT NULL UNIQUE,
   password_hash   VARCHAR(255) NOT NULL,
   role            ENUM('admin', 'evaluador') NOT NULL DEFAULT 'evaluador',
+  area_id         INT UNSIGNED DEFAULT NULL,
   activo          TINYINT DEFAULT 1,
   created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   last_login      TIMESTAMP NULL,
+  FOREIGN KEY (area_id) REFERENCES work_areas(id) ON DELETE SET NULL,
   INDEX idx_email (email),
-  INDEX idx_role (role)
+  INDEX idx_role (role),
+  INDEX idx_area_id (area_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================================

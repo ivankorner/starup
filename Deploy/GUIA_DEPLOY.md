@@ -17,7 +17,7 @@
 1. Ir a **Cloudways Panel → Tu App → Database Manager** (Adminer/phpMyAdmin)
 2. Click en **"SQL command"** o **"Import"**
 3. Pegar el contenido de `schema_cloudways.sql` y ejecutar
-4. Verificar que se crearon las 7 tablas: `users`, `sessions`, `submissions`, `forms`, `form_fields`, `form_responses`, `banners`
+4. Verificar que se crearon las 8 tablas: `work_areas`, `users`, `sessions`, `submissions`, `forms`, `form_fields`, `form_responses`, `banners`
 5. Verificar que existe el usuario admin (tabla `users`)
 
 ---
@@ -37,9 +37,9 @@ Esto genera la carpeta `dist/` con el frontend compilado.
 
 Antes de subir los archivos, ejecutar en la base remota el contenido de:
 
-- `sql/migrate_estado_designado.sql`
+- `sql/migrate_work_areas.sql`
 
-Esta migracion solo agrega columnas e indices nuevos en `form_responses`. No elimina tablas, no borra datos y no modifica archivos existentes de la base actual.
+Estas migraciones son aditivas. La primera agrega columnas e índices nuevos en `form_responses`; la segunda agrega un catálogo nuevo y una referencia nullable desde `users`, por lo que los usuarios existentes quedan intactos.
 
 ---
 
@@ -68,6 +68,7 @@ public_html/
 │   ├── submit.php           ← desde api/submit.php
 │   ├── users.php            ← desde api/users.php
 │   ├── banners.php          ← desde api/banners.php
+│   ├── work_areas.php       ← desde api/work_areas.php
 │   ├── login.php            ← desde api/login.php
 │   ├── auth/
 │   │   ├── login.php        ← desde api/auth/login.php

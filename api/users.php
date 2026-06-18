@@ -30,6 +30,12 @@ try {
         if ($id) {
             // GET /api/users?id=X — obtener usuario específico
             $stmt = $pdo->prepare("
+                SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login,
+                       wa.id AS area_id, wa.nombre AS area_name
+                FROM users u
+                LEFT JOIN work_areas wa ON wa.id = u.area_id
+                WHERE u.id = ?
+            ");
                 SELECT id, nombre, email, role, activo, created_at, last_login
                 FROM users
                 WHERE id = ?
@@ -37,7 +43,7 @@ try {
             $stmt->execute([$id]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$user) {
+            if (!$user) { 
                 http_response_code(404);
                 echo json_encode(['error' => 'Usuario no encontrado']);
                 exit;
@@ -49,6 +55,12 @@ try {
         } else {
             // GET /api/users — listar todos
             $stmt = $pdo->query("
+                SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login,
+                       wa.id AS area_id, wa.nombre AS area_name
+                FROM users u
+                LEFT JOIN work_areas wa ON wa.id = u.area_id
+                ORDER BY u.created_at DESC
+            ");
                 SELECT id, nombre, email, role, activo, created_at, last_login
                 FROM users
                 ORDER BY created_at DESC
@@ -79,6 +91,7 @@ try {
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
         $role = 'admin';
+        $areaId = $data['area_id'] ?? null;
 
         // Validaciones
         if (!$nombre) {
@@ -97,6 +110,18 @@ try {
             http_response_code(400);
             echo json_encode(['error' => 'Contraseña debe tener mínimo 6 caracteres']);
             exit;
+        }
+
+        if ($areaId !== null && $areaId !== '') {
+            $stmt = $pdo->prepare("SELECT id FROM work_areas WHERE id = ? AND activo = 1");
+            $stmt->execute([$areaId]);
+            if (!$stmt->fetch()) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Área de trabajo inválida']);
+                exit;
+            }
+        } else {
+            $areaId = null;
         }
 
         // Solo se permite crear administradores
@@ -118,10 +143,13 @@ try {
         // Crear usuario
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("
-            INSERT INTO users (nombre, email, password_hash, role, activo)
+        INSERT INTO users (nombre, email, password_hash, role, activo, area_id)
+        VALUES (?, ?, ?, ?, 1, ?)
+    ");
+            INSERT INTO users (nombre, email, password_hash, role, activo, area_id)
             VALUES (?, ?, ?, ?, 1)
         ");
-        $stmt->execute([$nombre, $email, $passwordHash, $role]);
+        $stmt->execute([$nombre, $email, $passwordHash, $role, $areaId]);
 
         http_response_code(201);
         echo json_encode([
@@ -178,6 +206,25 @@ try {
             }
             $updates[] = 'password_hash = ?';
             $params[] = password_hash($data['password'], PASSWORD_BCRYPT);
+        }
+
+        if (array_key_exists('area_id', $data)) {
+            $areaId = $data['area_id'];
+            if ($areaId === '' || $areaId === null) {
+                $updates[] = 'area_id = ?';
+                $params[] = null;
+            } else {
+                $stmt = $pdo->prepare("SELECT id FROM work_areas WHERE id = ? AND activo = 1");
+                $stmt->execute([$areaId]);
+                if (!$stmt->fetch()) {
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Área de trabajo inválida']);
+                    exit;
+                }
+
+                $updates[] = 'area_id = ?';
+                $params[] = $areaId;
+            }
         }
 
         // El rol no se puede cambiar (todos son administradores)

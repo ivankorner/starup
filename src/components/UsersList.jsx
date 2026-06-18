@@ -1,17 +1,36 @@
 import { useState, useEffect } from 'react';
 import UserModal from './UserModal';
+import WorkAreasManager from './WorkAreasManager';
 import Swal from 'sweetalert2';
 
 const API_URL = '/api';
 
 export default function UsersList({ token }) {
   const [users, setUsers] = useState([]);
+  const [areas, setAreas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [showAreasManager, setShowAreasManager] = useState(false);
 
   useEffect(() => {
     loadUsers();
+    loadAreas();
   }, []);
+
+  const loadAreas = () => {
+    fetch(`${API_URL}/work_areas.php`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('Error cargando áreas');
+      })
+      .then((data) => setAreas(Array.isArray(data) ? data : []))
+      .catch((err) => console.error(err));
+  };
 
   const loadUsers = () => {
     setLoading(true);
@@ -67,9 +86,20 @@ export default function UsersList({ token }) {
       <div style={{ marginBottom: '2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Gestión de Usuarios</h2>
-          <button className="button button-primary" onClick={() => setShowModal(true)}>
-            + Nuevo Usuario
-          </button>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button className="button button-text" onClick={() => setShowAreasManager(true)}>
+              Áreas de trabajo
+            </button>
+            <button
+              className="button button-primary"
+              onClick={() => {
+                setEditingUser(null);
+                setShowModal(true);
+              }}
+            >
+              + Nuevo Usuario
+            </button>
+          </div>
         </div>
 
         {loading ? (
@@ -83,6 +113,7 @@ export default function UsersList({ token }) {
                 <tr style={{ borderBottom: '2px solid var(--border)' }}>
                   <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Nombre</th>
                   <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Email</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Área de trabajo</th>
                   <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Rol</th>
                   <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Estado</th>
                   <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', fontSize: '14px' }}>Acciones</th>
@@ -93,6 +124,9 @@ export default function UsersList({ token }) {
                   <tr key={user.id} style={{ borderBottom: '1px solid var(--border)' }}>
                     <td style={{ padding: '12px', fontSize: '14px' }}>{user.nombre}</td>
                     <td style={{ padding: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>{user.email}</td>
+                    <td style={{ padding: '12px', fontSize: '14px', color: user.area_name ? 'var(--text-body)' : 'var(--text-muted)' }}>
+                      {user.area_name || 'Sin área'}
+                    </td>
                     <td style={{ padding: '12px', fontSize: '14px' }}>
                       <span style={{ fontWeight: '600', color: user.role === 'admin' ? 'var(--primary)' : 'var(--text-body)' }}>
                         {user.role}
@@ -104,6 +138,16 @@ export default function UsersList({ token }) {
                       </span>
                     </td>
                     <td style={{ padding: '12px', fontSize: '14px' }}>
+                      <button
+                        className="button button-text"
+                        onClick={() => {
+                          setEditingUser(user);
+                          setShowModal(true);
+                        }}
+                        style={{ fontSize: '12px', marginRight: '0.75rem' }}
+                      >
+                        Editar
+                      </button>
                       <button
                         className="button button-text"
                         onClick={() => handleDelete(user.id)}
@@ -121,7 +165,36 @@ export default function UsersList({ token }) {
       </div>
 
       {showModal && (
-        <UserModal onClose={() => { setShowModal(false); loadUsers(); }} token={token} />
+        <UserModal
+          onClose={() => {
+            setShowModal(false);
+            setEditingUser(null);
+          }}
+          onSaved={() => {
+            setShowModal(false);
+            setEditingUser(null);
+            loadUsers();
+          }}
+          onOpenAreasManager={() => {
+            setShowModal(false);
+            setShowAreasManager(true);
+          }}
+          token={token}
+          user={editingUser}
+          areas={areas}
+        />
+      )}
+
+      {showAreasManager && (
+        <WorkAreasManager
+          token={token}
+          areas={areas}
+          onClose={() => setShowAreasManager(false)}
+          onChanged={() => {
+            loadAreas();
+            loadUsers();
+          }}
+        />
       )}
     </>
   );
