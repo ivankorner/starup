@@ -13,11 +13,21 @@ require_once 'db.php';
 require_once 'middleware.php';
 require_once 'config.php';
 
+function columnExists(PDO $pdo, string $table, string $column): bool {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ? AND COLUMN_NAME = ?");
+    $stmt->execute([$table, $column]);
+    return (int)$stmt->fetchColumn() > 0;
+}
+
+function tableExists(PDO $pdo, string $table): bool {
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = ?");
+    $stmt->execute([$table]);
+    return (int)$stmt->fetchColumn() > 0;
+}
+
 try {
-    // Todas las operaciones requieren autenticación
     $currentUser = requireAuth();
 
-    // GET /api/users — listar usuarios (solo admins)
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if ($currentUser['role'] !== 'admin') {
             http_response_code(403);
@@ -25,54 +35,41 @@ try {
             exit;
         }
 
+        $hasAreaColumn = columnExists($pdo, 'users', 'area_id');
+        $hasAreasTable = $hasAreaColumn && tableExists($pdo, 'work_areas');
         $id = $_GET['id'] ?? null;
 
         if ($id) {
-            // GET /api/users?id=X — obtener usuario específico
-            $stmt = $pdo->prepare("
-                SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login,
-                       wa.id AS area_id, wa.nombre AS area_name
-                FROM users u
-                LEFT JOIN work_areas wa ON wa.id = u.area_id
-                WHERE u.id = ?
-            ");
-                SELECT id, nombre, email, role, activo, created_at, last_login
-                FROM users
-                WHERE id = ?
-            ");
+            if ($hasAreasTable) {
+                $stmt = $pdo->prepare("SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login, wa.id AS area_id, wa.nombre AS area_name FROM users u LEFT JOIN work_areas wa ON wa.id = u.area_id WHERE u.id = ?");
+            } else {
+                $stmt = $pdo->prepare("SELECT id, nombre, email, role, activo, created_at, last_login FROM users WHERE id = ?");
+            }
+
             $stmt->execute([$id]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$user) { 
+            if (!$user) {
                 http_response_code(404);
                 echo json_encode(['error' => 'Usuario no encontrado']);
                 exit;
             }
 
-            http_response_code(200);
             echo json_encode($user);
-
-        } else {
-            // GET /api/users — listar todos
-            $stmt = $pdo->query("
-                SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login,
-                       wa.id AS area_id, wa.nombre AS area_name
-                FROM users u
-                LEFT JOIN work_areas wa ON wa.id = u.area_id
-                ORDER BY u.created_at DESC
-            ");
-                SELECT id, nombre, email, role, activo, created_at, last_login
-                FROM users
-                ORDER BY created_at DESC
-            ");
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            http_response_code(200);
-            echo json_encode($users);
+            exit;
         }
 
-    // POST /api/users — crear usuario (solo admins)
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($hasAreasTable) {
+            $stmt = $pdo->query("SELECT u.id, u.nombre, u.email, u.role, u.activo, u.created_at, u.last_login, wa.id AS area_id, wa.nombre AS area_name FROM users u LEFT JOIN work_areas wa ON wa.id = u.area_id ORDER BY u.created_at DESC");
+        } else {
+            $stmt = $pdo->query("SELECT id, nombre, email, role, activo, created_at, last_login FROM users ORDER BY created_at DESC");
+        }
+
+        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($currentUser['role'] !== 'admin') {
             http_response_code(403);
             echo json_encode(['error' => 'Solo administradores pueden crear usuarios']);
@@ -80,7 +77,6 @@ try {
         }
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         if (!$data) {
             http_response_code(400);
             echo json_encode(['error' => 'JSON inválido']);
@@ -90,11 +86,9 @@ try {
         $nombre = trim($data['nombre'] ?? '');
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $role = 'admin';
         $areaId = $data['area_id'] ?? null;
 
-        // Validaciones
-        if (!$nombre) {
+        if ($nombre === '') {
             http_response_code(400);
             echo json_encode(['error' => 'Nombre requerido']);
             exit;
@@ -112,26 +106,25 @@ try {
             exit;
         }
 
-        if ($areaId !== null && $areaId !== '') {
-            $stmt = $pdo->prepare("SELECT id FROM work_areas WHERE id = ? AND activo = 1");
-            $stmt->execute([$areaId]);
-            if (!$stmt->fetch()) {
-                http_response_code(400);
-                echo json_encode(['error' => 'Área de trabajo inválida']);
-                exit;
+        $hasAreaColumn = columnExists($pdo, 'users', 'area_id');
+        $hasAreasTable = $hasAreaColumn && tableExists($pdo, 'work_areas');
+
+        if ($hasAreasTable) {
+            if ($areaId !== null && $areaId !== '') {
+                $stmt = $pdo->prepare("SELECT id FROM work_areas WHERE id = ? AND activo = 1");
+                $stmt->execute([$areaId]);
+                if (!$stmt->fetch()) {
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Área de trabajo inválida']);
+                    exit;
+                }
+            } else {
+                $areaId = null;
             }
         } else {
             $areaId = null;
         }
 
-        // Solo se permite crear administradores
-        if ($role !== 'admin') {
-            http_response_code(400);
-            echo json_encode(['error' => 'Solo se pueden crear administradores']);
-            exit;
-        }
-
-        // Verificar que el email no exista
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
@@ -140,36 +133,30 @@ try {
             exit;
         }
 
-        // Crear usuario
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $pdo->prepare("
-        INSERT INTO users (nombre, email, password_hash, role, activo, area_id)
-        VALUES (?, ?, ?, ?, 1, ?)
-    ");
-            INSERT INTO users (nombre, email, password_hash, role, activo, area_id)
-            VALUES (?, ?, ?, ?, 1)
-        ");
-        $stmt->execute([$nombre, $email, $passwordHash, $role, $areaId]);
+        if ($hasAreaColumn) {
+            $stmt = $pdo->prepare("INSERT INTO users (nombre, email, password_hash, role, activo, area_id) VALUES (?, ?, ?, 'admin', 1, ?)");
+            $stmt->execute([$nombre, $email, $passwordHash, $areaId]);
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO users (nombre, email, password_hash, role, activo) VALUES (?, ?, ?, 'admin', 1)");
+            $stmt->execute([$nombre, $email, $passwordHash]);
+        }
 
         http_response_code(201);
-        echo json_encode([
-            'success' => true,
-            'id' => $pdo->lastInsertId(),
-            'message' => 'Usuario creado exitosamente',
-        ]);
+        echo json_encode(['success' => true, 'id' => $pdo->lastInsertId(), 'message' => 'Usuario creado exitosamente']);
+        log_message("Nuevo usuario creado: $email por {$currentUser['email']}", 'INFO');
+        exit;
+    }
 
-        log_message("Nuevo usuario creado: $email (role: $role) por {$currentUser['email']}", 'INFO');
-
-    // PUT /api/users — actualizar usuario (solo admins)
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         if ($currentUser['role'] !== 'admin') {
             http_response_code(403);
             echo json_encode(['error' => 'Solo administradores pueden editar usuarios']);
             exit;
         }
 
-        $data = json_decode(file_get_contents('php://input'), true);
         $id = $_GET['id'] ?? null;
+        $data = json_decode(file_get_contents('php://input'), true);
 
         if (!$id) {
             http_response_code(400);
@@ -177,7 +164,6 @@ try {
             exit;
         }
 
-        // Verificar que el usuario existe
         $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
         $stmt->execute([$id]);
         if (!$stmt->fetch()) {
@@ -186,19 +172,20 @@ try {
             exit;
         }
 
-        // Actualizar campos permitidos
+        $hasAreaColumn = columnExists($pdo, 'users', 'area_id');
+        $hasAreasTable = $hasAreaColumn && tableExists($pdo, 'work_areas');
         $updates = [];
         $params = [];
 
         if (isset($data['nombre'])) {
-            $nombre = trim($data['nombre'] ?? '');
-            if ($nombre) {
+            $nombre = trim($data['nombre']);
+            if ($nombre !== '') {
                 $updates[] = 'nombre = ?';
                 $params[] = $nombre;
             }
         }
 
-        if (isset($data['password']) && $data['password']) {
+        if (!empty($data['password'])) {
             if (strlen($data['password']) < 6) {
                 http_response_code(400);
                 echo json_encode(['error' => 'Contraseña debe tener mínimo 6 caracteres']);
@@ -208,7 +195,7 @@ try {
             $params[] = password_hash($data['password'], PASSWORD_BCRYPT);
         }
 
-        if (array_key_exists('area_id', $data)) {
+        if ($hasAreaColumn && array_key_exists('area_id', $data) && $hasAreasTable) {
             $areaId = $data['area_id'];
             if ($areaId === '' || $areaId === null) {
                 $updates[] = 'area_id = ?';
@@ -221,17 +208,9 @@ try {
                     echo json_encode(['error' => 'Área de trabajo inválida']);
                     exit;
                 }
-
                 $updates[] = 'area_id = ?';
                 $params[] = $areaId;
             }
-        }
-
-        // El rol no se puede cambiar (todos son administradores)
-        if (isset($data['role'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'El rol no puede ser modificado']);
-            exit;
         }
 
         if (isset($data['activo'])) {
@@ -239,24 +218,27 @@ try {
             $params[] = (int)$data['activo'];
         }
 
+        if (isset($data['role'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'El rol no puede ser modificado']);
+            exit;
+        }
+
         if (empty($updates)) {
-            http_response_code(200);
             echo json_encode(['message' => 'Nada que actualizar']);
             exit;
         }
 
         $params[] = $id;
-        $query = "UPDATE users SET " . implode(', ', $updates) . " WHERE id = ?";
-        $stmt = $pdo->prepare($query);
+        $stmt = $pdo->prepare('UPDATE users SET ' . implode(', ', $updates) . ' WHERE id = ?');
         $stmt->execute($params);
 
-        http_response_code(200);
         echo json_encode(['success' => true, 'message' => 'Usuario actualizado']);
-
         log_message("Usuario actualizado: id=$id por {$currentUser['email']}", 'INFO');
+        exit;
+    }
 
-    // DELETE /api/users?id=X — eliminar usuario (solo admins)
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         if ($currentUser['role'] !== 'admin') {
             http_response_code(403);
             echo json_encode(['error' => 'Solo administradores pueden eliminar usuarios']);
@@ -264,21 +246,18 @@ try {
         }
 
         $id = $_GET['id'] ?? null;
-
         if (!$id) {
             http_response_code(400);
             echo json_encode(['error' => 'ID de usuario requerido']);
             exit;
         }
 
-        // No permitir eliminar el último admin
-        if ($id === $currentUser['id']) {
+        if ((string)$id === (string)$currentUser['id']) {
             http_response_code(400);
             echo json_encode(['error' => 'No puedes eliminar tu propia cuenta']);
             exit;
         }
 
-        // Verificar que existe
         $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
         $stmt->execute([$id]);
         if (!$stmt->fetch()) {
@@ -287,27 +266,26 @@ try {
             exit;
         }
 
-        // Eliminar sesiones del usuario
         $stmt = $pdo->prepare("DELETE FROM sessions WHERE user_id = ?");
         $stmt->execute([$id]);
 
-        // Eliminar usuario
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $stmt->execute([$id]);
 
-        http_response_code(200);
         echo json_encode(['success' => true, 'message' => 'Usuario eliminado']);
-
         log_message("Usuario eliminado: id=$id por {$currentUser['email']}", 'INFO');
-
-    } else {
-        http_response_code(405);
-        echo json_encode(['error' => 'Método no permitido']);
+        exit;
     }
 
+    http_response_code(405);
+    echo json_encode(['error' => 'Método no permitido']);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Error de base de datos']);
+    log_message("Error en users.php: " . $e->getMessage(), 'ERROR');
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Error interno']);
     log_message("Error en users.php: " . $e->getMessage(), 'ERROR');
 }
 ?>
