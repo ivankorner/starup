@@ -43,6 +43,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
   const [exporting, setExporting] = useState(false);
   const [search, setSearch] = useState('');
   const [formFilter, setFormFilter] = useState('');
+  const [areaFilter, setAreaFilter] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [veredictoFilter, setVeredictoFilter] = useState('');
@@ -76,6 +77,26 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
     return Array.from(map.entries()).map(([id, titulo]) => ({ id, titulo }));
   }, [rows]);
 
+  const getAssignedAreaName = (response) => {
+    const assignedUser = users.find((user) => String(user.id) === String(response.designado_user_id));
+    return assignedUser?.area_name || response.designado_area_name || '';
+  };
+
+  const uniqueAreas = useMemo(() => {
+    const map = new Map();
+
+    users.forEach((user) => {
+      if (user.area_name) map.set(user.area_name.toLowerCase(), user.area_name);
+    });
+
+    rows.forEach((response) => {
+      const areaName = getAssignedAreaName(response);
+      if (areaName) map.set(areaName.toLowerCase(), areaName);
+    });
+
+    return Array.from(map.values()).sort((a, b) => a.localeCompare(b, 'es'));
+  }, [rows, users]);
+
   const stats = useMemo(() => {
     const total = rows.length;
     const viable = rows.filter(s => s.veredicto === 'viable').length;
@@ -89,6 +110,14 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
     return rows.filter((s) => {
       if (q && !s.nombre?.toLowerCase().includes(q) && !s.email?.toLowerCase().includes(q)) return false;
       if (formFilter && String(s.form_id) !== String(formFilter)) return false;
+      if (areaFilter) {
+        const assignedArea = getAssignedAreaName(s);
+        if (areaFilter === 'sin-area') {
+          if (assignedArea) return false;
+        } else if (assignedArea !== areaFilter) {
+          return false;
+        }
+      }
       if (veredictoFilter) {
         if (veredictoFilter === 'sin-score' && (s.veredicto || s.raw_maximo > 0)) return false;
         if (veredictoFilter !== 'sin-score' && s.veredicto !== veredictoFilter) return false;
@@ -103,12 +132,12 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
       }
       return true;
     });
-  }, [rows, search, formFilter, veredictoFilter, dateFrom, dateTo]);
+  }, [rows, search, formFilter, areaFilter, users, veredictoFilter, dateFrom, dateTo]);
 
-  const hasActiveFilters = search || formFilter || veredictoFilter || dateFrom || dateTo;
+  const hasActiveFilters = search || formFilter || areaFilter || veredictoFilter || dateFrom || dateTo;
 
   const clearFilters = () => {
-    setSearch(''); setFormFilter(''); setVeredictoFilter(''); setDateFrom(''); setDateTo('');
+    setSearch(''); setFormFilter(''); setAreaFilter(''); setVeredictoFilter(''); setDateFrom(''); setDateTo('');
   };
 
   const formatDate = (str) => {
@@ -247,7 +276,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
           borderRadius: '12px',
           padding: '1.25rem',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr auto auto auto auto',
+          gridTemplateColumns: 'minmax(220px, 1.2fr) minmax(220px, 1.2fr) minmax(160px, 0.8fr) 150px 150px 130px auto',
           gap: '0.75rem',
           alignItems: 'end',
         }}>
@@ -274,6 +303,18 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
               {uniqueForms.map((f) => (
                 <option key={f.id} value={f.id}>{f.titulo}</option>
               ))}
+            </select>
+          </div>
+
+          {/* Area selector */}
+          <div>
+            <label style={labelStyle}>Área</label>
+            <select value={areaFilter} onChange={(e) => setAreaFilter(e.target.value)} style={inputStyle}>
+              <option value="">Todas las áreas</option>
+              {uniqueAreas.map((area) => (
+                <option key={area} value={area}>{area}</option>
+              ))}
+              <option value="sin-area">Sin área</option>
             </select>
           </div>
 

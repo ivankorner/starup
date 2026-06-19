@@ -36,7 +36,7 @@ function responseEstadoLabel($estado) {
 }
 
 function getResponseDetail(PDO $pdo, $id) {
-    $stmt = $pdo->prepare("\n        SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.estado_proyecto, fr.designado_user_id,\n               fr.created_at, fr.updated_at, fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,\n               f.titulo AS form_titulo,\n               u.nombre AS designado_nombre, u.email AS designado_email\n        FROM form_responses fr\n        JOIN forms f ON f.id = fr.form_id\n        LEFT JOIN users u ON u.id = fr.designado_user_id\n        WHERE fr.id = ?\n    ");
+    $stmt = $pdo->prepare("\n        SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.estado_proyecto, fr.designado_user_id,\n               fr.created_at, fr.updated_at, fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,\n               f.titulo AS form_titulo,\n               u.nombre AS designado_nombre, u.email AS designado_email,\n               wa.nombre AS designado_area_name\n        FROM form_responses fr\n        JOIN forms f ON f.id = fr.form_id\n        LEFT JOIN users u ON u.id = fr.designado_user_id\n        LEFT JOIN work_areas wa ON wa.id = u.area_id\n        WHERE fr.id = ?\n    ");
     $stmt->execute([$id]);
     $response = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -85,10 +85,12 @@ try {
                 SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.estado_proyecto, fr.designado_user_id, fr.created_at,
                        fr.updated_at, fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
                        f.titulo AS form_titulo,
-                       u.nombre AS designado_nombre, u.email AS designado_email
+                       u.nombre AS designado_nombre, u.email AS designado_email,
+                       wa.nombre AS designado_area_name
                 FROM form_responses fr
                 JOIN forms f ON f.id = fr.form_id
                 LEFT JOIN users u ON u.id = fr.designado_user_id
+                LEFT JOIN work_areas wa ON wa.id = u.area_id
                 WHERE fr.form_id = ?
                 ORDER BY fr.created_at DESC
             ");
@@ -108,10 +110,12 @@ try {
                 SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.estado_proyecto, fr.designado_user_id, fr.created_at,
                        fr.updated_at, fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
                        f.titulo AS form_titulo,
-                       u.nombre AS designado_nombre, u.email AS designado_email
+                       u.nombre AS designado_nombre, u.email AS designado_email,
+                       wa.nombre AS designado_area_name
                 FROM form_responses fr
                 JOIN forms f ON f.id = fr.form_id
                 LEFT JOIN users u ON u.id = fr.designado_user_id
+                LEFT JOIN work_areas wa ON wa.id = u.area_id
                 ORDER BY fr.created_at DESC
             ");
             $responses = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -355,9 +359,13 @@ try {
         $stmt = $pdo->prepare("
             SELECT fr.id, fr.form_id, fr.nombre, fr.email, fr.respuestas, fr.estado_proyecto, fr.designado_user_id,
                    fr.created_at, fr.updated_at, fr.score, fr.veredicto, fr.raw_obtenido, fr.raw_maximo,
-                   f.titulo AS form_titulo
+                   f.titulo AS form_titulo,
+                   u.nombre AS designado_nombre, u.email AS designado_email,
+                   wa.nombre AS designado_area_name
             FROM form_responses fr
             JOIN forms f ON f.id = fr.form_id
+            LEFT JOIN users u ON u.id = fr.designado_user_id
+            LEFT JOIN work_areas wa ON wa.id = u.area_id
             WHERE fr.id = ?
         ");
         $stmt->execute([$id]);
