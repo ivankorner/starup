@@ -405,6 +405,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
                     const vs = hasViability ? VEREDICTO_STYLE[row.veredicto] : null;
                     const statusOption = getStatusOption(row.estado_proyecto || 'recepcionado');
                     const assignedUser = users.find((user) => String(user.id) === String(row.designado_user_id));
+                    const assignedArea = assignedUser?.area_name || row.designado_area_name;
                     return (
                       <tr
                         key={row.id}
@@ -448,7 +449,7 @@ export default function ResponsesTable({ submissions, token, onRefresh, loading 
                             ))}
                           </select>
                           <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '4px' }}>
-                            {assignedUser ? assignedUser.email : '—'}
+                            {assignedUser ? (assignedArea || 'Sin área') : '—'}
                           </div>
                         </td>
                         <td style={tdStyle}>
